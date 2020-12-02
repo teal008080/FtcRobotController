@@ -66,27 +66,13 @@ public class UltimategoalHardware {
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
 
-    public DcMotor  conveyerDrive       = null;
-    public DcMotor  shooterDrive        = null;
-
-    public DcMotor  intakeDrive         = null;
 
 
     public int      speedFactor         = 1;
 
-    public boolean toggle = true;
-    public boolean belt = false;
 
 
-
-   /* public double      autoClawIdle        = .5;
-    public double      autoClawGrab        = .89;
-
-    public double      autoArmIdle         = .39;
-    public double      autoArmDown         = .82;//.83
-    public double      autoArmDeliver      = .60;
-
-    public double      DDRD                = .65;
+    /*public double      DDRD                = .65;
     public double      DDLD                = .55;
     public double      DDRI                =   1;
     public double      DDLI                = .9;
@@ -111,7 +97,7 @@ public class UltimategoalHardware {
        With these things we are able to help the extracurriculars. +
 
 
-       Not only have we been able to implement cad into our orbot design for ustom parts.
+       Not only have we been able to implement cad into our rorbot design for custom parts.
        but weve also been able to implement cad into our fundrasing, outreaching into our
        theatre program and outreaching into our band program to host a fun awards night.
     */
@@ -132,7 +118,7 @@ public class UltimategoalHardware {
 
 
 
-       BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+       /*BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
         parameters.mode                = BNO055IMU.SensorMode.IMU;
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -184,19 +170,7 @@ public class UltimategoalHardware {
         //rightIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //leftIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //SHOOTER HARDWARE
 
-        conveyerDrive        = hwMap.get(DcMotor.class, "conveyerDrive");
-        shooterDrive       = hwMap.get(DcMotor.class, "shooterDrive");
-
-        conveyerDrive.setPower(0);
-        shooterDrive.setPower(0);
-
-        //INTAKE HARDWARE
-
-        intakeDrive         = hwMap.get(DcMotor.class, "intakeDrive");
-
-        intakeDrive.setPower(0);
 
     }
 }

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
     /**
-     * This is the Main Driver Control for the 2020 FTC Skystone Robot Riccochet
+     * This is the Main Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
      */
 
     @TeleOp(name="UltimateGoalDriveCode", group="Iterative Opmode")//Originally just DriverControl
@@ -50,11 +50,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         }
         @Override
         public void start() {
-       /* runtime.reset();
-        robot.autoClawArm.setPosition(robot.autoClawIdle); //Set Idle Position
-        robot.autoClaw.setPosition(robot.autoClawIdle); //Set Idle Position
-        robot.delivRack.setPower(0.5);
-        robot.delivClaw.setPosition(robot.delivIdle); */
+
+
         }
 
         /*
@@ -115,16 +112,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 
-            //SHOOTER CODE
-            
-            boolean changed1 = false;
-            if(gamepad1.a && !changed1) {
-              robot.conveyerDrive.setPower(gamepad1.a ? 1 : 0);
-              changed1 = true;
-            } else if(!gamepad1.a)  {
-
-                changed1 = false;
-            }
 
 
 

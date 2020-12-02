@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 /**
-     * This is the Main Driver Control for the 2020 FTC Skystone Robot Riccochet
-     */
+ * This is the Test Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
+ */
 
     @TeleOp(name="UltimateGoalTestDriveCode", group="Iterative Opmode")//Originally just DriverControl
 //@Disabled
@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         //Creates new robot
         UltimateGoalTestHardwareMap robot       = new UltimateGoalTestHardwareMap();//probably want to update class + function names
 
-        /*
+        /**
          * Code to run ONCE when the driver hits INIT
          */
         @Override
@@ -34,14 +34,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             telemetry.addData("Status", "Initialized");
         }
 
-        /*
+        /**
          * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
          */
         @Override
         public void init_loop() {
 
 
-            /*
+            /**
              * Code to run ONCE when the driver hits PLAY
              */
         }
@@ -72,30 +72,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             }
             */
 
-/*
-            boolean state = false;
-            int pow = 0;
-             if(gamepad1.a){
-               state = true;
-               pow = 1;
-               robot.conveyerDrive.setPower(pow);
-                 try {
-                     Thread.sleep(1000);
-                 } catch (InterruptedException e) {
-                     e.printStackTrace();
-                 }
-             };
-             if(state && gamepad1.a){
-                 state = false;
-                 pow = 0;
-                 robot.conveyerDrive.setPower(pow);
-                 try {
-                     Thread.sleep(1000);
-                 } catch (InterruptedException e) {
-                     e.printStackTrace();
-                 }
-             };
-             */
+
+
 
 
             if (robot.toggle && gamepad1.a) {  // Only execute once per Button push

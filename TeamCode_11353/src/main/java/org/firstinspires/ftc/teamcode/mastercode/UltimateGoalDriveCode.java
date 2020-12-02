@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         //Creates new robot
         UltimategoalHardware robot       = new UltimategoalHardware();//probably want to update class + function names
 
-        /*
+        /**
          * Code to run ONCE when the driver hits INIT
          */
         @Override
@@ -37,14 +37,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             telemetry.addData("Status", "Initialized");
         }
 
-        /*
+        /**
          * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
          */
         @Override
         public void init_loop() {
 
 
-            /*
+            /**
              * Code to run ONCE when the driver hits PLAY
              */
         }
@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
         }
 
-        /*
+        /**
          * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
          */
         public boolean changed1, on1 = false;
@@ -66,7 +66,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         @Override
         public void loop() {
 
-            //Gets z Values - Right-Handed Coordinate System
+            /**
+             * Gets z Values - Right-Handed Coordinate System
+             */
+
             /*
             Orientation imu_angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             Orientation imu2_angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -80,16 +83,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             double yLift = gamepad2.left_stick_y;
 
             double yDeliv = gamepad2.right_stick_y;
-        /*
+        /**
         NEWLY COMMENTED 1/10/20
         //Math for robot orientated drive. The Z axis offset is converted to radians. Then by multiplying the y and x values by the
         //cos and sin of the gyro, we can "rotate" the gamepad left stick, so forward on the sick is always away
+         **/
+
+        /*
         double rad = Math.toRadians(z_angle)
         double forward = (y*Math.cos(rad))+(x*Math.sin(rad));
         double side    = (-y*Math.sin(rad))+(x*Math.cos(rad));
 
 
-        //Assigning drive power to motors
+        //Assigning drive power to motors using Z-offset
         robot.frontleftDrive.setPower(-forward-side-z);
         robot.frontrightDrive.setPower(-forward+side-z);
         robot.backleftDrive.setPower(forward-side-z);

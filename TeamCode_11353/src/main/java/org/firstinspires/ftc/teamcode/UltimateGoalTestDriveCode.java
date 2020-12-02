@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.test_teamcode;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -102,22 +102,21 @@ import org.firstinspires.ftc.test_teamcode.UltimateGoalTestHardwareMap;
                  }
              };
              */
-            boolean toggle = true;
-            boolean belt = false;
 
-            if (toggle && gamepad1.a) {  // Only execute once per Button push
-                toggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
-                if (belt) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
-                    belt= false;
-                    conveyerDrive.setPow(0);
+
+            if (robot.toggle && gamepad1.a) {  // Only execute once per Button push
+                robot.toggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
+                if (robot.belt) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
+                    robot.belt= false;
+                    robot.conveyerDrive.setPower(0);
                     telemetry.addData("Feed Belt", "Deactivated");
                 } else {
-                    belt= true;
-                    conveyorDrive.setPow(1);
+                    robot.belt= true;
+                    robot.conveyerDrive.setPower(1);
                     telemetry.addData("Feed Belt", "Activated");
                 }
             } else if(!gamepad1.a) {
-                toggle = true; // Button has been released, so this allows a re-press to activate the code above.
+                robot.toggle = true; // Button has been released, so this allows a re-press to activate the code above.
             }
 
 

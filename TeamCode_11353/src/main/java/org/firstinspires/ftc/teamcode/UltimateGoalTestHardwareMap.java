@@ -22,7 +22,8 @@ public class UltimateGoalTestHardwareMap {
 
 
 
-
+    public boolean toggle = true;
+    public boolean belt = false;
 
 
 

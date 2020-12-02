@@ -74,6 +74,9 @@ public class UltimategoalHardware {
 
     public int      speedFactor         = 1;
 
+    public boolean toggle = true;
+    public boolean belt = false;
+
 
 
    /* public double      autoClawIdle        = .5;

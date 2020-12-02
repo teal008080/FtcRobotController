@@ -92,26 +92,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             }
 
 
-            //INTAKE CODE
-
-           /* boolean toggleb = true;
-            boolean intake = false;
-
-            if (toggleb && gamepad1.x) {  // Only execute once per Button push
-                toggleb = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
-                if (intake) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
-                    intake= false;
-                    intakeDrive.setPow(0);
-                    telemetry.addData("Intake", "Deactivated");
-                } else {
-                    intake= true;
-                    intakeDrive.setPow(.45);
-                    telemetry.addData("Intake", "Activated");
-                }
-            } else if(!gamepad1.x) {
-                toggleb = true; // Button has been released, so this allows a re-press to activate the code above.
-            }
-*/
 
 
         }

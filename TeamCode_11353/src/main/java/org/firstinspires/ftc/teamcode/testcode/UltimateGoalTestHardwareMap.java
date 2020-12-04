@@ -38,7 +38,9 @@ public class UltimateGoalTestHardwareMap {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
+        intakeDrive            = hwMap.get(DcMotor.class, "intakeDrive");
 
+        intakeDrive.setPower(0);
 
 
 

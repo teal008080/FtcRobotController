@@ -76,9 +76,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             double z_angle = (imu_angles.firstAngle + imu2_angles.firstAngle) / 2;//zAngle;
 */
             //Double Variables for driver control sticks
-            double x = gamepad1.left_stick_x;
+            double x = -gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
-            double z = gamepad1.right_stick_x;
+            double z = -gamepad1.right_stick_x;
 
             double yLift = gamepad2.left_stick_y;
 
@@ -110,11 +110,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                 robot.speedFactor = 1;
             }
 
+            if (gamepad1.right_bumper) { //Reverse drive control
+                robot.reverseFactor = -1;
+            } else {
+                robot.reverseFactor = 1;
+            }
+
             //DRIVE FUNCTION BELOW
-            robot.frontleftDrive.setPower((Math.pow(y + x + z, 3)) / robot.speedFactor);
-            robot.frontrightDrive.setPower((Math.pow(-y + x + z, 3)) / robot.speedFactor);
-            robot.backleftDrive.setPower((Math.pow(y - x + z, 3)) / robot.speedFactor);
-            robot.backrightDrive.setPower((Math.pow(-y - x + z, 3)) / robot.speedFactor);
+            robot.frontleftDrive.setPower((Math.pow((y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+            robot.frontrightDrive.setPower((Math.pow((-y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+            robot.backleftDrive.setPower((Math.pow((y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+            robot.backrightDrive.setPower((Math.pow((-y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
 
 
 

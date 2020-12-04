@@ -48,7 +48,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         @Override
         public void start() {}
 
-        public boolean changed1, on1 = false;
+
 
 
 

@@ -14,7 +14,9 @@ public class UltimateGoalTestHardwareMap {
     /* Public OpMode members. */
     public BNO055IMU imu;
 
-
+    public DcMotor intakeDrive = null;
+    public boolean intakeToggle = true;
+    public boolean intake = false;
 
 
 

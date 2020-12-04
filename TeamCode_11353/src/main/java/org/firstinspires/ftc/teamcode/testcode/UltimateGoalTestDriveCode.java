@@ -56,28 +56,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         public void loop() {
 
 
+            /**
+             * SHOOTER CODE
+             */
 
-
-
-
-            //SHOOTER CODE
-
-
-            /*if(gamepad1.a && !changed1) {
-              robot.conveyerDrive.setPower(gamepad1.a ? 1 : 0);
-              changed1 = true;
-            } else if(!gamepad1.a)  {
-
-                changed1 = false;
-            }
-            */
-
-
-
-
-
-            if (robot.toggle && gamepad1.a) {  // Only execute once per Button push
-                robot.toggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
+            //Belt Toggle (GAMEPAD A)
+            if (robot.beltToggle && gamepad1.a) {  // Only execute once per Button push
+                robot.beltToggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
                 if (robot.belt) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
                     robot.belt= false;
                     robot.conveyerDrive.setPower(0);
@@ -88,9 +73,31 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                     telemetry.addData("Feed Belt", "Activated");
                 }
             } else if(!gamepad1.a) {
-                robot.toggle = true; // Button has been released, so this allows a re-press to activate the code above.
+                robot.beltToggle = true; // Button has been released, so this allows a re-press to activate the code above.
             }
 
+            //Shooting Toggle (RIGHT TRIGGER)
+
+            if (gamepad1.right_trigger == 1) {  //Converts the trigger from a float to a boolean
+                robot.shootTrigger = true;
+            } else if (gamepad1.right_trigger == 0) {
+                robot.shootTrigger = false;
+            }
+
+            if (robot.shootToggle && robot.shootTrigger) {  // Only execute once per Button push
+                robot.shootToggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
+                if (robot.shoot) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
+                    robot.shoot= false;
+                    robot.shooterDrive.setPower(0);
+                    telemetry.addData("Shooter", "Deactivated");
+                } else {
+                    robot.shoot= true;
+                    robot.shooterDrive.setPower(1);
+                    telemetry.addData("Shooter", "Activated");
+                }
+            } else if(!robot.shootTrigger) {
+                robot.shootToggle = true; // Button has been released, so this allows a re-press to activate the code above.
+            }
 
 
 

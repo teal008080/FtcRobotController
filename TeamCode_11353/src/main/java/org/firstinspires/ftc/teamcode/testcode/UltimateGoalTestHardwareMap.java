@@ -18,13 +18,16 @@ public class UltimateGoalTestHardwareMap {
 
 
     public DcMotor conveyerDrive = null;
-    //public DcMotor shooterDrive = null;
+    public DcMotor shooterDrive = null;
 
 
 
-    public boolean toggle = true;
+    public boolean beltToggle = true;
     public boolean belt = false;
 
+    public boolean shootTrigger = false;
+    public boolean shootToggle = true;
+    public boolean shoot = false;
 
 
 
@@ -49,10 +52,10 @@ public class UltimateGoalTestHardwareMap {
         //SHOOTER HARDWARE
 
         conveyerDrive        = hwMap.get(DcMotor.class, "conveyerDrive");
-        //shooterDrive       = hwMap.get(DcMotor.class, "shooterDrive");
+        shooterDrive       = hwMap.get(DcMotor.class, "shooterDrive");
 
         conveyerDrive.setPower(0);
-       // shooterDrive.setPower(0);
+        shooterDrive.setPower(0);
 
     }
 }

@@ -55,7 +55,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         @Override
         public void loop() {
 
+            /**
+             * Intake Code
+              */
 
+            //Intake Toggle
+
+            if (robot.intakeToggle && gamepad1.y) {  // Only execute once per Button push
+                robot.intakeToggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
+                if (robot.intake) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
+                    robot.intake = false;
+                    robot.intakeDrive.setPower(0);
+                    telemetry.addData("Intake", "Deactivated");
+                } else {
+                    robot.intake = true;
+                    robot.intakeDrive.setPower(1);
+                    telemetry.addData("Intake", "Activated");
+                }
+            }
 
 
 

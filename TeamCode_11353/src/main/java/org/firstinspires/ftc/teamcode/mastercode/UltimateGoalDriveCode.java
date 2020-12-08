@@ -12,15 +12,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
      * This is the Main Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
      */
 
-    @TeleOp(name="UltimateGoalDriveCode", group="Iterative Opmode")//Originally just DriverControl
-//@Disabled
+    @TeleOp(name="UltimateGoalDriveCode", group="Iterative Opmode")
+
     public class UltimateGoalDriveCode extends OpMode
     {
         private ElapsedTime runtime = new ElapsedTime();
 
 
         //Creates new robot
-        UltimategoalHardware robot       = new UltimategoalHardware();//probably want to update class + function names
+        UltimategoalHardware robot       = new UltimategoalHardware();
 
         /**
          * Code to run ONCE when the driver hits INIT
@@ -57,10 +57,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         /**
          * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
          */
-        public boolean changed1, on1 = false;
-        public boolean changed2, on2 = false;
-        public boolean changed3, on3 = false;
-        public boolean changed4, on4 = false;
+
 
 
         @Override
@@ -70,38 +67,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
              * Gets z Values - Right-Handed Coordinate System
              */
 
-            /*
-            Orientation imu_angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            Orientation imu2_angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            double z_angle = (imu_angles.firstAngle + imu2_angles.firstAngle) / 2;//zAngle;
-*/
+
+
             //Double Variables for driver control sticks
             double x = -gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
             double z = -gamepad1.right_stick_x;
 
-            double yLift = gamepad2.left_stick_y;
-
-            double yDeliv = gamepad2.right_stick_y;
-        /**
-        NEWLY COMMENTED 1/10/20
-        //Math for robot orientated drive. The Z axis offset is converted to radians. Then by multiplying the y and x values by the
-        //cos and sin of the gyro, we can "rotate" the gamepad left stick, so forward on the sick is always away
-         **/
-
-        /*
-        double rad = Math.toRadians(z_angle)
-        double forward = (y*Math.cos(rad))+(x*Math.sin(rad));
-        double side    = (-y*Math.sin(rad))+(x*Math.cos(rad));
-
-
-        //Assigning drive power to motors using Z-offset
-        robot.frontleftDrive.setPower(-forward-side-z);
-        robot.frontrightDrive.setPower(-forward+side-z);
-        robot.backleftDrive.setPower(forward-side-z);
-        robot.backrightDrive.setPower(forward+side-z);
-
-        */
 
 
             if (gamepad1.left_bumper) { // Control Speed of Drive

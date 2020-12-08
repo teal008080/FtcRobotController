@@ -96,10 +96,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
         telemetry.addData("Side Component", side);
 
         //Assigning drive power to motors using Z-offset
-        robot.frontleftDrive.setPower((-forward-side-z)/(robot.speedFactor*robot.reverseFactor));
-        robot.frontrightDrive.setPower((-forward+side-z)/(robot.speedFactor*robot.reverseFactor));
-        robot.backleftDrive.setPower((forward-side-z)/(robot.speedFactor*robot.reverseFactor));
-        robot.backrightDrive.setPower((forward+side-z)/(robot.speedFactor*robot.reverseFactor));
+        robot.frontleftDrive.setPower((-forward-side-z)/(robot.speedFactor));
+        robot.frontrightDrive.setPower((-forward+side-z)/(robot.speedFactor));
+        robot.backleftDrive.setPower((forward-side-z)/(robot.speedFactor));
+        robot.backrightDrive.setPower((forward+side-z)/(robot.speedFactor));
 
 
 

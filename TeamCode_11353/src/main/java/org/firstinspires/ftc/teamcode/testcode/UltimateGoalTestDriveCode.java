@@ -91,6 +91,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
         double forward = (y*Math.cos(rad))+(x*Math.sin(rad));
         double side    = (-y*Math.sin(rad))+(x*Math.cos(rad));
 
+        telemetry.addData("Z-Angle", z_angle);
+        telemetry.addData("Forward Component", forward);
+        telemetry.addData("Side Component", side);
 
         //Assigning drive power to motors using Z-offset
         robot.frontleftDrive.setPower((-forward-side-z)/(robot.speedFactor*robot.reverseFactor));

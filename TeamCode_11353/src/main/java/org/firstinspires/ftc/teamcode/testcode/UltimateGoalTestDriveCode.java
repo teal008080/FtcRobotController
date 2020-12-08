@@ -83,7 +83,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             /**
              NEWLY COMMENTED 1/10/20
              Math for robot orientated drive. The Z axis offset is converted to radians. Then by multiplying the y and x values by the
-             cos and sin of the gyro, we can "rotate" the gamepad left stick, so forward on the sick is always away
+             cos and sin of the gyro, we can "rotate" the game pad left stick, so forward on the sick is always away
              **/
 
 

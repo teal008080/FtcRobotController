@@ -28,19 +28,17 @@
  */
 
 
-package org.firstinspires.ftc.teamcode.mastercode;
+package org.firstinspires.ftc.teamcode.testcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @Disabled
-public class UltimategoalHardware {
+public class UltimategoalTestHardwareMap {
 
     /* Public OpMode members. */
     public BNO055IMU       imu;
@@ -76,7 +74,7 @@ public class UltimategoalHardware {
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public UltimategoalHardware(){
+    public UltimategoalTestHardwareMap(){
 
     }
 

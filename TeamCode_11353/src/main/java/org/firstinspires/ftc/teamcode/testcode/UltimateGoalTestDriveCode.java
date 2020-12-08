@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.mastercode;
+package org.firstinspires.ftc.teamcode.testcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,18 +9,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
     /**
-     * This is the Main Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
+     * This is the Test Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
      */
 
-    @TeleOp(name="UltimateGoalDriveCode", group="Iterative Opmode")
+    @TeleOp(name="UltimateGoalTestDriveCode", group="Iterative Opmode")
 
-    public class UltimateGoalDriveCode extends OpMode
+    public class UltimateGoalTestDriveCode extends OpMode
     {
         private ElapsedTime runtime = new ElapsedTime();
 
 
         //Creates new robot
-        UltimategoalHardware robot       = new UltimategoalHardware();
+        UltimategoalTestHardwareMap robot       = new UltimategoalTestHardwareMap();
 
         /**
          * Code to run ONCE when the driver hits INIT

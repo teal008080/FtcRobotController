@@ -59,24 +59,6 @@ public class UltimategoalHardware {
 
 
 
-    /*public double      DDRD                = .65;
-    public double      DDLD                = .55;
-    public double      DDRI                =   1;
-    public double      DDLI                = .9;
-
-    public double     delivIdle            = .6;
-    public double     delivGrab            = .91;
-
-    public double     turnFactorPID        = .5;
-
-    public double     tolerancePID         = 2;
-    public double     tolerancePID_d       = 1;
-    */
-
-
-    //public static MiniPID controllerAngle = new MiniPID(0.035, 0, 0.03); //.025
-    //public static MiniPID controllerDrive = new MiniPID(0.035, 0, 0); //.025
-
     /*
        We use cad on the team in many different ways. One of those ways is through
        creating custom parts like our auto claw, to maximize the ability of our robot.
@@ -104,25 +86,6 @@ public class UltimategoalHardware {
         hwMap = ahwMap;
 
 
-
-       /*BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-
-        parameters.mode                = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled      = false;
-
-        imu = hwMap.get(BNO055IMU.class, "imu");
-        //imu2 = hwMap.get(BNO055IMU.class, "imu2");
-        imu.initialize(parameters);
-
-
-        //imu2.initialize(parameters);
-/*
-        while(!imu.isGyroCalibrated() && !imu2.isGyroCalibrated()){
-            //I don't know how necessary this is, decided to include it
-        }
-*/
         // Define and Initialize Motors
 
         frontleftDrive        = hwMap.get(DcMotor.class, "front_left_drive");

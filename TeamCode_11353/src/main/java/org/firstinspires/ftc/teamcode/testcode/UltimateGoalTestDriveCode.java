@@ -21,7 +21,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
         //Creates new robot
         UltimategoalTestHardwareMap robot       = new UltimategoalTestHardwareMap();
-        UltimateGoalVuforiaTest vuforia = new UltimateGoalVuforiaTest();
+        UltimateGoalVuforiaTest vuforia         = new UltimateGoalVuforiaTest();
 
         /**
          * Code to run ONCE when the driver hits INIT
@@ -95,6 +95,20 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             robot.backleftDrive.setPower((Math.pow((y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.backrightDrive.setPower((Math.pow((-y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
 
+            //Maybe some functioning vuforia???
+
+            if (vuforia.robotRotation != 0) {
+                robot.frontleftDrive.setPower(1);
+                robot.frontrightDrive.setPower(-1);
+                robot.backleftDrive.setPower(-1);
+                robot.backrightDrive.setPower(1);
+
+            } else if (vuforia.robotX != 0) {
+                robot.frontleftDrive.setPower(-1);
+                robot.frontrightDrive.setPower(1);
+                robot.backleftDrive.setPower(-1);
+                robot.backrightDrive.setPower(-1);
+            }
 
 
 

@@ -21,6 +21,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
         //Creates new robot
         UltimategoalTestHardwareMap robot       = new UltimategoalTestHardwareMap();
+        UltimateGoalVuforiaTest vuforia = new UltimateGoalVuforiaTest();
 
         /**
          * Code to run ONCE when the driver hits INIT

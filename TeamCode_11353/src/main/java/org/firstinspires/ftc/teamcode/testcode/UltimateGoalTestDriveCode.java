@@ -33,7 +33,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
-            vuforia.init();
+
 
 
             // Tell the driver that initialization is complete.
@@ -69,8 +69,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
              * Gets z Values - Right-Handed Coordinate System
              */
 
-
             vuforia.whereAmI();
+
             //Double Variables for driver control sticks
             double xpad = -gamepad1.left_stick_x;
             double ypad = gamepad1.left_stick_y;
@@ -92,8 +92,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Maybe some functioning vuforia???
 
-            telemetry.addData("Position","{X,Y,Zangle}", vuforia.robotX , vuforia.robotY , vuforia.robotRotation);
-            telemetry.addData("Visible Target", vuforia.tracked);
 
 /*
             //DRIVE FUNCTION BELOW

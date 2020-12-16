@@ -32,6 +32,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
+            //vuforia.runOpMode();
 
 
             // Tell the driver that initialization is complete.
@@ -71,8 +72,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
             //Double Variables for driver control sticks
-            double x = -gamepad1.left_stick_x;
-            double y = gamepad1.left_stick_y;
+            double xpad = -gamepad1.left_stick_x;
+            double ypad = gamepad1.left_stick_y;
             double z = -gamepad1.right_stick_x;
 
 
@@ -89,26 +90,20 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                 robot.reverseFactor = 1;
             }
 
-            //DRIVE FUNCTION BELOW
-            robot.frontleftDrive.setPower((Math.pow((y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-            robot.frontrightDrive.setPower((Math.pow((-y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-            robot.backleftDrive.setPower((Math.pow((y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-            robot.backrightDrive.setPower((Math.pow((-y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-
             //Maybe some functioning vuforia???
 
-            if (vuforia.robotRotation != 0) {
-                robot.frontleftDrive.setPower(1);
-                robot.frontrightDrive.setPower(-1);
-                robot.backleftDrive.setPower(-1);
-                robot.backrightDrive.setPower(1);
+            telemetry.addData("Position","{X,Y,Zangle}", vuforia.robotX , vuforia.robotY , vuforia.robotRotation);
+            telemetry.addData("Visible Target", vuforia.tracked);
 
-            } else if (vuforia.robotX != 0) {
-                robot.frontleftDrive.setPower(-1);
-                robot.frontrightDrive.setPower(1);
-                robot.backleftDrive.setPower(-1);
-                robot.backrightDrive.setPower(-1);
-            }
+
+            //DRIVE FUNCTION BELOW
+            robot.frontleftDrive.setPower((Math.pow((ypad + xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+            robot.frontrightDrive.setPower((Math.pow((-ypad + xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+            robot.backleftDrive.setPower((Math.pow((ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+            robot.backrightDrive.setPower((Math.pow((-ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+
+
+
 
 
 

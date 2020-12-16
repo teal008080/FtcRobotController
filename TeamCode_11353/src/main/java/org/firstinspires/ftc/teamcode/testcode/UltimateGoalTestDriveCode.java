@@ -32,7 +32,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
-            //vuforia.runOpMode();
+
 
 
             // Tell the driver that initialization is complete.
@@ -52,8 +52,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         }
         @Override
         public void start() {
-
-
+            telemetry.addData("before", "before");
+            //vuforia.runOpMode();
+            telemetry.addData("after", "before");
         }
 
         /**

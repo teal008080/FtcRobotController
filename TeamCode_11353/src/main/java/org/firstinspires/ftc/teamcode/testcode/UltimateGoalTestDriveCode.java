@@ -96,14 +96,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             telemetry.addData("Position","{X,Y,Zangle}", vuforia.robotX , vuforia.robotY , vuforia.robotRotation);
             telemetry.addData("Visible Target", vuforia.tracked);
 
-
+/*
             //DRIVE FUNCTION BELOW
             robot.frontleftDrive.setPower((Math.pow((ypad + xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.frontrightDrive.setPower((Math.pow((-ypad + xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.backleftDrive.setPower((Math.pow((ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.backrightDrive.setPower((Math.pow((-ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
 
-
+*/
 
 
 

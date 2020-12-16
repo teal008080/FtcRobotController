@@ -53,9 +53,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         }
         @Override
         public void start() {
-            telemetry.addData("before", "before");
 
-            telemetry.addData("after", "before");
         }
 
         /**

@@ -14,8 +14,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
     @TeleOp(name="UltimateGoalTestDriveCode", group="Iterative Opmode")
 
-    public class UltimateGoalTestDriveCode extends OpMode
-    {
+    public class UltimateGoalTestDriveCode extends OpMode {
+
+
         private ElapsedTime runtime = new ElapsedTime();
 
 
@@ -32,7 +33,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
-
+            vuforia.init();
 
 
             // Tell the driver that initialization is complete.
@@ -53,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         @Override
         public void start() {
             telemetry.addData("before", "before");
-            //vuforia.runOpMode();
+
             telemetry.addData("after", "before");
         }
 
@@ -71,7 +72,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
              */
 
 
-
+            vuforia.whereAmI();
             //Double Variables for driver control sticks
             double xpad = -gamepad1.left_stick_x;
             double ypad = gamepad1.left_stick_y;

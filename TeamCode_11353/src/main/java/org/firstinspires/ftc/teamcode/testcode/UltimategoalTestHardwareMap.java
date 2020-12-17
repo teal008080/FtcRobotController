@@ -33,6 +33,7 @@ package org.firstinspires.ftc.teamcode.testcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -44,12 +45,12 @@ public class UltimategoalTestHardwareMap {
     public BNO055IMU       imu;
 
 
-    /*
+
     public DcMotor  frontleftDrive      = null;
     public DcMotor  frontrightDrive     = null;
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
-        */
+
 
 
 
@@ -86,7 +87,7 @@ public class UltimategoalTestHardwareMap {
 
 
         // Define and Initialize Motors
-/*
+
         frontleftDrive        = hwMap.get(DcMotor.class, "front_left_drive");
         frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
@@ -96,7 +97,7 @@ public class UltimategoalTestHardwareMap {
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        backrightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        backrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
 
 
         // Set all motors to zero power
@@ -118,7 +119,7 @@ public class UltimategoalTestHardwareMap {
 
         //rightIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //leftIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-*/
+
 
 
     }

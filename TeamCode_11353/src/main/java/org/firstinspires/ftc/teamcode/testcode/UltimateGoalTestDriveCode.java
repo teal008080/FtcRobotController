@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
         //Creates new robot
         UltimategoalTestHardwareMap robot       = new UltimategoalTestHardwareMap();
-        UltimateGoalVuforiaTest vuforia         = new UltimateGoalVuforiaTest();
+        UltGoalVuforia vuforia         = new UltGoalVuforia();
 
         /**
          * Code to run ONCE when the driver hits INIT
@@ -33,7 +33,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
-
+            vuforia.runOpMode();
 
 
             // Tell the driver that initialization is complete.
@@ -70,11 +70,33 @@ import com.qualcomm.robotcore.util.ElapsedTime;
              */
 
             vuforia.whereAmI();
+            telemetry.addData("xpos",  vuforia.xpos);
+            telemetry.addData("ypos", vuforia.ypos);
+            telemetry.addData("zangle", vuforia.zangle);
+            telemetry.addData("Working?" , vuforia.objecttracked);
+
+
 
             //Double Variables for driver control sticks
             double xpad = -gamepad1.left_stick_x;
             double ypad = gamepad1.left_stick_y;
             double z = -gamepad1.right_stick_x;
+
+            //VUFORIA DRIVE GARBAGE
+            /*
+            if(vuforia.ypos < 0 && vuforia.zangle < 2) {
+                //xpad = -1;
+            } else if (vuforia.zangle > 2) {
+                //xpad = 0;
+                z = 1;
+            }
+*/
+            if(vuforia.zangle > 0) {
+                z = 1;
+            } else {
+                z = 0;
+            }
+
 
 
 
@@ -90,17 +112,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                 robot.reverseFactor = 1;
             }
 
-            //Maybe some functioning vuforia???
 
 
-/*
+
+
             //DRIVE FUNCTION BELOW
             robot.frontleftDrive.setPower((Math.pow((ypad + xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.frontrightDrive.setPower((Math.pow((-ypad + xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.backleftDrive.setPower((Math.pow((ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.backrightDrive.setPower((Math.pow((-ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
 
-*/
+
 
 
 

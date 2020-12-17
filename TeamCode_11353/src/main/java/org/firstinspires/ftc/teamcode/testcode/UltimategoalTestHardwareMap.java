@@ -45,12 +45,12 @@ public class UltimategoalTestHardwareMap {
     public BNO055IMU       imu;
 
 
-
+/*
     public DcMotor  frontleftDrive      = null;
     public DcMotor  frontrightDrive     = null;
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
-
+*/
 
 
 
@@ -87,7 +87,7 @@ public class UltimategoalTestHardwareMap {
 
 
         // Define and Initialize Motors
-
+/*
         frontleftDrive        = hwMap.get(DcMotor.class, "front_left_drive");
         frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
@@ -119,7 +119,7 @@ public class UltimategoalTestHardwareMap {
 
         //rightIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //leftIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+*/
 
 
     }

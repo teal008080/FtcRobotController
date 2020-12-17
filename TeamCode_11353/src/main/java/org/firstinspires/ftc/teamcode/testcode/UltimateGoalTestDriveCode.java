@@ -114,7 +114,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 
-
+        /*
 
             //DRIVE FUNCTION BELOW
             robot.frontleftDrive.setPower((Math.pow((ypad + xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
@@ -122,7 +122,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             robot.backleftDrive.setPower((Math.pow((ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
             robot.backrightDrive.setPower((Math.pow((-ypad - xpad) * robot.reverseFactor + z, 3)) / robot.speedFactor);
 
-
+*/
 
 
 

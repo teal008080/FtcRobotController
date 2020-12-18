@@ -25,6 +25,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         UltGoalVuforia vuforia         = new UltGoalVuforia();
         UltGoalTensorflow tensorflow   = new UltGoalTensorflow();
 
+
+
         /**
          * Code to run ONCE when the driver hits INIT
          */
@@ -34,8 +36,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
+
+
             vuforia.runOpMode();
-            tensorflow.init();
+            tensorflow.initTfod();
 
 
             // Tell the driver that initialization is complete.
@@ -72,12 +76,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
              */
 
             vuforia.whereAmI();
+
             telemetry.addData("xpos",  vuforia.xpos);
             telemetry.addData("ypos", vuforia.ypos);
             telemetry.addData("zangle", vuforia.zangle);
             telemetry.addData("Working?" , vuforia.objecttracked);
 
-
+            tensorflow.runOpMode();
+            telemetry.addData("Objectsize", tensorflow.objectfound);
 
             //Double Variables for driver control sticks
             double xpad = -gamepad1.left_stick_x;

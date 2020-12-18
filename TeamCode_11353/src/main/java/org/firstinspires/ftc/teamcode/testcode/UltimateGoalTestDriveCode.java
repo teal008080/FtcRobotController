@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * This is the Test Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
  */
 
-    @TeleOp(name="UltimateGoalTestDriveCode", group="Iterative Opmode")//Originally just DriverControl
+    @TeleOp(name="MONKEYYYYY", group="Iterative Opmode")//Originally just DriverControl
 //@Disabled
     public class UltimateGoalTestDriveCode extends OpMode
     {

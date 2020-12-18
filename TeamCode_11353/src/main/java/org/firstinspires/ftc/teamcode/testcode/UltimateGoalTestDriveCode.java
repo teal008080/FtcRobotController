@@ -23,6 +23,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         //Creates new robot
         UltimategoalTestHardwareMap robot       = new UltimategoalTestHardwareMap();
         UltGoalVuforia vuforia         = new UltGoalVuforia();
+        UltGoalTensorflow tensorflow   = new UltGoalTensorflow();
 
         /**
          * Code to run ONCE when the driver hits INIT
@@ -34,6 +35,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
             vuforia.runOpMode();
+            tensorflow.init();
 
 
             // Tell the driver that initialization is complete.

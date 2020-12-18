@@ -28,7 +28,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
-
+            robot.monk();
 
             // Tell the driver that initialization is complete.
             telemetry.addData("Status", "Initialized");
@@ -48,12 +48,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         @Override
         public void start() {}
 
-        public boolean changed1, on1 = false;
+
 
 
 
         @Override
         public void loop() {
+
+
+                robot.monk();
 
 
 

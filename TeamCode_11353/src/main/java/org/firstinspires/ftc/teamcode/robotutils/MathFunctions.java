@@ -88,11 +88,11 @@ public class MathFunctions {
         //Sensor 2 = front
 
         if(sensor == 1){
-            double distance = robot.distanceSensor.getDistance(DistanceUnit.CM);
+            double distance = robot.dSensorBack.getDistance(DistanceUnit.CM);
             return distance;
         }
         else if(sensor ==2){
-            double distance = robot.distanceSensor_2.getDistance(DistanceUnit.CM);
+            double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
             return distance;
         }
         else{

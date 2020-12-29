@@ -67,8 +67,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
              */
 
 
-            telemetry.addData("Distance 1", robot.distanceSensor.getDistance(DistanceUnit.INCH));
-            telemetry.addData("Distance 2", robot.distanceSensor_2.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Distance 1", robot.dSensorBack.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Distance 2", robot.dSensorFront.getDistance(DistanceUnit.INCH));
 
 
             //Double Variables for driver control sticks

@@ -115,10 +115,7 @@ public class UltimategoalHardware {
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //rightIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //leftIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
 

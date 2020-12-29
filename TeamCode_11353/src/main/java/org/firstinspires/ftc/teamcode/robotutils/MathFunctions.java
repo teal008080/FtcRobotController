@@ -69,7 +69,7 @@ public class MathFunctions {
 
     }
 */
-
+/*
     public static double getDistanceColor(int sensor){
         if(sensor == 1){
             double distance = robot.distanceSensor_color.getDistance(DistanceUnit.CM);
@@ -80,7 +80,7 @@ public class MathFunctions {
             return 0;
         }
     }
-
+*/
 
     public static double getDistance(int sensor){
 

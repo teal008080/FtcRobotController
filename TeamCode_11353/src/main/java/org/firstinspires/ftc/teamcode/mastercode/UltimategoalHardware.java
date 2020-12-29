@@ -34,6 +34,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -51,6 +52,11 @@ public class UltimategoalHardware {
     public DcMotor  frontrightDrive     = null;
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
+
+    public DcMotor  intakeChainDrive    = null;
+
+    public DistanceSensor dSensorBack = null;
+    public DistanceSensor dSensorFront = null;
 
 
 
@@ -92,6 +98,7 @@ public class UltimategoalHardware {
         frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
+        intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
 
 
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
@@ -105,6 +112,7 @@ public class UltimategoalHardware {
         frontrightDrive.setPower(0);
         backleftDrive.setPower(0);
         backrightDrive.setPower(0);
+        intakeChainDrive.setPower(0);
 
 
 
@@ -114,6 +122,8 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        // Chain intake drive
 
 
 

@@ -179,7 +179,7 @@ public class RobotMovement{
             robot.frontrightDrive.setPower(-y + x + z);
             robot.backleftDrive.setPower(y - x + z);
             robot.backrightDrive.setPower(y - x + z);
-            if (MathFunctions.getDistanceColor(1) <= goal){
+            if (MathFunctions.getDistance(1) <= goal){
                 stopDrive();
                 break;
             }

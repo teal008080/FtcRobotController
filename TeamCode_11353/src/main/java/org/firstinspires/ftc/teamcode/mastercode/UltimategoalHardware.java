@@ -63,6 +63,9 @@ public class UltimategoalHardware {
     public int      speedFactor         = 1;
     public int      reverseFactor       = 1;
 
+    public boolean intakeToggle = true;
+    public boolean intake = false;
+
 
 
     /*
@@ -100,7 +103,7 @@ public class UltimategoalHardware {
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
         intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
 
-
+        intakeChainDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors

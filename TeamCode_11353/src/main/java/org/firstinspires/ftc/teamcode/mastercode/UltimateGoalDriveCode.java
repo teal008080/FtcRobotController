@@ -69,6 +69,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 
+
+
             //Double Variables for driver control sticks
             double x = -gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
@@ -95,6 +97,21 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             robot.backrightDrive.setPower((Math.pow((-y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
 
 
+            //Intake drive
+            if (robot.intakeToggle && gamepad1.y) {  // Only execute once per Button push
+                robot.intakeToggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
+                if (robot.intake) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
+                    robot.intake = false;
+                    robot.intakeChainDrive.setPower(0);
+                    telemetry.addData("Intake", "Deactivated");
+                    robot.intakeToggle = true;
+                } else {
+                    robot.intake = true;
+                    robot.intakeToggle = true;
+                    robot.intakeChainDrive.setPower(.5);
+                    telemetry.addData("Intake", "Activated");
+                }
+            }
 
 
 

@@ -4,11 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-
-
-    /**
+/**
      * This is the Main Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
      */
 
@@ -68,8 +67,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
              */
 
 
-
-
+            telemetry.addData("Front Distance", robot.dSensorFront.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Back Distance", robot.dSensorBack.getDistance(DistanceUnit.INCH));
 
             //Double Variables for driver control sticks
             double x = -gamepad1.left_stick_x;

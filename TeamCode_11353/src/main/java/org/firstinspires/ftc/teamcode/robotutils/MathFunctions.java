@@ -95,6 +95,14 @@ public class MathFunctions {
             double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
             return distance;
         }
+        else if(sensor ==3){
+            double distance = robot.dSensorLeft.getDistance(DistanceUnit.CM);
+            return distance;
+        }
+        else if(sensor ==4){
+            double distance = robot.dSensorRight.getDistance(DistanceUnit.CM);
+            return distance;
+        }
         else{
             return 0;
         }

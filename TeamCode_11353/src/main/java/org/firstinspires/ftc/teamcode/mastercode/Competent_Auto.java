@@ -35,15 +35,25 @@ public class Competent_Auto extends LinearOpMode {
 
         waitForStart();
         MathFunctions.setAngle();
+        RobotMovement.drivePID(.2, 0, -1, 5, 1);
+        RobotMovement.strafePID(.2, 0, 1, 5, 4);
 
         //Code above here should never change
 
         //While the stop button isn't pressed, run this code
         while (!isStopRequested()) {
+              RobotMovement.drivePID(.5, 0, 1, 10, 2);
+              RobotMovement.strafePID( .5, 0, -1, 10, 3);
+              RobotMovement.drivePID(.5, 0, -1, 10, 1);
+              RobotMovement.strafePID(.5, 0, 1, 10, 4);
+
+            telemetry.addData("Distance Front", MathFunctions.getDistance(2));
+            telemetry.addData("Distance Back",  MathFunctions.getDistance(1));
+            telemetry.addData("Distance Left", MathFunctions.getDistance(3));
+            telemetry.addData("Distance Right", MathFunctions.getDistance(4));
 
 
-
-
+            /*
             //Park
             RobotMovement.drivePIDtime(.5, 90, -1, 250, 0);
             RobotMovement.strafeLeft(1, 1250);
@@ -51,6 +61,7 @@ public class Competent_Auto extends LinearOpMode {
             // Dont put code below here
             RobotMovement.stopDrive();
             break;
+            */
         }
         RobotMovement.stopDrive();
         stop();

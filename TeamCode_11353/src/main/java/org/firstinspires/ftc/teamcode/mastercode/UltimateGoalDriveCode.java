@@ -72,6 +72,8 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
             telemetry.addData("Distance Front", MathFunctions.getDistance(2));
             telemetry.addData("Distance Back",  MathFunctions.getDistance(1));
+            telemetry.addData("Distance Left", MathFunctions.getDistance(3));
+            telemetry.addData("Distance Right", MathFunctions.getDistance(4));
 
 
             //Double Variables for driver control sticks

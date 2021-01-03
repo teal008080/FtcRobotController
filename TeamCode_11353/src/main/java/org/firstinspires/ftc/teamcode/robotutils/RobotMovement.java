@@ -163,7 +163,7 @@ public class RobotMovement{
         }
     }
 
-    public static void strafePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
+    public static void strafePID(double power, double goalAngle, int direction, double goal, int sensor) {//-180 to 180
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
@@ -179,7 +179,7 @@ public class RobotMovement{
             robot.frontrightDrive.setPower(-y + x + z);
             robot.backleftDrive.setPower(y - x + z);
             robot.backrightDrive.setPower(y - x + z);
-            if (MathFunctions.getDistance(1) <= goal){
+            if (MathFunctions.getDistance(sensor) <= goal){
                 stopDrive();
                 break;
             }

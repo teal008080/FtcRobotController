@@ -53,8 +53,8 @@ public class UltimategoalHardware {
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
 
-    public DistanceSensor dSensorBack = null;
-    public DistanceSensor dSensorFront = null;
+    public DistanceSensor dSensorBack   = null;
+    public DistanceSensor dSensorFront  = null;
 
 
 
@@ -93,6 +93,19 @@ public class UltimategoalHardware {
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
+
+        //Define and Initialize Sensors
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode             = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit        = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit        = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled   = false;
+
+        imu = hwMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(parameters);
+
 
 
         // Define and Initialize Motors

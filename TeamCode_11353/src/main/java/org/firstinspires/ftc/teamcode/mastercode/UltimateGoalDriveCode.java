@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
+import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
 
 /**
@@ -20,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
         //Creates new robot
         UltimategoalHardware robot       = new UltimategoalHardware();
+
 
         /**
          * Code to run ONCE when the driver hits INIT
@@ -67,8 +70,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
              */
 
 
-            telemetry.addData("Distance 1", robot.dSensorBack.getDistance(DistanceUnit.INCH));
-            telemetry.addData("Distance 2", robot.dSensorFront.getDistance(DistanceUnit.INCH));
+            telemetry.addData("Distance Front", MathFunctions.getDistance(2));
+            telemetry.addData("Distance Back",  MathFunctions.getDistance(1));
 
 
             //Double Variables for driver control sticks

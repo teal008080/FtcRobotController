@@ -15,7 +15,7 @@ package org.firstinspires.ftc.teamcode.mastercode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.mastercode.UltimategoalHardware;
+
 import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 public class Competent_Auto extends LinearOpMode {
 
     UltimategoalHardware robot = new UltimategoalHardware();
+
 
     @Override
     public void runOpMode() {

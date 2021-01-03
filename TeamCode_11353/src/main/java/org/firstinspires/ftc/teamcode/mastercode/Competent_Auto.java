@@ -35,10 +35,12 @@ public class Competent_Auto extends LinearOpMode {
 
         waitForStart();
         MathFunctions.setAngle();
+
+        //Code above here should never change
+        //Sets the initial position of the robot, the bottom right, looking at the target
         RobotMovement.drivePID(.2, 0, -1, 5, 1);
         RobotMovement.strafePID(.2, 0, 1, 5, 4);
 
-        //Code above here should never change
 
         //While the stop button isn't pressed, run this code
         while (!isStopRequested()) {

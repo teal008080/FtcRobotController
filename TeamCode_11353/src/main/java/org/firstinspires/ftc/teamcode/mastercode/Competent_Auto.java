@@ -14,6 +14,7 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.robot.Robot;
 
 
 import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
@@ -38,16 +39,22 @@ public class Competent_Auto extends LinearOpMode {
 
         //Code above here should never change
         //Sets the initial position of the robot, the bottom right, looking at the target
-        RobotMovement.drivePID(.2, 0, -1, 5, 1);
-        RobotMovement.strafePID(.2, 0, 1, 5, 4);
+       RobotMovement.turnToAnglePID(-90);
+       RobotMovement.drivePID(.5,-90,1,10,2);
+       RobotMovement.turnToAnglePID(-180);
+       RobotMovement.drivePID(.5, -180, 1, 10,2);
+       RobotMovement.turnToAnglePID(0);
 
 
         //While the stop button isn't pressed, run this code
         while (!isStopRequested()) {
               RobotMovement.drivePID(.5, 0, 1, 10, 2);
-              RobotMovement.strafePID( .5, 0, -1, 10, 3);
-              RobotMovement.drivePID(.5, 0, -1, 10, 1);
-              RobotMovement.strafePID(.5, 0, 1, 10, 4);
+              RobotMovement.turnToAnglePID(90);
+              RobotMovement.drivePID(.5, 90, 1, 10, 2);
+              RobotMovement.turnToAnglePID(180);
+              RobotMovement.drivePID(.5, 180, 1,10, 2);
+              RobotMovement.turnToAnglePID(-90);
+              RobotMovement.drivePID(.5, -90, 1,10, 2);
 
             telemetry.addData("Distance Front", MathFunctions.getDistance(2));
             telemetry.addData("Distance Back",  MathFunctions.getDistance(1));

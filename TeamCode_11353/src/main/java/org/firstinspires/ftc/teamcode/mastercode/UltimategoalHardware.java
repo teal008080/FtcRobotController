@@ -53,10 +53,10 @@ public class UltimategoalHardware {
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
 
-    public DistanceSensor dSensorBack   = null;
+    //public DistanceSensor dSensorBack   = null;
     public DistanceSensor dSensorFront  = null;
-    public DistanceSensor dSensorLeft   = null;
-    public DistanceSensor dSensorRight  = null;
+    //public DistanceSensor dSensorLeft   = null;
+    //public DistanceSensor dSensorRight  = null;
 
 
 
@@ -117,10 +117,10 @@ public class UltimategoalHardware {
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
 
-        dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor_back");
+        //dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor_back");
         dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
-        dSensorLeft        = hwMap.get(DistanceSensor.class, "distance_sensor_left");
-        dSensorRight      = hwMap.get(DistanceSensor.class, "distance_sensor_right");
+        //dSensorLeft        = hwMap.get(DistanceSensor.class, "distance_sensor_left");
+        //dSensorRight      = hwMap.get(DistanceSensor.class, "distance_sensor_right");
 
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors

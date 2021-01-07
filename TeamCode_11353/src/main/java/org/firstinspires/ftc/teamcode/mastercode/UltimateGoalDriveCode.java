@@ -53,18 +53,7 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
         @Override
         public void start() {
 
-            RobotMovement.turnToAnglePID(-90);
-            RobotMovement.drivePID(.5,-90,1,10,2);
-            RobotMovement.turnToAnglePID(-180);
-            RobotMovement.drivePID(.5, -180, 1, 10,2);
-            RobotMovement.turnToAnglePID(0);
-            RobotMovement.drivePID(.5, 0, 1, 10, 2);
-            RobotMovement.turnToAnglePID(90);
-            RobotMovement.drivePID(.5, 90, 1, 10, 2);
-            RobotMovement.turnToAnglePID(180);
-            RobotMovement.drivePID(.5, 180, 1,10, 2);
-            RobotMovement.turnToAnglePID(-90);
-            RobotMovement.drivePID(.5, -90, 1,10, 2);
+
         }
 
         /**

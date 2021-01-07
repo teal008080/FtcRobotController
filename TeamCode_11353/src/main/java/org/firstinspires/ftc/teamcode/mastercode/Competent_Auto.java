@@ -33,9 +33,21 @@ public class Competent_Auto extends LinearOpMode {
 
         //Initialize servos to starting positions
         robot.init(hardwareMap);
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
 
+        while (!isStopRequested() && !robot.imu.isGyroCalibrated())
+        {
+            sleep(50);
+            idle();
+
+        }
+        telemetry.addData("Mode", "waiting for start");
+        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+        telemetry.update();
         waitForStart();
-        //MathFunctions.setAngle();
+        MathFunctions.setAngle();
+
 
         //Code above here should never change
         //Sets the initial position of the robot, the bottom right, looking at the target

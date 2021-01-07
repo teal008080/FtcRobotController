@@ -35,7 +35,7 @@ public class Competent_Auto extends LinearOpMode {
         robot.init(hardwareMap);
 
         waitForStart();
-        MathFunctions.setAngle();
+        //MathFunctions.setAngle();
 
         //Code above here should never change
         //Sets the initial position of the robot, the bottom right, looking at the target

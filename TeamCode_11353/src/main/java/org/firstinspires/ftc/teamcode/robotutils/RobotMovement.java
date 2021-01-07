@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotutils;
 
 import org.firstinspires.ftc.teamcode.mastercode.UltimategoalHardware;
+import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 
 public class RobotMovement{
 

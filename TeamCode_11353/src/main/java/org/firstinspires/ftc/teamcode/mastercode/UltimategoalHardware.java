@@ -38,6 +38,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 
 
 @Disabled
@@ -45,6 +47,7 @@ public class UltimategoalHardware {
 
     /* Public OpMode members. */
     public BNO055IMU       imu;
+    Orientation angles;
 
 
 
@@ -99,12 +102,14 @@ public class UltimategoalHardware {
         //Define and Initialize Sensors
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
-        parameters.mode             = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit        = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit        = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled   = false;
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
 
         imu = hwMap.get(BNO055IMU.class, "imu");
+
+
 
         imu.initialize(parameters);
 

@@ -1,5 +1,11 @@
 package org.firstinspires.ftc.teamcode.robotutils;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CompassSensor;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.mastercode.Competent_Auto;
 import org.firstinspires.ftc.teamcode.mastercode.UltimategoalHardware;
 import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 
@@ -7,13 +13,16 @@ public class RobotMovement{
 
     public static double z_angle;
     public static double globalAngle;
-    public static UltimategoalHardware robot = new UltimategoalHardware();
+
+    public static Competent_Auto auto = new Competent_Auto();
+    public static UltimategoalHardware robot = new UltimategoalHardware(auto);
 
 
     public static MiniPID controllerAngle = new MiniPID(0.035, 0, 0.03); //.025
     public static MiniPID controllerDrive = new MiniPID(0.035, 0, 0); //.025
 
     public static double OpModeRuntime = System.currentTimeMillis();
+
 
     /**
      * drivePIDGeneral is a generalized straight drive with no exit condition. This means that
@@ -28,7 +37,7 @@ public class RobotMovement{
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
             double correction = controllerDrive.getOutput(MathFunctions.getAngle(), goalAngle);
-            //telemetry.addData("Distance", getDistance(2));
+            robot.telemetry.addData("Distance", MathFunctions.getDistance(2));
             //telemetry.update();
             double y = -direction * power;
             double x = 0;
@@ -61,8 +70,8 @@ public class RobotMovement{
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
             double correction = controllerDrive.getOutput(MathFunctions.getAngle(), goalAngle);
-            //telemetry.addData("Distance", getDistance(2));
-            //telemetry.update();
+            robot.telemetry.addData("Distance", MathFunctions.getDistance(sensor));
+            robot.telemetry.update();
             double y = -direction * power;
             double x = 0;
             double z = correction;
@@ -232,10 +241,10 @@ public class RobotMovement{
 
             double hotGarb = controllerAngle.getOutput(MathFunctions.getAngle(), goalAngle);
 
-            //telemetry.addData("Angle:", getAngle()); //Gives our current pos
-            //telemetry.addData("Hot Garb:", hotGarb);
-            //telemetry.addData("Global Subtract", globalAngle);
-            //telemetry.update();
+            robot.telemetry.addData("Angle:", MathFunctions.getAngle()); //Gives our current pos
+            robot.telemetry.addData("Hot Garb:", hotGarb);
+            robot.telemetry.addData("Global Subtract", globalAngle);
+            robot.telemetry.update();
 
 
             hotGarb =hotGarb*robot.turnFactorPID ;

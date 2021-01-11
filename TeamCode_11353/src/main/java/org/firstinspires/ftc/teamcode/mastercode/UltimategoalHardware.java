@@ -32,11 +32,15 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
@@ -47,7 +51,7 @@ public class UltimategoalHardware {
 
     /* Public OpMode members. */
     public BNO055IMU       imu;
-    Orientation angles;
+    public Telemetry telemetry;
 
 
 
@@ -90,7 +94,11 @@ public class UltimategoalHardware {
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public UltimategoalHardware(){
+    public UltimategoalHardware(OpMode opMode){
+        telemetry = opMode.telemetry;
+    }
+
+    public UltimategoalHardware() {
 
     }
 
@@ -112,6 +120,7 @@ public class UltimategoalHardware {
 
 
         imu.initialize(parameters);
+
 
 
 

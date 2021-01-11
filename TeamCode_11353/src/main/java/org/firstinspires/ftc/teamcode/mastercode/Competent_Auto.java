@@ -33,8 +33,9 @@ public class Competent_Auto extends LinearOpMode {
 
         //Initialize servos to starting positions
         robot.init(hardwareMap);
-        telemetry.addData("Mode", "calibrating...");
-        telemetry.update();
+
+        robot.telemetry.addData("Mode", "calibrating...");
+        robot.telemetry.update();
 
         while (!isStopRequested() && !robot.imu.isGyroCalibrated())
         {
@@ -42,9 +43,9 @@ public class Competent_Auto extends LinearOpMode {
             idle();
 
         }
-        telemetry.addData("Mode", "waiting for start");
-        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
-        telemetry.update();
+        robot.telemetry.addData("Mode", "waiting for start");
+        robot.telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+        robot.telemetry.update();
         waitForStart();
         MathFunctions.setAngle();
 
@@ -68,10 +69,7 @@ public class Competent_Auto extends LinearOpMode {
               RobotMovement.turnToAnglePID(-90);
               RobotMovement.drivePID(.5, -90, 1,10, 2);
 
-            telemetry.addData("Distance Front", MathFunctions.getDistance(2));
-            telemetry.addData("Distance Back",  MathFunctions.getDistance(1));
-            telemetry.addData("Distance Left", MathFunctions.getDistance(3));
-            telemetry.addData("Distance Right", MathFunctions.getDistance(4));
+
 
 
             /*

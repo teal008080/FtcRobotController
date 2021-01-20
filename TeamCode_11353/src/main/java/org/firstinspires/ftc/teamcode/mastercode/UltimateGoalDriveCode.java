@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
         }
         @Override
         public void start() {
-
+            robot.drop.setPosition(90);
 
         }
 
@@ -67,8 +67,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
              */
 
 
-            telemetry.addData("Front Distance", robot.dSensorFront.getDistance(DistanceUnit.INCH));
-            telemetry.addData("Back Distance", robot.dSensorBack.getDistance(DistanceUnit.INCH));
+           // telemetry.addData("Front Distance", robot.dSensorFront.getDistance(DistanceUnit.INCH));
+            //telemetry.addData("Back Distance", robot.dSensorBack.getDistance(DistanceUnit.INCH));
 
             //Double Variables for driver control sticks
             double x = -gamepad1.left_stick_x;
@@ -112,6 +112,33 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
                 }
             }
 
+            //Shooter code
+
+            if (gamepad1.right_bumper) {
+                robot.shooterDrive.setPower(.75);
+
+            } else{
+                robot.shooterDrive.setPower(0);
+            }
+
+            if (robot.triggerboolean && gamepad1.b) {  // Only execute once per Button push
+                robot.triggerboolean = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
+                if (robot.triggerstate) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
+                    robot.triggerstate = false;
+                    robot.trigger.setPosition(0);
+                    telemetry.addData("TRIGGER", "Deactivated");
+                    robot.triggerboolean = true;
+                } else {
+                    robot.triggerstate = true;
+                    robot.triggerboolean = true;
+                    while (robot.triggerboolean) {
+                        robot.trigger.setPosition(45);
+                        robot.trigger.setPosition(0);
+
+                    }
+                    telemetry.addData("Intake", "Activated");
+                }
+            }
 
 
 

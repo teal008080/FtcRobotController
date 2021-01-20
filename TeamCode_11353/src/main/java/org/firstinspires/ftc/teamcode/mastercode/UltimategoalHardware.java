@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -54,6 +55,10 @@ public class UltimategoalHardware {
     public DcMotor  backleftDrive       = null;
 
     public DcMotor  intakeChainDrive    = null;
+    public DcMotor  shooterDrive        = null;
+
+    public Servo    drop                = null;
+    public Servo    trigger             = null;
 
     public DistanceSensor dSensorBack = null;
     public DistanceSensor dSensorFront = null;
@@ -65,6 +70,8 @@ public class UltimategoalHardware {
 
     public boolean intakeToggle = true;
     public boolean intake = false;
+    public boolean triggerboolean = true;
+    public boolean triggerstate = false;
 
 
 
@@ -102,8 +109,13 @@ public class UltimategoalHardware {
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
         intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
+        shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
 
-        intakeChainDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        drop                  =hwMap.get(Servo.class, "drop");
+        trigger               =hwMap.get(Servo.class, "trigger");
+
+        intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
+        shooterDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -116,9 +128,10 @@ public class UltimategoalHardware {
         backleftDrive.setPower(0);
         backrightDrive.setPower(0);
         intakeChainDrive.setPower(0);
+        shooterDrive.setPower(0);
 
-        dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor");
-        dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
+       // dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor");
+        //dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
 
 
 

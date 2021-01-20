@@ -115,7 +115,7 @@ public class UltimategoalHardware {
         trigger               =hwMap.get(Servo.class, "trigger");
 
         intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
-        shooterDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        shooterDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -129,6 +129,9 @@ public class UltimategoalHardware {
         backrightDrive.setPower(0);
         intakeChainDrive.setPower(0);
         shooterDrive.setPower(0);
+
+        drop.setPosition(.48);
+        trigger.setPosition(.44);
 
        // dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor");
         //dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");

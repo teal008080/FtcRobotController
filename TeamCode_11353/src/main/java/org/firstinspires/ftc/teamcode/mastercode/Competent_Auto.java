@@ -34,8 +34,8 @@ public class Competent_Auto extends LinearOpMode {
         //Initialize servos to starting positions
         robot.init(hardwareMap);
 
-        robot.telemetry.addData("Mode", "calibrating...");
-        robot.telemetry.update();
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
 
         while (!isStopRequested() && !robot.imu.isGyroCalibrated())
         {
@@ -43,31 +43,31 @@ public class Competent_Auto extends LinearOpMode {
             idle();
 
         }
-        robot.telemetry.addData("Mode", "waiting for start");
-        robot.telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
-        robot.telemetry.update();
+        telemetry.addData("Mode", "waiting for start");
+        telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+        telemetry.update();
         waitForStart();
         MathFunctions.setAngle();
 
 
         //Code above here should never change
         //Sets the initial position of the robot, the bottom right, looking at the target
-       RobotMovement.turnToAnglePID(-90);
-       RobotMovement.drivePID(.5,-90,1,10,2);
-       RobotMovement.turnToAnglePID(-180);
-       RobotMovement.drivePID(.5, -180, 1, 10,2);
-       RobotMovement.turnToAnglePID(0);
+       RobotMovement.turnToAnglePID(-90, telemetry);
+       RobotMovement.drivePID(.5,-90,1,10,2, telemetry);
+       RobotMovement.turnToAnglePID(-180, telemetry);
+       RobotMovement.drivePID(.5, -180, 1, 10,2, telemetry);
+       RobotMovement.turnToAnglePID(0, telemetry);
 
 
         //While the stop button isn't pressed, run this code
         while (!isStopRequested()) {
-              RobotMovement.drivePID(.5, 0, 1, 10, 2);
-              RobotMovement.turnToAnglePID(90);
-              RobotMovement.drivePID(.5, 90, 1, 10, 2);
-              RobotMovement.turnToAnglePID(180);
-              RobotMovement.drivePID(.5, 180, 1,10, 2);
-              RobotMovement.turnToAnglePID(-90);
-              RobotMovement.drivePID(.5, -90, 1,10, 2);
+              RobotMovement.drivePID(.5, 0, 1, 10, 2, telemetry);
+              RobotMovement.turnToAnglePID(90, telemetry);
+              RobotMovement.drivePID(.5, 90, 1, 10, 2, telemetry);
+              RobotMovement.turnToAnglePID(180, telemetry);
+              RobotMovement.drivePID(.5, 180, 1,10, 2, telemetry);
+              RobotMovement.turnToAnglePID(-90, telemetry);
+              RobotMovement.drivePID(.5, -90, 1,10, 2, telemetry);
 
 
 

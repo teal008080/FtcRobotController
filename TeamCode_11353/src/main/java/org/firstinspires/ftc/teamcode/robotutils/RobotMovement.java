@@ -65,13 +65,13 @@ public class RobotMovement{
      * @param goal distance from wall
      * @param sensor
      */
-    public static void drivePID(double power, double goalAngle, int direction, double goal, int sensor) {//-180 to 180
+    public static void drivePID(double power, double goalAngle, int direction, double goal, int sensor, Telemetry telemetry) {//-180 to 180
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
             double correction = controllerDrive.getOutput(MathFunctions.getAngle(), goalAngle);
-            robot.telemetry.addData("Distance", MathFunctions.getDistance(sensor));
-            robot.telemetry.update();
+            telemetry.addData("Distance", MathFunctions.getDistance(sensor));
+            telemetry.update();
             double y = -direction * power;
             double x = 0;
             double z = correction;
@@ -235,16 +235,16 @@ public class RobotMovement{
         }
     }
 
-    public static void turnToAnglePID(double goalAngle){//-180 to 180
+    public static void turnToAnglePID(double goalAngle, Telemetry telemetry){//-180 to 180
         controllerAngle.setOutputLimits(-1,1);
         while (true) {
 
             double hotGarb = controllerAngle.getOutput(MathFunctions.getAngle(), goalAngle);
 
-            robot.telemetry.addData("Angle:", MathFunctions.getAngle()); //Gives our current pos
-            robot.telemetry.addData("Hot Garb:", hotGarb);
-            robot.telemetry.addData("Global Subtract", globalAngle);
-            robot.telemetry.update();
+            telemetry.addData("Angle:", MathFunctions.getAngle()); //Gives our current pos
+            telemetry.addData("Hot Garb:", hotGarb);
+            telemetry.addData("Global Subtract", globalAngle);
+            telemetry.update();
 
 
             hotGarb =hotGarb*robot.turnFactorPID ;

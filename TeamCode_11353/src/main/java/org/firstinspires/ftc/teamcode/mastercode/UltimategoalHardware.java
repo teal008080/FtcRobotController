@@ -47,7 +47,7 @@ public class UltimategoalHardware {
     /* Public OpMode members. */
     public BNO055IMU       imu;
 
-
+    public long waittime = 0;
 
     public DcMotor  frontleftDrive      = null;
     public DcMotor  frontrightDrive     = null;
@@ -70,8 +70,13 @@ public class UltimategoalHardware {
 
     public boolean intakeToggle = true;
     public boolean intake = false;
+
     public boolean triggerboolean = true;
     public boolean triggerstate = false;
+
+    public boolean shooterToggle = true;
+    public boolean shooter = false;
+
 
 
 

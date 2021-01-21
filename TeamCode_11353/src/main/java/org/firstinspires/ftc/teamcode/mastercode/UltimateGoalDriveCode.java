@@ -114,34 +114,54 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
             //Shooter code
 
-            if (gamepad1.right_bumper) {
-                robot.shooterDrive.setPower(1);
-
-            } else{
-                robot.shooterDrive.setPower(0);
-            }
-
-
-            /*
-             // Prevents this section of code from being called again until the Button is released and re-pressed
-                if (!gamepad1.b) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
-
-                    robot.trigger.setPosition(.43);
-                    telemetry.addData("TRIGGER", "Deactivated");
-                    robot.triggerboolean = true;
-                } else if (gamepad1.b) {
-
-
-                        robot.trigger.setPosition(.53);
-
-                        robot.trigger.setPosition(.43);
-
-
-                    telemetry.addData("Intake", "Activated");
+            if (robot.shooterToggle && gamepad1.right_bumper) {  // Only execute once per Button push
+                robot.shooterToggle = false;  // Prevents this section of code from being called again until the Button is released and re-pressed
+                if (robot.shooter) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
+                    robot.intake = false;
+                    robot.shooterDrive.setPower(0);
+                    telemetry.addData("Shooter", "Deactivated");
+                    robot.shooterToggle = true;
+                } else {
+                    robot.shooter = true;
+                    robot.shooterToggle = true;
+                    robot.shooterDrive.setPower(1);
+                    telemetry.addData("Shooter", "Activated");
                 }
             }
 
-*/
+            // Trigger Mechanism
+            if (robot.triggerboolean && gamepad1.b) {  // Only execute once per Button push
+                robot.triggerboolean = false;
+                // Prevents this section of code from being called again until the Button is released and re-pressed
+                if (robot.triggerstate) {  // Decide which way to set the motor this time through (or use this as a motor value instead)
+                    robot.triggerstate = false;
+                    robot.trigger.setPosition(.43);
+                    telemetry.addData("TRIGGER", "Deactivated");
+                    robot.triggerboolean = true;
+                } else {
+                    if (robot.waittime > System.currentTimeMillis()) {
+                        robot.trigger.setPosition(.43);
+                        robot.waittime = 0;
+                        return;
+
+                    } else {
+                        robot.trigger.setPosition(.53);
+                        telemetry.addData("Intake", "Activated");
+                        if (robot.waittime == 0) {
+                            robot.waittime = System.currentTimeMillis() + 84;
+                        }
+                        robot.triggerstate = true;
+                        robot.triggerboolean = true;
+                    }
+
+                }
+            }
+            telemetry.update();
+        }
+
+
+
+            /*
             if(gamepad1.b){
                 robot.trigger.setPosition(.53);
 
@@ -149,10 +169,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
             if(gamepad1.a){
                 robot.trigger.setPosition(.43);
             }
+*/
 
 
 
-        }
         @Override
         public void stop() {
         }

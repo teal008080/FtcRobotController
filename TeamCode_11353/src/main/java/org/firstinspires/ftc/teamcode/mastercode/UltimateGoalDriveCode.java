@@ -62,11 +62,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
         @Override
         public void loop() {
 
-            /**
-             * Gets z Values - Right-Handed Coordinate System
-             */
 
-            robot.drop.setPosition(0);
+
+            //robot.drop.setPosition(0);
            // telemetry.addData("Front Distance", robot.dSensorFront.getDistance(DistanceUnit.INCH));
             //telemetry.addData("Back Distance", robot.dSensorBack.getDistance(DistanceUnit.INCH));
 

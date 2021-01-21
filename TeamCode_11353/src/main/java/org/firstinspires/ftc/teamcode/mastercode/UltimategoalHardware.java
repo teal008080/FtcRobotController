@@ -58,7 +58,7 @@ public class UltimategoalHardware {
     public DcMotor  shooterDrive        = null;
 
     public Servo    drop                = null;
-    public Servo    trigger             = null;
+    public Servo    triggerServo             = null;
 
     public DistanceSensor dSensorBack = null;
     public DistanceSensor dSensorFront = null;
@@ -68,11 +68,11 @@ public class UltimategoalHardware {
     public int      speedFactor         = 1;
     public int      reverseFactor       = 1;
 
-    public boolean intakeToggle = true;
+    public boolean intakeToggle = false;
     public boolean intake = false;
 
-    public boolean triggerboolean = true;
-    public boolean triggerstate = false;
+    public boolean triggerToggle = true;
+    public boolean trigger = false;
 
     public boolean shooterToggle = true;
     public boolean shooter = false;
@@ -117,7 +117,7 @@ public class UltimategoalHardware {
         shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
 
         drop                  =hwMap.get(Servo.class, "drop");
-        trigger               =hwMap.get(Servo.class, "trigger");
+        triggerServo               =hwMap.get(Servo.class, "trigger");
 
         intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
         shooterDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -136,7 +136,7 @@ public class UltimategoalHardware {
         shooterDrive.setPower(0);
 
         drop.setPosition(.48);
-        trigger.setPosition(.44);
+        triggerServo.setPosition(.44);
 
        // dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor");
         //dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");

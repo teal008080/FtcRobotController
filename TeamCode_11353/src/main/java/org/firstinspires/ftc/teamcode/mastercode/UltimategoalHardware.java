@@ -120,7 +120,7 @@ public class UltimategoalHardware {
         trigger               =hwMap.get(Servo.class, "trigger");
 
         intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
-        shooterDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterDrive.setDirection(DcMotor.Direction.REVERSE);
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors

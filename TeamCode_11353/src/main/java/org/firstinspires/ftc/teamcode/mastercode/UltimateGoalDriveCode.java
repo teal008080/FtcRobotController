@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
         }
         @Override
         public void start() {
-            robot.drop.setPosition(.7);
+            robot.drop.setPosition(.3);
 
         }
 

@@ -42,6 +42,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
@@ -52,6 +54,8 @@ public class UltimategoalHardware {
     /* Public OpMode members. */
     public BNO055IMU       imu;
     public Telemetry telemetry;
+    public Orientation angles;
+
 
 
 
@@ -94,9 +98,7 @@ public class UltimategoalHardware {
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public UltimategoalHardware(OpMode opMode){
-        telemetry = opMode.telemetry;
-    }
+
 
     public UltimategoalHardware() {
 
@@ -116,6 +118,7 @@ public class UltimategoalHardware {
         parameters.loggingEnabled      = false;
 
         imu = hwMap.get(BNO055IMU.class, "imu");
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
 
 

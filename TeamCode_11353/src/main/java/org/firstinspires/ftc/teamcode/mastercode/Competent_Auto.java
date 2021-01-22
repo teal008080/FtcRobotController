@@ -17,6 +17,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.robot.Robot;
 
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
@@ -34,6 +38,7 @@ public class Competent_Auto extends LinearOpMode {
         //Initialize servos to starting positions
         robot.init(hardwareMap);
 
+
         telemetry.addData("Mode", "calibrating...");
         telemetry.update();
 
@@ -47,7 +52,7 @@ public class Competent_Auto extends LinearOpMode {
         telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
         telemetry.update();
         waitForStart();
-        MathFunctions.setAngle();
+        MathFunctions.setAngle(robot.angles);
 
 
         //Code above here should never change

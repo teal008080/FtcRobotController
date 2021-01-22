@@ -4,9 +4,16 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
+
+import static org.firstinspires.ftc.teamcode.robotutils.RobotMovement.globalAngle;
 
 
 /**
@@ -37,6 +44,7 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
             // Tell the driver that initialization is complete.
             telemetry.addData("Status", "Initialized");
+            telemetry.update();
         }
 
         /**
@@ -71,37 +79,12 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
 
 
-            telemetry.addData("Distance Front", MathFunctions.getDistance(2));
-            telemetry.addData("Distance Back",  MathFunctions.getDistance(1));
-            telemetry.addData("Distance Left", MathFunctions.getDistance(3));
-            telemetry.addData("Distance Right", MathFunctions.getDistance(4));
+            //telemetry.addData("Distance Front", MathFunctions.getDistance(2));
+            telemetry.update();
 
+            Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-            //Double Variables for driver control sticks
-            double x = -gamepad1.left_stick_x;
-            double y = gamepad1.left_stick_y;
-            double z = -gamepad1.right_stick_x;
-
-
-
-            if (gamepad1.left_bumper) { // Control Speed of Drive
-                robot.speedFactor = 3;
-            } else {
-                robot.speedFactor = 1;
-            }
-
-            if (gamepad1.right_bumper) { //Reverse drive control
-                robot.reverseFactor = -1;
-            } else {
-                robot.reverseFactor = 1;
-            }
-
-            //DRIVE FUNCTION BELOW
-            robot.frontleftDrive.setPower((Math.pow((y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-            robot.frontrightDrive.setPower((Math.pow((-y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-            robot.backleftDrive.setPower((Math.pow((y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-            robot.backrightDrive.setPower((Math.pow((-y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-
+           telemetry.addData("Angle", angles.firstAngle);
 
 
 

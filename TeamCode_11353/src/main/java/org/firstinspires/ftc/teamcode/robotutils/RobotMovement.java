@@ -14,14 +14,15 @@ public class RobotMovement{
     public static double z_angle;
     public static double globalAngle;
 
-    public static Competent_Auto auto = new Competent_Auto();
-    public static UltimategoalHardware robot = new UltimategoalHardware(auto);
+
+    public static UltimategoalHardware robot = new UltimategoalHardware();
 
 
     public static MiniPID controllerAngle = new MiniPID(0.035, 0, 0.03); //.025
     public static MiniPID controllerDrive = new MiniPID(0.035, 0, 0); //.025
 
     public static double OpModeRuntime = System.currentTimeMillis();
+
 
 
     /**
@@ -36,7 +37,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
-            double correction = controllerDrive.getOutput(MathFunctions.getAngle(), goalAngle);
+            double correction = controllerDrive.getOutput(MathFunctions.getAngle(robot.angles), goalAngle);
             robot.telemetry.addData("Distance", MathFunctions.getDistance(2));
             //telemetry.update();
             double y = -direction * power;
@@ -69,7 +70,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
-            double correction = controllerDrive.getOutput(MathFunctions.getAngle(), goalAngle);
+            double correction = controllerDrive.getOutput(MathFunctions.getAngle(robot.angles), goalAngle);
             telemetry.addData("Distance", MathFunctions.getDistance(sensor));
             telemetry.update();
             double y = -direction * power;
@@ -98,7 +99,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
-            double correction = controllerDrive.getOutput(MathFunctions.getAngle(), goalAngle);
+            double correction = controllerDrive.getOutput(MathFunctions.getAngle(robot.angles), goalAngle);
             //telemetry.addData("Distance",getDistance(2));
             //telemetry.update();
             double y = -direction * power;
@@ -126,7 +127,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
-            double correctionZ = controllerAngle.getOutput(MathFunctions.getAngle(), 0);
+            double correctionZ = controllerAngle.getOutput(MathFunctions.getAngle(robot.angles), 0);
             double correction = controllerDrive.getOutput(MathFunctions.getDistance(4), goal);
             //telemetry.update();
             double y = -1 * power;
@@ -150,7 +151,7 @@ public class RobotMovement{
         }
 
         while (true) {
-            double correctionZ = controllerAngle.getOutput(MathFunctions.getAngle(), 0);
+            double correctionZ = controllerAngle.getOutput(MathFunctions.getAngle(robot.angles), 0);
             double correction = controllerDrive.getOutput(MathFunctions.getDistance(1), goal);
             //telemetry.update();
             double y = -1 * power;
@@ -178,8 +179,8 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
-            double correction = controllerDrive.getOutput(MathFunctions.getAngle(), goalAngle);
-            //telemetry.addData("Angle:", getAngle()); //Gives our current pos
+            double correction = controllerDrive.getOutput(MathFunctions.getAngle(robot.angles), goalAngle);
+            //telemetry.addData("Angle:", getAngle(robot.angles)); //Gives our current pos
             //telemetry.addData("Hot Garb:", correction);
             //telemetry.addData("Global Subtract", globalAngle);
             //telemetry.update();
@@ -239,9 +240,9 @@ public class RobotMovement{
         controllerAngle.setOutputLimits(-1,1);
         while (true) {
 
-            double hotGarb = controllerAngle.getOutput(MathFunctions.getAngle(), goalAngle);
+            double hotGarb = controllerAngle.getOutput(MathFunctions.getAngle(robot.angles), goalAngle);
 
-            telemetry.addData("Angle:", MathFunctions.getAngle()); //Gives our current pos
+            telemetry.addData("Angle:", MathFunctions.getAngle(robot.angles)); //Gives our current pos
             telemetry.addData("Hot Garb:", hotGarb);
             telemetry.addData("Global Subtract", globalAngle);
             telemetry.update();
@@ -254,11 +255,11 @@ public class RobotMovement{
             robot.frontleftDrive.setPower(hotGarb);
             robot.backleftDrive.setPower(hotGarb);
 
-            if( ((goalAngle - robot.tolerancePID) <= MathFunctions.getAngle()) && ((goalAngle + robot.tolerancePID) >= MathFunctions.getAngle() )){
+            if( ((goalAngle - robot.tolerancePID) <= MathFunctions.getAngle(robot.angles)) && ((goalAngle + robot.tolerancePID) >= MathFunctions.getAngle(robot.angles) )){
                 break;
             }
 
-            if(MathFunctions.getAngle() == goalAngle){
+            if(MathFunctions.getAngle(robot.angles) == goalAngle){
                 robot.frontrightDrive.setPower(0);
                 robot.backrightDrive.setPower(0);
                 robot.frontleftDrive.setPower(0);

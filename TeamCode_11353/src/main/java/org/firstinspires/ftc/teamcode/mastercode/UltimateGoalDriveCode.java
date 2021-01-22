@@ -82,9 +82,8 @@ import static org.firstinspires.ftc.teamcode.robotutils.RobotMovement.globalAngl
             //telemetry.addData("Distance Front", MathFunctions.getDistance(2));
             telemetry.update();
 
-            Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-           telemetry.addData("Angle", angles.firstAngle);
+           telemetry.addData("Angle", robot.angles.firstAngle);
 
 
 

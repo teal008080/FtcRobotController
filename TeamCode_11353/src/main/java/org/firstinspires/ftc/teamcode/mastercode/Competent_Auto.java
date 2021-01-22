@@ -24,12 +24,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
+import static org.firstinspires.ftc.teamcode.robotutils.RobotMovement.globalAngle;
+
 
 @Autonomous(name="Actually Competent Auto", group="PID")
 //@Disabled
 public class Competent_Auto extends LinearOpMode {
 
     UltimategoalHardware robot = new UltimategoalHardware();
+    public Orientation angles;
 
 
     @Override
@@ -37,13 +40,15 @@ public class Competent_Auto extends LinearOpMode {
 
         //Initialize servos to starting positions
         robot.init(hardwareMap);
+        telemetry.update();
 
+
+        angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         telemetry.addData("Mode", "calibrating...");
         telemetry.update();
 
-        while (!isStopRequested() && !robot.imu.isGyroCalibrated())
-        {
+        while (!isStopRequested() && !robot.imu.isGyroCalibrated()) {
             sleep(50);
             idle();
 
@@ -52,27 +57,27 @@ public class Competent_Auto extends LinearOpMode {
         telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
         telemetry.update();
         waitForStart();
-        MathFunctions.setAngle(robot.angles);
+        setAngle();
 
 
         //Code above here should never change
         //Sets the initial position of the robot, the bottom right, looking at the target
-       RobotMovement.turnToAnglePID(-90, telemetry);
-       RobotMovement.drivePID(.5,-90,1,10,2, telemetry);
-       RobotMovement.turnToAnglePID(-180, telemetry);
-       RobotMovement.drivePID(.5, -180, 1, 10,2, telemetry);
-       RobotMovement.turnToAnglePID(0, telemetry);
+        RobotMovement.turnToAnglePID(-90, telemetry);
+        RobotMovement.drivePID(.5, -90, 1, 10, 2, telemetry);
+        RobotMovement.turnToAnglePID(-180, telemetry);
+        RobotMovement.drivePID(.5, -180, 1, 10, 2, telemetry);
+        RobotMovement.turnToAnglePID(0, telemetry);
 
 
         //While the stop button isn't pressed, run this code
         while (!isStopRequested()) {
-              RobotMovement.drivePID(.5, 0, 1, 10, 2, telemetry);
-              RobotMovement.turnToAnglePID(90, telemetry);
-              RobotMovement.drivePID(.5, 90, 1, 10, 2, telemetry);
-              RobotMovement.turnToAnglePID(180, telemetry);
-              RobotMovement.drivePID(.5, 180, 1,10, 2, telemetry);
-              RobotMovement.turnToAnglePID(-90, telemetry);
-              RobotMovement.drivePID(.5, -90, 1,10, 2, telemetry);
+            RobotMovement.drivePID(.5, 0, 1, 10, 2, telemetry);
+            RobotMovement.turnToAnglePID(90, telemetry);
+            RobotMovement.drivePID(.5, 90, 1, 10, 2, telemetry);
+            RobotMovement.turnToAnglePID(180, telemetry);
+            RobotMovement.drivePID(.5, 180, 1, 10, 2, telemetry);
+            RobotMovement.turnToAnglePID(-90, telemetry);
+            RobotMovement.drivePID(.5, -90, 1, 10, 2, telemetry);
 
 
 
@@ -89,5 +94,24 @@ public class Competent_Auto extends LinearOpMode {
         }
         RobotMovement.stopDrive();
         stop();
+    }
+
+    public double getAngle() {
+        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+
+        Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle;
+
+        return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
+    }
+
+    public void setAngle() {
+        angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        double deltaAngle = angles.firstAngle;
+        globalAngle = deltaAngle;
     }
 }

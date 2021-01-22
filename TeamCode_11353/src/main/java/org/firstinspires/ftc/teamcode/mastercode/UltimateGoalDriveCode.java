@@ -117,16 +117,22 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
             // Trigger Mechanism
 
-            int i;
-            for (i = 0; i <= 2 && gamepad1.b; i++) {
-                if(robot.waittime == 0) robot.waittime = System.currentTimeMillis();
-                if (robot.triggerServo.getPosition() == .43 && System.currentTimeMillis() - robot.waittime == 150) {robot.triggerServo.setPosition(.53); robot.waittime = 0;};
-                if (robot.triggerServo.getPosition() == .53 && System.currentTimeMillis() - robot.waittime == 150) {robot.triggerServo.setPosition(.43); robot.waittime = 0;}
+           if (gamepad1.b) {
+               while (gamepad1.b) {
+                   if (robot.waittime == 0) robot.waittime = System.currentTimeMillis();
+                   if (robot.triggerServo.getPosition() == .43 && System.currentTimeMillis() - robot.waittime == 130) {
+                       robot.triggerServo.setPosition(.53);
+                       robot.waittime = 0;
+                   }
+
+                   if (robot.triggerServo.getPosition() == .53 && System.currentTimeMillis() - robot.waittime == 130) {
+                       robot.triggerServo.setPosition(.43);
+                       robot.waittime = 0;
+                   }
 
 
-
-                
-            }
+               }
+           }
             if (!gamepad1.b) { robot.triggerServo.setPosition(.43); robot.waittime = 0; telemetry.addData("Trigger","Deactivated"); }
 
 

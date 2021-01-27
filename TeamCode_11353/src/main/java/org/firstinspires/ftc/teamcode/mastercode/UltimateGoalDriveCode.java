@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
         }
         @Override
         public void start() {
-            robot.drop.setPosition(.3);
+            robot.drop.setPosition(.6);
 
         }
 
@@ -106,13 +106,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
             //Shooter code
 
 
-            if (gamepad1.right_bumper && !robot.shooterToggle) {
+            if (gamepad1.x && !robot.shooterToggle) {
                 if (robot.shooterDrive.getPower() == 0) robot.shooterDrive.setPower(1);
                 else robot.shooterDrive.setPower(0);
                 robot.shooterToggle = true;
                 if (robot.shooterDrive.getPower() == 0) telemetry.addData("Shooter", "Deactivated");
                 else telemetry.addData("Shooter", "Activated");
-            } else if (!gamepad1.right_bumper) robot.shooterToggle = false;
+            } else if (!gamepad1.x) robot.shooterToggle = false;
 
 
             // Trigger Mechanism

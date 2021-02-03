@@ -108,10 +108,13 @@ public class Competent_Auto extends LinearOpMode {
         // We have to process the angle because the imu works in euler angles so the Z axis is
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
-
+        telemetry.addData("getangel.pre","yes");
+        telemetry.update();
         angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle;
+        telemetry.addData("getanglepost", angles.firstAngle);
+        telemetry.update();
 
         return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
     }

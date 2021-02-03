@@ -240,8 +240,10 @@ public class RobotMovement{
     public static void turnToAnglePID(double goalAngle, Telemetry telemetry){//-180 to 180
         controllerAngle.setOutputLimits(-1,1);
         while (true) {
-
+            telemetry.addData("Turntoanglepre", "Yes");
+            telemetry.update();
             double hotGarb = controllerAngle.getOutput(auto.getAngle(), goalAngle);
+            telemetry.addData("tuentoanglepost", "yes");
 
             telemetry.addData("Angle:", auto.getAngle()); //Gives our current pos
             telemetry.addData("Hot Garb:", hotGarb);

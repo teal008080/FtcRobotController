@@ -63,6 +63,8 @@ public class Competent_Auto extends LinearOpMode {
         telemetry.update();
         waitForStart();
         setAngle();
+        telemetry.addData("POstPost", "yes");
+        telemetry.update();
 
 
         //Code above here should never change
@@ -107,7 +109,7 @@ public class Competent_Auto extends LinearOpMode {
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle;
 
@@ -115,8 +117,11 @@ public class Competent_Auto extends LinearOpMode {
     }
 
     public void setAngle() {
+        telemetry.addData("SetAngle.pre", "yes");
+
+        telemetry.update();
         angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        telemetry.addData("Testesaetsats", angles.firstAngle);
+        telemetry.addData("Setangle.Post", angles.firstAngle);
         telemetry.update();
 
         //double deltaAngle = angles.firstAngle;

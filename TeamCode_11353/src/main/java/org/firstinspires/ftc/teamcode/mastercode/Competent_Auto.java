@@ -55,6 +55,11 @@ public class Competent_Auto extends LinearOpMode {
         }
         telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
+
+        telemetry.update();
+        angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        telemetry.addData("test", angles.firstAngle);
         telemetry.update();
         waitForStart();
         setAngle();
@@ -111,7 +116,10 @@ public class Competent_Auto extends LinearOpMode {
 
     public void setAngle() {
         angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        double deltaAngle = angles.firstAngle;
-        globalAngle = deltaAngle;
+        telemetry.addData("Testesaetsats", angles.firstAngle);
+        telemetry.update();
+
+        //double deltaAngle = angles.firstAngle;
+        //globalAngle = deltaAngle;
     }
 }

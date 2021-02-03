@@ -54,7 +54,7 @@ public class UltimategoalHardware {
     /* Public OpMode members. */
     public BNO055IMU       imu;
     public Telemetry telemetry;
-    public Orientation angles;
+    //public Orientation angles;
 
 
 
@@ -118,7 +118,7 @@ public class UltimategoalHardware {
         parameters.loggingEnabled      = false;
 
         imu = hwMap.get(BNO055IMU.class, "imu");
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        //angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
 
 

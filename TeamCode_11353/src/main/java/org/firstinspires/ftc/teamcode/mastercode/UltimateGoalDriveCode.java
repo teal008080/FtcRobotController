@@ -27,9 +27,10 @@ import static org.firstinspires.ftc.teamcode.robotutils.RobotMovement.globalAngl
         private ElapsedTime runtime = new ElapsedTime();
 
 
+
         //Creates new robot
         UltimategoalHardware robot       = new UltimategoalHardware();
-
+        Orientation angles;
 
         /**
          * Code to run ONCE when the driver hits INIT
@@ -40,6 +41,7 @@ import static org.firstinspires.ftc.teamcode.robotutils.RobotMovement.globalAngl
 
             //Initalize hardware from Hardware UltimateGoal
             robot.init(hardwareMap);
+            angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
 
             // Tell the driver that initialization is complete.
@@ -80,11 +82,11 @@ import static org.firstinspires.ftc.teamcode.robotutils.RobotMovement.globalAngl
 
 
             //telemetry.addData("Distance Front", MathFunctions.getDistance(2));
+
+
+            angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            telemetry.addData("Angle", angles.firstAngle);
             telemetry.update();
-
-
-           telemetry.addData("Angle", robot.angles.firstAngle);
-
 
 
 

@@ -63,8 +63,8 @@ public class UltimategoalHardware {
     public DistanceSensor dSensorBack = null;
     public DistanceSensor dSensorFront = null;
 
-    public DcMotor wobbleSpool = null;
-    public Servo wobbleGrab = null;
+   // public DcMotor wobbleSpool = null;
+    //public Servo wobbleGrab = null;
 
 
 
@@ -118,11 +118,11 @@ public class UltimategoalHardware {
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
         intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
         shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
-        wobbleSpool           = hwMap.get(DcMotor.class, "wobblespool");
+        //wobbleSpool           = hwMap.get(DcMotor.class, "wobblespool");
 
         drop                  =hwMap.get(Servo.class, "drop");
         triggerServo               =hwMap.get(Servo.class, "trigger");
-        wobbleGrab             = hwMap.get(Servo.class, "grab");
+        //wobbleGrab             = hwMap.get(Servo.class, "grab");
 
         intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
         shooterDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -139,9 +139,9 @@ public class UltimategoalHardware {
         backrightDrive.setPower(0);
         intakeChainDrive.setPower(0);
         shooterDrive.setPower(0);
-        wobbleSpool.setPower(0);
+        //wobbleSpool.setPower(0);
 
-        wobbleGrab.setPosition(0);
+        //wobbleGrab.setPosition(0);
         drop.setPosition(.48);
         triggerServo.setPosition(.44);
 

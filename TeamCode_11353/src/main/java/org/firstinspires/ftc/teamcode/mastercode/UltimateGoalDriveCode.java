@@ -120,12 +120,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
            if (gamepad1.b) {
                while (gamepad1.b) {
                    if (robot.waittime == 0) robot.waittime = System.currentTimeMillis();
-                   if (robot.triggerServo.getPosition() == .43 && System.currentTimeMillis() - robot.waittime == 130) {
-                       robot.triggerServo.setPosition(.53);
+                   if (robot.triggerServo.getPosition() == .43 && System.currentTimeMillis() - robot.waittime == 140) {
+                       robot.triggerServo.setPosition(.55);
                        robot.waittime = 0;
                    }
 
-                   if (robot.triggerServo.getPosition() == .53 && System.currentTimeMillis() - robot.waittime == 130) {
+                   if (robot.triggerServo.getPosition() == .55 && System.currentTimeMillis() - robot.waittime == 140) {
                        robot.triggerServo.setPosition(.43);
                        robot.waittime = 0;
                    }

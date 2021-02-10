@@ -133,7 +133,29 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
                }
            }
+
             if (!gamepad1.b) { robot.triggerServo.setPosition(.43); robot.waittime = 0; telemetry.addData("Trigger","Deactivated"); }
+
+            //wobble meche
+
+
+            if (gamepad2.a && !robot.wobbleDown) {
+                if (robot.wobbleSpool.getCurrentPosition() == 0){
+                    robot.wobbleGrab.setPosition(40);
+                    robot.wobbleSpool.setTargetPosition(28);
+
+                }
+                else {
+                    robot.wobbleSpool.setTargetPosition(0);
+                    robot.wobbleGrab.setPosition(50);
+
+                }
+                robot.wobbleDown = true;
+                if (robot.wobbleSpool.getCurrentPosition() == 0)
+                    telemetry.addData("Wobble","Down");
+                else telemetry.addData("Wobble", "Up");
+            } else if (!gamepad2.a) robot.wobbleDown = false;
+
 
 
             /*
@@ -169,7 +191,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
              */
 
-            telemetry.update();
+
 
                     }
 

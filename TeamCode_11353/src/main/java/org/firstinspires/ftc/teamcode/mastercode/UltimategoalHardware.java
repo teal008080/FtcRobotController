@@ -63,8 +63,8 @@ public class UltimategoalHardware {
     public DistanceSensor dSensorBack = null;
     public DistanceSensor dSensorFront = null;
 
-   // public DcMotor wobbleSpool = null;
-    //public Servo wobbleGrab = null;
+    public DcMotor wobbleSpool = null;
+    public Servo wobbleGrab = null;
 
 
 
@@ -79,6 +79,9 @@ public class UltimategoalHardware {
 
     public boolean shooterToggle = true;
     public boolean shooter = false;
+
+    public boolean wobbleDown = true;
+
 
 
 
@@ -156,6 +159,8 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Chain intake drive
 

@@ -231,7 +231,7 @@ public class Comp_Auto_2 {
             //Code above here should never change
             while(isStopRequested() == false) {
 
-                drivePIDtime(.5,0,1,300,1);
+                drivePIDtime(.5,0,1,1000,1);
                 sleep(400);
                 turnToAnglePID(180);
                 sleep(500);

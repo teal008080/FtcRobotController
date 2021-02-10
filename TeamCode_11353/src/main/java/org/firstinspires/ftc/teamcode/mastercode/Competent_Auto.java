@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 
 import static org.firstinspires.ftc.teamcode.robotutils.RobotMovement.globalAngle;
 
-
+/*
 @Autonomous(name="Actually Competent Auto", group="PID")
 //@Disabled
 public class Competent_Auto extends LinearOpMode {
@@ -168,6 +168,7 @@ public class Competent_Auto extends LinearOpMode {
             RobotMovement.stopDrive();
             break;
             */
+/*
         }
         RobotMovement.stopDrive();
         stop();
@@ -175,3 +176,4 @@ public class Competent_Auto extends LinearOpMode {
 
 
 }
+*/

@@ -25,10 +25,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         UltimategoalHardware robot = new UltimategoalHardware();
 
         MiniPID controllerAngle = new MiniPID(0.02, 0, 0.02); //.025
-        MiniPID controllerDrive = new MiniPID(0.035, 0, 0); //.025
+        MiniPID controllerDrive = new MiniPID(0.035, 0, 0.01); //.025
         //Past working values .035, 0, .03
 
-        //Ziegler-Nichols standard for starting PID tuning values
+        //Ziegler-Nichols standard for starting PID tuning value
         //Kcr = Proportional gain that causes steady osscillation (.04)
         //Pcr = Period of Kcr's Oscillation (measured in seconds) (1.4s) T
         //In a full PID system:
@@ -113,10 +113,11 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 double y = -direction * power;
                 double x = 0;
                 double z = correction;
+                z = z * robot.turnFactorPID;
                 robot.frontleftDrive.setPower(y + x + z);
                 robot.frontrightDrive.setPower(-y + x + z);
-                robot.backleftDrive.setPower(y - x + z);
-                robot.backrightDrive.setPower(-y - x + z);
+                robot.backleftDrive.setPower(y - x - z);
+                robot.backrightDrive.setPower(-y - x - z);
                 if(System.currentTimeMillis()-starTime >= time) {
                     stopDrive();
                     break;
@@ -210,9 +211,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
 
-                if( ((goalAngle - robot.tolerancePID) <= getAngle()) && ((goalAngle + robot.tolerancePID) >= getAngle() )){
-                    break;
-                }
+
                 double absdif = Math.abs(getAngle() - goalAngle);
 
                 if(absdif <= robot.tolerancePID){

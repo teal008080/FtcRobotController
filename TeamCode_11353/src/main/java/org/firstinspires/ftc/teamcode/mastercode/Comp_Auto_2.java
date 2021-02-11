@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.mastercode;
 
 
-    import android.graphics.Color;
+
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -15,16 +15,16 @@ import org.firstinspires.ftc.teamcode.mastercode.UltimategoalHardware;
 import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
-public class Comp_Auto_2 {
+
     @Autonomous(name="Phoenix Auto", group="PID")
 //@Disabled
-    public class OmniAutonomousPhoenixAuto extends LinearOpMode {
+    public class Comp_Auto_2 extends LinearOpMode {
 
         public double z_angle;
         public double globalAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(0.035, 0, 0.03); //.025
+        MiniPID controllerAngle = new MiniPID(0.02, 0, 0.02); //.025
         MiniPID controllerDrive = new MiniPID(0.035, 0, 0); //.025
         //Past working values .035, 0, .03
 
@@ -204,9 +204,9 @@ public class Comp_Auto_2 {
                 hotGarb =hotGarb*robot.turnFactorPID ;
 
                 robot.frontrightDrive.setPower(hotGarb);
-                robot.backrightDrive.setPower(hotGarb);
+                robot.backrightDrive.setPower(-hotGarb);
                 robot.frontleftDrive.setPower(hotGarb);
-                robot.backleftDrive.setPower(hotGarb);
+                robot.backleftDrive.setPower(-hotGarb);
 
 
 
@@ -229,7 +229,7 @@ public class Comp_Auto_2 {
 
 
         @Override
-        public void runOpMode() throws InterruptedException {
+        public void runOpMode(){
             robot.init(hardwareMap);
             telemetry.addData("Imu Status", robot.imu.getSystemStatus());
             telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
@@ -239,11 +239,11 @@ public class Comp_Auto_2 {
             //Code above here should never change
             while(isStopRequested() == false) {
 
-                drivePIDtime(.5,0,1,1000,1);
-                sleep(400);
+                drivePIDtime(.5,0,1,2000,1);
+                sleep(500);
                 turnToAnglePID(180);
                 sleep(500);
-                drivePIDtime(.5,180,1,300,1);
+                drivePIDtime(.5,180,1,2000,1);
 
 
 
@@ -257,4 +257,4 @@ public class Comp_Auto_2 {
             stop();
         }
     }
-}
+

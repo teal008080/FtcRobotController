@@ -6,7 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CompassSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.mastercode.Competent_Auto;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.mastercode.UltimategoalHardware;
 import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 
@@ -17,7 +21,7 @@ public class RobotMovement{
 
 
     public static UltimategoalHardware robot = new UltimategoalHardware();
-    public static Competent_Auto auto = new Competent_Auto();
+
 
 
     public static MiniPID controllerAngle = new MiniPID(0.035, 0, 0.03); //.025
@@ -39,7 +43,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
-            double correction = controllerDrive.getOutput(auto.getAngle(), goalAngle);
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
             robot.telemetry.addData("Distance", MathFunctions.getDistance(2));
             //telemetry.update();
             double y = -direction * power;
@@ -72,7 +76,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
-            double correction = controllerDrive.getOutput(auto.getAngle(), goalAngle);
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
             telemetry.addData("Distance", MathFunctions.getDistance(sensor));
             telemetry.update();
             double y = -direction * power;
@@ -101,7 +105,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
-            double correction = controllerDrive.getOutput(auto.getAngle(), goalAngle);
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
             //telemetry.addData("Distance",getDistance(2));
             //telemetry.update();
             double y = -direction * power;
@@ -129,7 +133,7 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
-            double correctionZ = controllerAngle.getOutput(auto.getAngle(), 0);
+            double correctionZ = controllerAngle.getOutput(getAngle(), 0);
             double correction = controllerDrive.getOutput(MathFunctions.getDistance(4), goal);
             //telemetry.update();
             double y = -1 * power;
@@ -153,7 +157,7 @@ public class RobotMovement{
         }
 
         while (true) {
-            double correctionZ = controllerAngle.getOutput(auto.getAngle(), 0);
+            double correctionZ = controllerAngle.getOutput(getAngle(), 0);
             double correction = controllerDrive.getOutput(MathFunctions.getDistance(1), goal);
             //telemetry.update();
             double y = -1 * power;
@@ -181,8 +185,8 @@ public class RobotMovement{
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
-            double correction = controllerDrive.getOutput(auto.getAngle(), goalAngle);
-            //telemetry.addData("Angle:", getAngle(auto.angles)); //Gives our current pos
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
+            //telemetry.addData("Angle:", getAngle(angles)); //Gives our current pos
             //telemetry.addData("Hot Garb:", correction);
             //telemetry.addData("Global Subtract", globalAngle);
             //telemetry.update();
@@ -243,10 +247,10 @@ public class RobotMovement{
         while (true) {
             telemetry.addData("Turntoanglepre", "Yes");
             telemetry.update();
-            double hotGarb = controllerAngle.getOutput(auto.getAngle(), goalAngle);
+            double hotGarb = controllerAngle.getOutput(getAngle(), goalAngle);
             telemetry.addData("tuentoanglepost", "yes");
 
-            telemetry.addData("Angle:", auto.getAngle()); //Gives our current pos
+            telemetry.addData("Angle:", getAngle()); //Gives our current pos
             telemetry.addData("Hot Garb:", hotGarb);
             telemetry.addData("Global Subtract", globalAngle);
             telemetry.update();
@@ -259,11 +263,11 @@ public class RobotMovement{
             robot.frontleftDrive.setPower(hotGarb);
             robot.backleftDrive.setPower(hotGarb);
 
-            if( ((goalAngle - robot.tolerancePID) <= auto.getAngle()) && ((goalAngle + robot.tolerancePID) >= auto.getAngle() )){
+            if( ((goalAngle - robot.tolerancePID) <= getAngle()) && ((goalAngle + robot.tolerancePID) >= getAngle() )){
                 break;
             }
 
-            if(auto.getAngle() == goalAngle){
+            if(getAngle() == goalAngle){
                 robot.frontrightDrive.setPower(0);
                 robot.backrightDrive.setPower(0);
                 robot.frontleftDrive.setPower(0);
@@ -288,6 +292,19 @@ public class RobotMovement{
         }
         return angle;
     }
+    public static double getAngle() {
+        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+
+        Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle;
+
+        return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
+    }
+
 
     /**
      * This Array List draws a circle and where that circle intersects a line (drawn by the target of the robot designated by teamcode.RobotMovement.goToPosition) it marks a point.

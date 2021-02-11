@@ -194,6 +194,7 @@ public class Comp_Auto_2 {
 
                 double hotGarb = controllerAngle.getOutput(getAngle(), goalAngle);
 
+
                 telemetry.addData("Angle:", getAngle()); //Gives our current pos
                 telemetry.addData("Hot Garb:", hotGarb);
                 telemetry.addData("Global Subtract", globalAngle);
@@ -207,11 +208,14 @@ public class Comp_Auto_2 {
                 robot.frontleftDrive.setPower(hotGarb);
                 robot.backleftDrive.setPower(hotGarb);
 
+
+
                 if( ((goalAngle - robot.tolerancePID) <= getAngle()) && ((goalAngle + robot.tolerancePID) >= getAngle() )){
                     break;
                 }
+                double absdif = Math.abs(getAngle() - goalAngle);
 
-                if(getAngle() == goalAngle){
+                if(absdif <= robot.tolerancePID){
                     robot.frontrightDrive.setPower(0);
                     robot.backrightDrive.setPower(0);
                     robot.frontleftDrive.setPower(0);
@@ -222,9 +226,13 @@ public class Comp_Auto_2 {
             }
         }
 
+
+
         @Override
         public void runOpMode() throws InterruptedException {
             robot.init(hardwareMap);
+            telemetry.addData("Imu Status", robot.imu.getSystemStatus());
+            telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
 
             waitForStart();
             setAngle();

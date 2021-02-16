@@ -16,16 +16,17 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-    @Autonomous(name="Phoenix Auto", group="PID")
+    @Autonomous(name="Phoenix Auto PID Tuning", group="PID")
 //@Disabled
     public class Comp_Auto_2 extends LinearOpMode {
 
         public double z_angle;
         public double globalAngle;
+        public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(0.02, 0, 0.02); //.025
-        MiniPID controllerDrive = new MiniPID(0.035, 0, 0.01); //.025
+        MiniPID controllerAngle = new MiniPID(0.035, 0, 0.03); //.025
+        MiniPID controllerDrive = new MiniPID(0.00, 0, 0.00); //.025
         //Past working values .035, 0, .03
 
         //Ziegler-Nichols standard for starting PID tuning value
@@ -56,7 +57,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-            double deltaAngle = angles.firstAngle;
+            deltaAngle = angles.firstAngle;
 
             return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
         }
@@ -192,29 +193,29 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public void turnToAnglePID(double goalAngle){//-180 to 180
             controllerAngle.setOutputLimits(-1,1);
             while (true) {
-
-                double hotGarb = controllerAngle.getOutput(getAngle(), goalAngle);
+                getAngle();
+                double error = controllerAngle.getOutput(getAngle(), goalAngle);
 
 
                 telemetry.addData("Angle:", getAngle()); //Gives our current pos
-                telemetry.addData("Hot Garb:", hotGarb);
+                telemetry.addData("Error:", error);
                 telemetry.addData("Global Subtract", globalAngle);
                 telemetry.update();
 
 
-                hotGarb =hotGarb*robot.turnFactorPID ;
+                error =error*robot.turnFactorPID ;
 
-                robot.frontrightDrive.setPower(hotGarb);
-                robot.backrightDrive.setPower(-hotGarb);
-                robot.frontleftDrive.setPower(hotGarb);
-                robot.backleftDrive.setPower(-hotGarb);
-
-
+                robot.frontrightDrive.setPower(error);
+                robot.backrightDrive.setPower(-error);
+                robot.frontleftDrive.setPower(error);
+                robot.backleftDrive.setPower(-error);
 
 
-                double absdif = Math.abs(getAngle() - goalAngle);
 
-                if(absdif <= robot.tolerancePID){
+
+                double abserr = Math.abs(getAngle() - goalAngle);
+
+                if(abserr <= robot.tolerancePID){
                     robot.frontrightDrive.setPower(0);
                     robot.backrightDrive.setPower(0);
                     robot.frontleftDrive.setPower(0);
@@ -238,11 +239,29 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             //Code above here should never change
             while(isStopRequested() == false) {
 
-                drivePIDtime(.5,0,1,2000,1);
-                sleep(500);
-                turnToAnglePID(180);
-                sleep(500);
-                drivePIDtime(.5,180,1,2000,1);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+                turnToAnglePID(90);
+                sleep(2000);
+
 
 
 

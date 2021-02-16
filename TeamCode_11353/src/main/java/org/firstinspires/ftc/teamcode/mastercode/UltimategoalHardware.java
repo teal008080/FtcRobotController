@@ -76,7 +76,7 @@ public class UltimategoalHardware {
 
     public double     turnFactorPID        = .5;
 
-    public double     tolerancePID         = 2;
+    public double     tolerancePID         = 3;
 
 
 

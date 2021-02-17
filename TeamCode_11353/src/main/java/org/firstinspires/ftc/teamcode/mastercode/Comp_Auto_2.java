@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.mastercode.UltimategoalHardware;
+import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
@@ -90,7 +91,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.frontrightDrive.setPower(-y + x + z);
                 robot.backleftDrive.setPower(y - x + z);
                 robot.backrightDrive.setPower(-y - x + z);
-                if(getDistance() <= goal) {
+
+               double abserror = Math.abs(getDistance()-goal);
+                if(abserror <= robot.tolerancePID2) {
                     stopDrive();
                     break;
                 }
@@ -198,15 +201,16 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 telemetry.addData("Angle:", getAngle()); //Gives our current pos
                 telemetry.addData("Error:", error);
                 telemetry.addData("Global Subtract", globalAngle);
+                telemetry.addData("Goal", goalAngle);
                 telemetry.update();
 
 
-                error =error*robot.turnFactorPID ;
+                error = error*robot.turnFactorPID ;
 
-                robot.frontrightDrive.setPower(error);
-                robot.backrightDrive.setPower(-error);
-                robot.frontleftDrive.setPower(error);
-                robot.backleftDrive.setPower(-error);
+                robot.frontrightDrive.setPower(-error);
+                robot.backrightDrive.setPower(error);
+                robot.frontleftDrive.setPower(-error);
+                robot.backleftDrive.setPower(error);
 
 
                 double abserr = Math.abs(getAngle() - goalAngle);
@@ -220,7 +224,25 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 }
 
             }
+
+
         }
+        public void launch2shots() {
+            robot.shooterDrive.setPower(.67);
+
+
+            robot.triggerServo.setPosition(.55);
+            sleep(140);
+            robot.triggerServo.setPosition(.43);
+            sleep(140);
+            robot.triggerServo.setPosition(.55);
+            sleep(140);
+            robot.triggerServo.setPosition(.43);
+            sleep(140);
+            robot.shooterDrive.setPower(0);
+        }
+
+
 
 
 
@@ -235,11 +257,20 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             //Code above here should never change
             while(!isStopRequested()) {
 
-                drivePID(.5,0,1,30);
-                turnToAnglePID(-90);
-                drivePID(.5,-90,1,30);
+                drivePID(.5,0,1,40);
                 turnToAnglePID(90);
-                drivePID(.5,90,1,30);
+                drivePID(.5,90,1, 40);
+                turnToAnglePID(180);
+                drivePID(.5,180,1, 40);
+                turnToAnglePID(-90);
+                drivePID(.5,-90,1, 40);
+                turnToAnglePID(0);
+                drivePID(.5,0,1, 40);
+                turnToAnglePID(180);
+                drivePID(.5,180,1, 40);
+                turnToAnglePID(-90);
+                drivePID(.5,-90,1, 40);
+                stopDrive();
 
 
 

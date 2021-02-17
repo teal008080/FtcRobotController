@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -56,7 +57,7 @@ public class UltimategoalHardware {
     public Telemetry telemetry;
     //public Orientation angles;
 
-
+    public long waittime = 0;
 
 
     public DcMotor  frontleftDrive      = null;
@@ -69,15 +70,23 @@ public class UltimategoalHardware {
     //public DistanceSensor dSensorLeft   = null;
     //public DistanceSensor dSensorRight  = null;
 
+    public DcMotor  shooterDrive        = null;
+    public Servo triggerServo             = null;
+
+    public boolean triggerToggle = true;
+    public boolean trigger = false;
+
+    public boolean shooterToggle = true;
+    public boolean shooter = false;
 
 
     public int      speedFactor         = 1;
     public int      reverseFactor       = 1;
 
-    public double     turnFactorPID        = .1;
+    public double     turnFactorPID        = .4;
 
-    public double     tolerancePID         = 10;
-
+    public double     tolerancePID         = 3;
+    public double     tolerancePID2         = 2;
 
 
 
@@ -135,12 +144,16 @@ public class UltimategoalHardware {
         frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
+        shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
+
+        triggerServo               =hwMap.get(Servo.class, "trigger");
 
         //dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor_back");
         dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
         //dSensorLeft        = hwMap.get(DistanceSensor.class, "distance_sensor_left");
         //dSensorRight      = hwMap.get(DistanceSensor.class, "distance_sensor_right");
 
+        shooterDrive.setDirection(DcMotor.Direction.REVERSE);
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -152,6 +165,7 @@ public class UltimategoalHardware {
         frontrightDrive.setPower(0);
         backleftDrive.setPower(0);
         backrightDrive.setPower(0);
+        shooterDrive.setPower(0);
 
 
 
@@ -161,6 +175,8 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        triggerServo.setPosition(.43);
 
 
 

@@ -70,14 +70,14 @@ public class UltimategoalHardware {
     //public DistanceSensor dSensorLeft   = null;
     //public DistanceSensor dSensorRight  = null;
 
+
+    public DcMotor  intakeChainDrive    = null;
+
+
+
     public DcMotor  shooterDrive        = null;
     public Servo triggerServo             = null;
 
-    public boolean triggerToggle = true;
-    public boolean trigger = false;
-
-    public boolean shooterToggle = true;
-    public boolean shooter = false;
 
 
     public int      speedFactor         = 1;
@@ -85,8 +85,8 @@ public class UltimategoalHardware {
 
     public double     turnFactorPID        = .4;
 
-    public double     tolerancePID         = 3;
-    public double     tolerancePID2         = 2;
+    public double     tolerancePID         = 2;
+    public double     tolerancePID2         = 1;
 
 
 
@@ -153,6 +153,7 @@ public class UltimategoalHardware {
         //dSensorLeft        = hwMap.get(DistanceSensor.class, "distance_sensor_left");
         //dSensorRight      = hwMap.get(DistanceSensor.class, "distance_sensor_right");
 
+        intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
         shooterDrive.setDirection(DcMotor.Direction.REVERSE);
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
@@ -166,7 +167,7 @@ public class UltimategoalHardware {
         backleftDrive.setPower(0);
         backrightDrive.setPower(0);
         shooterDrive.setPower(0);
-
+        intakeChainDrive.setPower(0);
 
 
         // Set all motors to run without encoders.
@@ -175,6 +176,7 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        intakeChainDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         triggerServo.setPosition(.43);
 

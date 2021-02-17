@@ -63,6 +63,19 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
         }
 
+        public boolean isirregular(){
+            boolean irregular = false;
+            double starttime = System.currentTimeMillis();
+            double expected = starttime/22;
+            double current = robot.intakeChainDrive.getCurrentPosition();
+            if (expected - current != 0) {
+                irregular = true;
+            }
+
+
+          return irregular;
+        }
+
 
 
 
@@ -227,10 +240,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
         }
-        public void launch2shots() {
+        public void launch3shots() {
             robot.shooterDrive.setPower(.67);
-
-
+            sleep(200);
             robot.triggerServo.setPosition(.55);
             sleep(140);
             robot.triggerServo.setPosition(.43);
@@ -239,7 +251,28 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(140);
             robot.triggerServo.setPosition(.43);
             sleep(140);
+            robot.triggerServo.setPosition(.55);
+            sleep(140);
+            robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setPower(0);
+        }
+
+
+        //Assumes the robot is at the side to the left of the blue tower, looking at the tower. Facing the back wall.
+        public void ringIntakeSweep() {
+            robot.intakeChainDrive.setPower(1);
+            while (!isirregular()) {
+                drivePID(.3, 0, 1, 30);
+                turnToAnglePID(-90);
+                drivePID(.3, -90, 1, 30);
+                turnToAnglePID(180);
+                drivePID(.3, 180, 1, 30);
+                turnToAnglePID(90);
+                drivePID(.3, 90, 1, 30);
+                turnToAnglePID(0);
+            }
+            robot.intakeChainDrive.setPower(0);
+
         }
 
 
@@ -258,19 +291,15 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             while(!isStopRequested()) {
 
                 drivePID(.5,0,1,40);
+                turnToAnglePID(-90);
+                drivePID(.5,-90,1, 40);
+                turnToAnglePID(180);
+                drivePID(.5,180,1, 40);
                 turnToAnglePID(90);
                 drivePID(.5,90,1, 40);
-                turnToAnglePID(180);
-                drivePID(.5,180,1, 40);
-                turnToAnglePID(-90);
-                drivePID(.5,-90,1, 40);
                 turnToAnglePID(0);
-                drivePID(.5,0,1, 40);
-                turnToAnglePID(180);
-                drivePID(.5,180,1, 40);
-                turnToAnglePID(-90);
-                drivePID(.5,-90,1, 40);
-                stopDrive();
+                ringIntakeSweep();
+
 
 
 

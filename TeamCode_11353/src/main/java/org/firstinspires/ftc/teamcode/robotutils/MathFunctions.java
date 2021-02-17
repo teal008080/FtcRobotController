@@ -82,33 +82,16 @@ public class MathFunctions {
     }
 */
 
-    public static double getDistance(int sensor){
+    public static double getDistance(){
 
         //Sensor 1 = back
         //Sensor 2 = front
 
-        if(sensor == 2){
-            double distance = robot.dSensorFront.getDistance(DistanceUnit.INCH);
-            return distance;
-        }
-        /*
-        else if(sensor ==2){
-            double distance = robot.dSensorFront.getDistance(DistanceUnit.INCH);
-            return distance;
-        }
-        else if(sensor ==3){
-            double distance = robot.dSensorLeft.getDistance(DistanceUnit.INCH);
-            return distance;
-        }
-        else if(sensor ==4){
-            double distance = robot.dSensorRight.getDistance(DistanceUnit.INCH);
-            return distance;
-        }
 
-         */
-        else{
-            return 0;
-        }
+            double distance = robot.dSensorFront.getDistance(DistanceUnit.INCH);
+            return distance;
+
+
 
     }
 

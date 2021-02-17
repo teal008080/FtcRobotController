@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(0.035, 0, 0.03); //.025
+        MiniPID controllerAngle = new MiniPID(0.021, 0.333, 0.08); //.025
         MiniPID controllerDrive = new MiniPID(0.00, 0, 0.00); //.025
         //Past working values .035, 0, .03
 
@@ -66,24 +66,22 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
 
-        public double getDistance(int sensor){
-            if(sensor == 1){
+        public double getDistance(){
+
                 double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
                 return distance;
-            }
 
-            else{
-                return 0;
-            }
+
+
 
         }
 
-        public void drivePID(double power, double goalAngle, int direction, double goal, int sensor) {//-180 to 180
+        public void drivePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
             double starTime = System.currentTimeMillis();
             controllerDrive.setOutputLimits(-1,1);
             while (true) {
                 double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-                telemetry.addData("Distance",getDistance(2));
+                telemetry.addData("Distance",getDistance());
                 telemetry.update();
                 double y = -direction * power;
                 double x = 0;
@@ -92,7 +90,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.frontrightDrive.setPower(-y + x + z);
                 robot.backleftDrive.setPower(y - x + z);
                 robot.backrightDrive.setPower(-y - x + z);
-                if(getDistance(sensor) <= goal) {
+                if(getDistance() <= goal) {
                     stopDrive();
                     break;
                 }
@@ -109,7 +107,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             controllerDrive.setOutputLimits(-1,1);
             while (true) {
                 double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-                telemetry.addData("Distance",getDistance(2));
+                telemetry.addData("Distance",getDistance());
                 telemetry.update();
                 double y = -direction * power;
                 double x = 0;
@@ -211,8 +209,6 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.backleftDrive.setPower(-error);
 
 
-
-
                 double abserr = Math.abs(getAngle() - goalAngle);
 
                 if(abserr <= robot.tolerancePID){
@@ -237,30 +233,14 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             waitForStart();
             setAngle();
             //Code above here should never change
-            while(isStopRequested() == false) {
+            while(!isStopRequested()) {
 
+                drivePID(.5,0,1,30);
+                turnToAnglePID(-90);
+                drivePID(.5,-90,1,30);
                 turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
-                turnToAnglePID(90);
-                sleep(2000);
+                drivePID(.5,90,1,30);
+
 
 
 

@@ -44,7 +44,7 @@ public class RobotMovement{
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
             double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-            robot.telemetry.addData("Distance", MathFunctions.getDistance(2));
+            robot.telemetry.addData("Distance", MathFunctions.getDistance());
             //telemetry.update();
             double y = -direction * power;
             double x = 0;
@@ -70,14 +70,14 @@ public class RobotMovement{
      * @param goalAngle desired robot angle
      * @param direction 1 = forward, -1 = backwards
      * @param goal distance from wall
-     * @param sensor
+     * @param
      */
-    public static void drivePID(double power, double goalAngle, int direction, double goal, int sensor, Telemetry telemetry) {//-180 to 180
+    public static void drivePID(double power, double goalAngle, int direction, double goal, Telemetry telemetry) {//-180 to 180
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
             double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-            telemetry.addData("Distance", MathFunctions.getDistance(sensor));
+            telemetry.addData("Distance", MathFunctions.getDistance());
             telemetry.update();
             double y = -direction * power;
             double x = 0;
@@ -86,7 +86,7 @@ public class RobotMovement{
             robot.frontrightDrive.setPower(-y + x + z);
             robot.backleftDrive.setPower(y - x + z);
             robot.backrightDrive.setPower(-y - x + z);
-            if (MathFunctions.getDistance(sensor) <= goal) {
+            if (MathFunctions.getDistance() <= goal) {
                 stopDrive();
                 break;
             }
@@ -101,12 +101,12 @@ public class RobotMovement{
 
     }
 
-    public static void drivePIDtime(double power, double goalAngle, int direction, double time, int sensor) {//-180 to 180
+    public static void drivePIDtime(double power, double goalAngle, int direction, double time) {//-180 to 180
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
             double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-            //telemetry.addData("Distance",getDistance(2));
+            //telemetry.addData("Distance",getDistance());
             //telemetry.update();
             double y = -direction * power;
             double x = 0;
@@ -134,7 +134,7 @@ public class RobotMovement{
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
             double correctionZ = controllerAngle.getOutput(getAngle(), 0);
-            double correction = controllerDrive.getOutput(MathFunctions.getDistance(4), goal);
+            double correction = controllerDrive.getOutput(MathFunctions.getDistance(), goal);
             //telemetry.update();
             double y = -1 * power;
             double x = correction;
@@ -143,7 +143,7 @@ public class RobotMovement{
             robot.frontrightDrive.setPower(-y + x + z);
             robot.backleftDrive.setPower(y - x + z);
             robot.backrightDrive.setPower(-y - x + z);
-            if(MathFunctions.getDistance(4) <= goal) {
+            if(MathFunctions.getDistance() <= goal) {
                 stopDrive();
                 break;
             }
@@ -158,7 +158,7 @@ public class RobotMovement{
 
         while (true) {
             double correctionZ = controllerAngle.getOutput(getAngle(), 0);
-            double correction = controllerDrive.getOutput(MathFunctions.getDistance(1), goal);
+            double correction = controllerDrive.getOutput(MathFunctions.getDistance(), goal);
             //telemetry.update();
             double y = -1 * power;
             double x = correction;
@@ -167,7 +167,7 @@ public class RobotMovement{
             robot.frontrightDrive.setPower(-y + x + z);
             robot.backleftDrive.setPower(y - x + z);
             robot.backrightDrive.setPower(-y - x + z);
-            if(MathFunctions.getDistance(1) <= goal) {
+            if(MathFunctions.getDistance() <= goal) {
                 stopDrive();
                 break;
             }
@@ -181,7 +181,7 @@ public class RobotMovement{
         }
     }
 
-    public static void strafePID(double power, double goalAngle, int direction, double goal, int sensor) {//-180 to 180
+    public static void strafePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
         double starTime = System.currentTimeMillis();
         controllerDrive.setOutputLimits(-1,1);
         while (true) {
@@ -197,7 +197,7 @@ public class RobotMovement{
             robot.frontrightDrive.setPower(-y + x + z);
             robot.backleftDrive.setPower(y - x + z);
             robot.backrightDrive.setPower(y - x + z);
-            if (MathFunctions.getDistance(sensor) <= goal){
+            if (MathFunctions.getDistance() <= goal){
                 stopDrive();
                 break;
             }

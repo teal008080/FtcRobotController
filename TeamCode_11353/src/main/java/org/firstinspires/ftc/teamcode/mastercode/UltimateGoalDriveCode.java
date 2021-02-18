@@ -142,7 +142,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
             if (gamepad2.a && !robot.wobbleDown) {
                 if (robot.wobbleSpool.getCurrentPosition() == 0){
                     robot.wobbleGrab.setPosition(40);
-                    robot.wobbleSpool.setTargetPosition(28);
+                    robot.wobbleSpool.setTargetPosition(1140);
 
                 }
                 else {

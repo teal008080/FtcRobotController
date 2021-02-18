@@ -142,7 +142,7 @@ public class UltimategoalHardware {
         backrightDrive.setPower(0);
         intakeChainDrive.setPower(0);
         shooterDrive.setPower(0);
-        //wobbleSpool.setPower(0);
+        wobbleSpool.setPower(.2);
 
         //wobbleGrab.setPosition(0);
         drop.setPosition(.48);

@@ -17,17 +17,17 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-@Autonomous(name="Testing", group="PID")
+@Autonomous(name="Phoenix Auto PID Tuning", group="PID")
 //@Disabled
-public class comp3 extends LinearOpMode {
+public class Pid_Tuning extends LinearOpMode {
 
     public double z_angle;
     public double globalAngle;
     public double deltaAngle;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(0.021, 0.333, 0.08); //.025
-    MiniPID controllerDrive = new MiniPID(0.00, 0, 0.00); //.025
+    MiniPID controllerAngle = new MiniPID(0.019, 0.45, 0.08); //.025
+    MiniPID controllerDrive = new MiniPID(0.00, 0.0, 0.00); //.025
     //Past working values .035, 0, .03
 
     //Ziegler-Nichols standard for starting PID tuning value
@@ -96,6 +96,7 @@ public class comp3 extends LinearOpMode {
         while (true) {
             double correction = controllerDrive.getOutput(getAngle(), goalAngle);
             telemetry.addData("Distance",getDistance());
+            telemetry.addData("Error:", correction);
             telemetry.update();
             double y = -direction * power;
             double x = 0;
@@ -124,15 +125,16 @@ public class comp3 extends LinearOpMode {
         while (true) {
             double correction = controllerDrive.getOutput(getAngle(), goalAngle);
             telemetry.addData("Distance",getDistance());
+            telemetry.addData("Error:", correction);
             telemetry.update();
             double y = -direction * power;
             double x = 0;
             double z = correction;
             z = z * robot.turnFactorPID;
-            robot.frontleftDrive.setPower(y + x + z);
+            robot.frontleftDrive.setPower(y + x - z);
             robot.frontrightDrive.setPower(-y + x + z);
             robot.backleftDrive.setPower(y - x - z);
-            robot.backrightDrive.setPower(-y - x - z);
+            robot.backrightDrive.setPower(-y - x + z);
             if(System.currentTimeMillis()-starTime >= time) {
                 stopDrive();
                 break;
@@ -183,9 +185,9 @@ public class comp3 extends LinearOpMode {
 
 
     public void strafeLeft(double power, long time){
-        robot.frontrightDrive.setPower(-power);
+        robot.frontrightDrive.setPower(power);
         robot.backrightDrive.setPower(power);
-        robot.frontleftDrive.setPower(-power);
+        robot.frontleftDrive.setPower(power);
         robot.backleftDrive.setPower(power);
         sleep(time);
         stopDrive();
@@ -243,19 +245,19 @@ public class comp3 extends LinearOpMode {
     }
     public void launch3shots() {
         robot.shooterDrive.setPower(.75);
-        sleep(5000);
+        sleep(4000);
         robot.triggerServo.setPosition(.55);
-        sleep(200);
+        sleep(140);
         robot.triggerServo.setPosition(.43);
-        sleep(200);
+        sleep(140);
         robot.triggerServo.setPosition(.55);
-        sleep(200);
+        sleep(140);
         robot.triggerServo.setPosition(.43);
-        sleep(200);
+        sleep(140);
         robot.triggerServo.setPosition(.55);
-        sleep(200);
+        sleep(140);
         robot.triggerServo.setPosition(.43);
-
+        robot.shooterDrive.setPower(0);
     }
 
 
@@ -286,12 +288,26 @@ public class comp3 extends LinearOpMode {
         telemetry.addData("Imu Status", robot.imu.getSystemStatus());
         telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
 
+
         waitForStart();
         setAngle();
         //Code above here should never change
         while(!isStopRequested()) {
+            controllerAngle.reset();
+            sleep(5000);
+            turnToAnglePID(90);
+            sleep(1000);
+            turnToAnglePID(90);
+            sleep(1000);
+            turnToAnglePID(90);
+            sleep(1000);
+            turnToAnglePID(90);
+            sleep(1000);
+            turnToAnglePID(90);
+            sleep(1000);
+            turnToAnglePID(90);
+            sleep(1000);
 
-            launch3shots();
 
 
 

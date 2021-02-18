@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-    @Autonomous(name="Phoenix Auto PID Tuning", group="PID")
+    @Autonomous(name="Ultimate Goal Auto Blue, Right Line", group="PID")
 //@Disabled
     public class Comp_Auto_2 extends LinearOpMode {
 

@@ -86,7 +86,7 @@ public class UltimategoalHardware {
     public double     turnFactorPID        = .4;
 
     public double     tolerancePID         = 2;
-    public double     tolerancePID2         = 1;
+    public double     tolerancePID2         = 5;
 
 
 
@@ -145,6 +145,7 @@ public class UltimategoalHardware {
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
         shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
+        intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
 
         triggerServo               =hwMap.get(Servo.class, "trigger");
 
@@ -176,7 +177,8 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        intakeChainDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeChainDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooterDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         triggerServo.setPosition(.43);
 

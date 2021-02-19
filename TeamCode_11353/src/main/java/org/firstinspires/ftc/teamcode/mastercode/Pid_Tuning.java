@@ -26,7 +26,7 @@ public class Pid_Tuning extends LinearOpMode {
     public double deltaAngle;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(0.019, 0.45, 0.08); //.025
+    MiniPID controllerAngle = new MiniPID(40, 2, 8); //.025
     MiniPID controllerDrive = new MiniPID(0.00, 0.0, 0.00); //.025
     //Past working values .035, 0, .03
 
@@ -208,7 +208,7 @@ public class Pid_Tuning extends LinearOpMode {
 
     public void turnToAnglePID(double goalAngle){//-180 to 180
         controllerAngle.setOutputLimits(-1,1);
-        controllerAngle.setOutputRampRate(.2);
+        controllerAngle.setOutputRampRate(.4);
         while (true) {
             getAngle();
             double error = controllerAngle.getOutput(getAngle(), goalAngle);
@@ -294,20 +294,23 @@ public class Pid_Tuning extends LinearOpMode {
         //Code above here should never change
         while(!isStopRequested()) {
             controllerAngle.reset();
-            sleep(5000);
-            turnToAnglePID(90);
-            sleep(1000);
-            turnToAnglePID(90);
-            sleep(1000);
-            turnToAnglePID(90);
-            sleep(1000);
-            turnToAnglePID(90);
-            sleep(1000);
-            turnToAnglePID(90);
+            setAngle();
             sleep(1000);
             turnToAnglePID(90);
             sleep(1000);
 
+
+            turnToAnglePID(-90);
+            sleep(1000);
+            turnToAnglePID(0);
+            sleep(1000);
+            turnToAnglePID(90);
+            sleep(1000);
+
+
+            turnToAnglePID(-90);
+            sleep(1000);
+            turnToAnglePID(0);
 
 
 

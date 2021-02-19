@@ -26,8 +26,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(0.019, 0.45, 0.08); //.025
-        MiniPID controllerDrive = new MiniPID(0.00, 0.0, 0.00); //.025
+        MiniPID controllerAngle = new MiniPID(40, 2,12); //.025
+        MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
         //Ziegler-Nichols standard for starting PID tuning value
@@ -208,7 +208,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         public void turnToAnglePID(double goalAngle){//-180 to 180
             controllerAngle.setOutputLimits(-1,1);
-            controllerAngle.setOutputRampRate(.2);
+            controllerAngle.setOutputRampRate(.4);
             while (true) {
                 getAngle();
                 double error = controllerAngle.getOutput(getAngle(), goalAngle);
@@ -244,7 +244,23 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
         public void launch3shots() {
-            robot.shooterDrive.setPower(.75);
+            robot.shooterDrive.setPower(.90);
+            sleep(4000);
+            robot.triggerServo.setPosition(.55);
+            sleep(140);
+            robot.triggerServo.setPosition(.43);
+            sleep(140);
+            robot.triggerServo.setPosition(.55);
+            sleep(140);
+            robot.triggerServo.setPosition(.43);
+            sleep(140);
+            robot.triggerServo.setPosition(.55);
+            sleep(140);
+            robot.triggerServo.setPosition(.43);
+            robot.shooterDrive.setPower(0);
+        }
+        public void launch3powershots() {
+            robot.shooterDrive.setPower(.70);
             sleep(4000);
             robot.triggerServo.setPosition(.55);
             sleep(140);
@@ -292,26 +308,26 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             setAngle();
             //Code above here should never change
             while(!isStopRequested()) {
-                drivePIDtime(.5,0,-1,500);
+                drivePIDtime(1,0,-1,250);
                 turnToAnglePID(-90);
-                drivePIDtime(.5,-90,1,1000);
-                turnToAnglePID(175);
-                drivePIDtime(.5,175,1,3000);
+                drivePIDtime(1,-90,1,500);
+                turnToAnglePID(160);
+                drivePIDtime(1,160,1,1250);
                 turnToAnglePID(0);
-                launch3shots();
+                launch3powershots();
                 turnToAnglePID(180);
-                drivePIDtime(.5,180,1,1200);
-                strafeLeft(.5,3000);
+                drivePIDtime(1,180,1,600);
+                strafeLeft(1,1500);
                 //Drop wobble
                 turnToAnglePID(0);
                 robot.intakeChainDrive.setPower(1);
-                drivePID(.5,0,1,40);
+                drivePIDtime(1,180,1,2500);
                 robot.intakeChainDrive.setPower(0);
                 turnToAnglePID(180);
-                drivePIDtime(.5,180,1,3000);
+                drivePIDtime(1,180,1,1250);
                 turnToAnglePID(0);
                 launch3shots();
-                drivePIDtime(.5,0,-1,200);
+                drivePIDtime(1,0,-1,100);
 
 
 

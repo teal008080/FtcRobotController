@@ -32,21 +32,13 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
 
 
 @Disabled
@@ -54,34 +46,41 @@ public class UltimategoalHardware {
 
     /* Public OpMode members. */
     public BNO055IMU       imu;
-    public Telemetry telemetry;
-    //public Orientation angles;
 
     public long waittime = 0;
-
 
     public DcMotor  frontleftDrive      = null;
     public DcMotor  frontrightDrive     = null;
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
 
-    //public DistanceSensor dSensorBack   = null;
-    public DistanceSensor dSensorFront  = null;
-    //public DistanceSensor dSensorLeft   = null;
-    //public DistanceSensor dSensorRight  = null;
-
-
     public DcMotor  intakeChainDrive    = null;
-
-
-
     public DcMotor  shooterDrive        = null;
-    public Servo triggerServo             = null;
+
+    public Servo    drop                = null;
+    public Servo    triggerServo             = null;
+
+    public DistanceSensor dSensorBack = null;
+    public DistanceSensor dSensorFront = null;
+
+    public DcMotor wobbleSpool = null;
+    public Servo wobbleGrab = null;
 
 
 
     public int      speedFactor         = 1;
     public int      reverseFactor       = 1;
+
+    public boolean intakeToggle = false;
+    public boolean intake = false;
+
+    public boolean triggerToggle = true;
+    public boolean trigger = false;
+
+    public boolean shooterToggle = true;
+    public boolean shooter = false;
+
+    public boolean wobbleDown = true;
 
     public double     turnFactorPID        = .3;
 
@@ -90,13 +89,13 @@ public class UltimategoalHardware {
 
 
 
+
+
     /*
        We use cad on the team in many different ways. One of those ways is through
        creating custom parts like our auto claw, to maximize the ability of our robot.
        We also use cad to design our schools theatre set and make awards for band.
        With these things we are able to help the extracurriculars. +
-
-
        Not only have we been able to implement cad into our rorbot design for custom parts.
        but weve also been able to implement cad into our fundrasing, outreaching into our
        theatre program and outreaching into our band program to host a fun awards night.
@@ -107,9 +106,7 @@ public class UltimategoalHardware {
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-
-
-    public UltimategoalHardware() {
+    public UltimategoalHardware(){
 
     }
 
@@ -118,25 +115,6 @@ public class UltimategoalHardware {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        //Define and Initialize Sensors
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-
-        parameters.mode                = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled      = false;
-
-        imu = hwMap.get(BNO055IMU.class, "imu");
-        //angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
-
-
-        imu.initialize(parameters);
-
-
-
-
-
 
         // Define and Initialize Motors
 
@@ -144,15 +122,13 @@ public class UltimategoalHardware {
         frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
-        shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
         intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
+        shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
+        //wobbleSpool           = hwMap.get(DcMotor.class, "wobblespool");
 
+        drop                  =hwMap.get(Servo.class, "drop");
         triggerServo               =hwMap.get(Servo.class, "trigger");
-
-        //dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor_back");
-        dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
-        //dSensorLeft        = hwMap.get(DistanceSensor.class, "distance_sensor_left");
-        //dSensorRight      = hwMap.get(DistanceSensor.class, "distance_sensor_right");
+        //wobbleGrab             = hwMap.get(Servo.class, "grab");
 
         intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
         shooterDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -167,8 +143,17 @@ public class UltimategoalHardware {
         frontrightDrive.setPower(0);
         backleftDrive.setPower(0);
         backrightDrive.setPower(0);
-        shooterDrive.setPower(0);
         intakeChainDrive.setPower(0);
+        shooterDrive.setPower(0);
+        wobbleSpool.setPower(1);
+
+        //wobbleGrab.setPosition(0);
+        drop.setPosition(.48);
+        triggerServo.setPosition(.44);
+
+        // dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor");
+        //dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
+
 
 
         // Set all motors to run without encoders.
@@ -177,10 +162,10 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        intakeChainDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shooterDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        triggerServo.setPosition(.43);
+
+        // Chain intake drive
 
 
 

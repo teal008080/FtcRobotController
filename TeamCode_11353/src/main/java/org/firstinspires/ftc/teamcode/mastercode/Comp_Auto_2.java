@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -266,18 +267,17 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeLeft(.2,300);
-
+            strafeLeft(.2,500);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.2,600);
+            strafeRight(.2,1000);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setPower(0);
-            strafeLeft(.2,300);
+            strafeLeft(.2,500);
             sleep(250);
         }
 
@@ -296,6 +296,16 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 turnToAnglePID(0);
             }
             robot.intakeChainDrive.setPower(0);
+
+        }
+
+        public void wobbledrop() {
+            robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.wobbleSpool.setTargetPosition(690);
+            sleep(300);
+            robot.wobbleGrab.setPosition(90);
+
 
         }
 
@@ -328,11 +338,12 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
                 turnToAnglePID(178);
                 sleep(350);
-                turnToAnglePID(0);
-                sleep(350);
+                wobbledrop();
                 turnToAnglePID(0);
 
+
                 strafeLeft(.6,180);
+                sleep(400);
                 robot.intakeChainDrive.setPower(1);
                 sleep(350);
                 drivePIDtime(1,0,1,2000);

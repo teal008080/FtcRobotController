@@ -83,9 +83,9 @@ public class UltimategoalHardware {
     public int      speedFactor         = 1;
     public int      reverseFactor       = 1;
 
-    public double     turnFactorPID        = .5;
+    public double     turnFactorPID        = .6;
 
-    public double     tolerancePID         = 2;
+    public double     tolerancePID         = 1;
     public double     tolerancePID2         = 5;
 
 

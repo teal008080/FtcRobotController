@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(40, 2,12); //.025
+        MiniPID controllerAngle = new MiniPID(5, 3,3); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -196,9 +196,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
         public void strafeRight(double power, long time){
-            robot.frontrightDrive.setPower(power);
+            robot.frontrightDrive.setPower(-power);
             robot.backrightDrive.setPower(-power);
-            robot.frontleftDrive.setPower(power);
+            robot.frontleftDrive.setPower(-power);
             robot.backleftDrive.setPower(-power);
             sleep(time);
             stopDrive();
@@ -208,7 +208,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         public void turnToAnglePID(double goalAngle){//-180 to 180
             controllerAngle.setOutputLimits(-1,1);
-            controllerAngle.setOutputRampRate(.4);
+
             while (true) {
                 getAngle();
                 double error = controllerAngle.getOutput(getAngle(), goalAngle);
@@ -244,7 +244,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
         public void launch3shots() {
-            robot.shooterDrive.setPower(.90);
+            robot.shooterDrive.setPower(.0);
             sleep(4000);
             robot.triggerServo.setPosition(.55);
             sleep(140);
@@ -282,12 +282,12 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.intakeChainDrive.setPower(1);
             while (!isirregular()) {
                 drivePID(.3, 0, 1, 30);
-                turnToAnglePID(-90);
-                drivePID(.3, -90, 1, 30);
+                turnToAnglePID(-0);
+                drivePID(.3, -0, 1, 30);
                 turnToAnglePID(180);
                 drivePID(.3, 180, 1, 30);
-                turnToAnglePID(90);
-                drivePID(.3, 90, 1, 30);
+                turnToAnglePID(0);
+                drivePID(.3, 0, 1, 30);
                 turnToAnglePID(0);
             }
             robot.intakeChainDrive.setPower(0);
@@ -306,27 +306,36 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             waitForStart();
             setAngle();
+
             //Code above here should never change
             while(!isStopRequested()) {
                 drivePIDtime(1,0,-1,250);
-                turnToAnglePID(-90);
-                drivePIDtime(1,-90,1,500);
-                turnToAnglePID(160);
-                drivePIDtime(1,160,1,1250);
-                turnToAnglePID(0);
+                sleep(350);
+                strafeLeft(1,250);
+                sleep(350);
+                drivePIDtime(1,0,-1,800);
+                sleep(350);
                 launch3powershots();
-                turnToAnglePID(180);
-                drivePIDtime(1,180,1,600);
-                strafeLeft(1,1500);
-                //Drop wobble
+                sleep(350);
+                drivePIDtime(1,0,-1,900);
+                sleep(350);
+                strafeRight(1,1100);
+
+                turnToAnglePID(140);
+                sleep(350);
                 turnToAnglePID(0);
+                sleep(350);
+
                 robot.intakeChainDrive.setPower(1);
-                drivePIDtime(1,180,1,2500);
+                sleep(350);
+                drivePIDtime(1,0,1,2500);
+                sleep(350);
                 robot.intakeChainDrive.setPower(0);
-                turnToAnglePID(180);
-                drivePIDtime(1,180,1,1250);
-                turnToAnglePID(0);
+                sleep(350);
+                drivePIDtime(1,0,-1,1250);
+                sleep(350);
                 launch3shots();
+                sleep(350);
                 drivePIDtime(1,0,-1,100);
 
 

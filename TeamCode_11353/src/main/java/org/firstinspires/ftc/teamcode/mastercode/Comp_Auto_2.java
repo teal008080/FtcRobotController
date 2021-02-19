@@ -338,7 +338,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
                 turnToAnglePID(178);
                 sleep(350);
-                wobbledrop();
+                //wobbledrop();
                 turnToAnglePID(0);
 
 

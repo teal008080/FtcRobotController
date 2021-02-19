@@ -142,7 +142,7 @@ public class UltimategoalHardware {
         backrightDrive.setPower(0);
         intakeChainDrive.setPower(0);
         shooterDrive.setPower(0);
-        wobbleSpool.setPower(.2);
+        wobbleSpool.setPower(.3);
 
         //wobbleGrab.setPosition(0);
         drop.setPosition(.48);
@@ -159,8 +159,8 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         // Chain intake drive
 

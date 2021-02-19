@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -138,16 +139,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
             //wobble meche
 
-
+            robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             if (gamepad2.a && !robot.wobbleDown) {
                 if (robot.wobbleSpool.getCurrentPosition() == 0){
-                    robot.wobbleGrab.setPosition(40);
+
                     robot.wobbleSpool.setTargetPosition(1140);
 
                 }
                 else {
                     robot.wobbleSpool.setTargetPosition(0);
-                    robot.wobbleGrab.setPosition(50);
+
 
                 }
                 robot.wobbleDown = true;

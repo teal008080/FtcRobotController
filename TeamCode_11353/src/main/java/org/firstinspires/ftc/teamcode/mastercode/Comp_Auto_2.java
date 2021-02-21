@@ -245,7 +245,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
         public void launch3shots() {
-            robot.shooterDrive.setPower(.75);
+            robot.shooterDrive.setPower(.70);
             sleep(2000);
             robot.triggerServo.setPosition(.55);
             sleep(200);
@@ -261,23 +261,23 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.shooterDrive.setPower(0);
         }
         public void launch3powershots() {
-            robot.shooterDrive.setPower(.67);
+            robot.shooterDrive.setPower(.61);
             sleep(2000);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeLeft(.2,500);
+            turnToAnglePID(8);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.2,1000);
+            turnToAnglePID(-3);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setPower(0);
-            strafeLeft(.2,500);
+            turnToAnglePID(0);
             sleep(250);
         }
 
@@ -301,10 +301,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         public void wobbledrop() {
             robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            robot.wobbleSpool.setTargetPosition(690);
-            sleep(300);
-            robot.wobbleGrab.setPosition(90);
+            robot.wobbleSpool.setPower(1);
+            robot.wobbleSpool.setTargetPosition(1000);
+            robot.wobbleGrab.setPosition(.67);
+            sleep(500);
 
 
         }
@@ -318,7 +318,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.init(hardwareMap);
             telemetry.addData("Imu Status", robot.imu.getSystemStatus());
             telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
-
+            robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.wobbleGrab.setPosition(.4);
             waitForStart();
             setAngle();
 
@@ -338,23 +339,25 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
                 turnToAnglePID(178);
                 sleep(350);
-                //wobbledrop();
-                turnToAnglePID(0);
+                wobbledrop();
+                turnToAnglePID(-2);
 
 
                 strafeLeft(.6,180);
                 sleep(400);
                 robot.intakeChainDrive.setPower(1);
                 sleep(350);
-                drivePIDtime(1,0,1,2000);
+                drivePIDtime(1,-2,1,2000);
                 sleep(350);
+
+                sleep(350);
+
+                drivePIDtime(1,-2,-1,650);
                 robot.intakeChainDrive.setPower(0);
-                sleep(350);
-                drivePIDtime(1,0,-1,650);
                 sleep(350);
                 launch3shots();
                 sleep(350);
-                drivePIDtime(1,0,-1,200);
+                drivePIDtime(1,-2,-1,200);
                 sleep(300);
                 strafeLeft(1,300);
 

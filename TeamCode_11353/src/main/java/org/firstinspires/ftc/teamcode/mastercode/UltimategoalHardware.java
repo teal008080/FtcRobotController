@@ -81,11 +81,13 @@ public class UltimategoalHardware {
     public boolean shooter = false;
 
     public boolean wobbleDown = true;
+    public boolean wobbleopen = true;
 
     public double     turnFactorPID        = .3;
 
     public double     tolerancePID         = 2;
     public double     tolerancePID2         = 5;
+    public double     wobbletolerance       = 30;
 
 
 
@@ -115,7 +117,15 @@ public class UltimategoalHardware {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
+        //Define and Initialize Sensors
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+        imu = hwMap.get(BNO055IMU.class, "imu");
 
+        imu.initialize(parameters);
         // Define and Initialize Motors
 
         frontleftDrive        = hwMap.get(DcMotor.class, "front_left_drive");
@@ -124,11 +134,11 @@ public class UltimategoalHardware {
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
         intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
         shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
-        //wobbleSpool           = hwMap.get(DcMotor.class, "wobblespool");
+        wobbleSpool           = hwMap.get(DcMotor.class, "wobblespool");
 
         drop                  =hwMap.get(Servo.class, "drop");
         triggerServo               =hwMap.get(Servo.class, "trigger");
-        //wobbleGrab             = hwMap.get(Servo.class, "grab");
+        wobbleGrab             = hwMap.get(Servo.class, "grab");
 
         intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
         shooterDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -145,14 +155,15 @@ public class UltimategoalHardware {
         backrightDrive.setPower(0);
         intakeChainDrive.setPower(0);
         shooterDrive.setPower(0);
-        wobbleSpool.setPower(1);
+        wobbleSpool.setPower(0);
 
         //wobbleGrab.setPosition(0);
         drop.setPosition(.48);
         triggerServo.setPosition(.44);
+        wobbleGrab.setPosition(.4);
 
         // dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor");
-        //dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
+        dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
 
 
 
@@ -163,6 +174,7 @@ public class UltimategoalHardware {
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        wobbleSpool.setTargetPosition(0);
 
 
         // Chain intake drive

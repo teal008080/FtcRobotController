@@ -44,7 +44,7 @@ public class RobotMovement{
         controllerDrive.setOutputLimits(-1, 1);
         while (true) {
             double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-            robot.telemetry.addData("Distance", MathFunctions.getDistance());
+
             //telemetry.update();
             double y = -direction * power;
             double x = 0;

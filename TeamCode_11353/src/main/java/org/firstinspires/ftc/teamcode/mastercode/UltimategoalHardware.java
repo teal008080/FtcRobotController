@@ -93,15 +93,7 @@ public class UltimategoalHardware {
 
 
 
-    /*
-       We use cad on the team in many different ways. One of those ways is through
-       creating custom parts like our auto claw, to maximize the ability of our robot.
-       We also use cad to design our schools theatre set and make awards for band.
-       With these things we are able to help the extracurriculars. +
-       Not only have we been able to implement cad into our rorbot design for custom parts.
-       but weve also been able to implement cad into our fundrasing, outreaching into our
-       theatre program and outreaching into our band program to host a fun awards night.
-    */
+
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;

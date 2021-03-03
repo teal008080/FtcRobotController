@@ -267,12 +267,12 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            turnToAnglePID(8);
+            turnToAnglePID(2);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            turnToAnglePID(-3);
+            turnToAnglePID(5);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
@@ -331,11 +331,14 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(350);
                 drivePIDtime(1,0,-1,650);
                 sleep(350);
+                turnToAnglePID(2);
+                sleep(200);
                 launch3powershots();
+
                 sleep(350);
                 drivePIDtime(1,0,-1,1150);
                 sleep(350);
-                strafeRight(.8,1100);
+                strafeRight(.8,1000 );
 
                 turnToAnglePID(178);
                 sleep(350);
@@ -344,6 +347,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
                 strafeLeft(.6,180);
+                turnToAnglePID(0);
                 sleep(400);
                 robot.intakeChainDrive.setPower(1);
                 sleep(350);

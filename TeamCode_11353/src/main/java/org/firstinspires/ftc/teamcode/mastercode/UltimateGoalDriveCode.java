@@ -90,8 +90,14 @@ public class UltimateGoalDriveCode extends OpMode
         //DRIVE FUNCTION BELOW
         robot.frontleftDrive.setPower((Math.pow((y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
         robot.frontrightDrive.setPower((Math.pow((-y + x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-        robot.backleftDrive.setPower((Math.pow((y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
-        robot.backrightDrive.setPower((Math.pow((-y - x) * robot.reverseFactor + z, 3)) / robot.speedFactor);
+        robot.backleftDrive.setPower((Math.pow((y + x) * robot.reverseFactor - z, 3)) / robot.speedFactor);
+        robot.backrightDrive.setPower((Math.pow((-y + x) * robot.reverseFactor - z, 3)) / robot.speedFactor);
+
+        telemetry.addData("LF", robot.frontleftDrive.getPower());
+        telemetry.addData("RF", robot.frontrightDrive.getPower());
+        telemetry.addData("LB", robot.backleftDrive.getPower());
+        telemetry.addData("RB", robot.backrightDrive.getPower());
+
 
         //Intake drive
 

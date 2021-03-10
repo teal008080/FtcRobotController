@@ -218,15 +218,17 @@ public class Pid_Tuning extends LinearOpMode {
             telemetry.addData("Error:", error);
             telemetry.addData("Global Subtract", globalAngle);
             telemetry.addData("Goal", goalAngle);
+            telemetry.addData("Bl", robot.backleftDrive.getPower());
+            telemetry.addData("fl", robot.frontleftDrive.getPower());
             telemetry.update();
 
 
             error = error*robot.turnFactorPID ;
 
             robot.frontrightDrive.setPower(-error);
-            robot.backrightDrive.setPower(error);
+            robot.backrightDrive.setPower(-error);
             robot.frontleftDrive.setPower(-error);
-            robot.backleftDrive.setPower(error);
+            robot.backleftDrive.setPower(-error);
 
 
             double abserr = Math.abs(getAngle() - goalAngle);

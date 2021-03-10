@@ -83,7 +83,7 @@ public class UltimategoalHardware {
     public boolean wobbleDown = true;
     public boolean wobbleopen = true;
 
-    public double     turnFactorPID        = .3;
+    public double     turnFactorPID        = .05;
 
     public double     tolerancePID         = 2;
     public double     tolerancePID2         = 5;
@@ -134,10 +134,11 @@ public class UltimategoalHardware {
 
         intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
         shooterDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        frontleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        frontrightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         backrightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+
 
 
         // Set all motors to zero power
@@ -159,12 +160,17 @@ public class UltimategoalHardware {
 
 
 
+        frontleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setTargetPosition(0);
 

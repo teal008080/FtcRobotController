@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(10, 3,3); //.025
+        MiniPID controllerAngle = new MiniPID(.2, .01,.05); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -187,9 +187,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         public void strafeLeft(double power, long time){
             robot.frontrightDrive.setPower(power);
-            robot.backrightDrive.setPower(power);
+            robot.backrightDrive.setPower(-power);
             robot.frontleftDrive.setPower(power);
-            robot.backleftDrive.setPower(power);
+            robot.backleftDrive.setPower(-power);
             sleep(time);
             stopDrive();
 
@@ -198,9 +198,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         public void strafeRight(double power, long time){
             robot.frontrightDrive.setPower(-power);
-            robot.backrightDrive.setPower(-power);
+            robot.backrightDrive.setPower(power);
             robot.frontleftDrive.setPower(-power);
-            robot.backleftDrive.setPower(-power);
+            robot.backleftDrive.setPower(power);
             sleep(time);
             stopDrive();
 
@@ -225,9 +225,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 error = error*robot.turnFactorPID ;
 
                 robot.frontrightDrive.setPower(-error);
-                robot.backrightDrive.setPower(error);
+                robot.backrightDrive.setPower(-error);
                 robot.frontleftDrive.setPower(-error);
-                robot.backleftDrive.setPower(error);
+                robot.backleftDrive.setPower(-error);
 
 
                 double abserr = Math.abs(getAngle() - goalAngle);
@@ -267,17 +267,17 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            turnToAnglePID(2);
+            strafeLeft(.5,400);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            turnToAnglePID(5);
+            strafeRight(.5,800);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setPower(0);
-            turnToAnglePID(0);
+            strafeLeft(.5,400);
             sleep(250);
         }
 
@@ -327,9 +327,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             while(!isStopRequested()) {
                 drivePIDtime(1,0,-1,250);
                 sleep(350);
-                strafeLeft(.75,300);
+                strafeLeft(.5,600);
                 sleep(350);
-                drivePIDtime(1,0,-1,650);
+                drivePIDtime(1,0,-1,900);
                 sleep(350);
                 turnToAnglePID(2);
                 sleep(200);

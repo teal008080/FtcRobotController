@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(.2, .01,.05); //.025
+        MiniPID controllerAngle = new MiniPID(0, 3,4); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -267,17 +267,17 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeLeft(.5,400);
+            strafeLeft(.5,200);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.5,800);
+            strafeRight(.5,400);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setPower(0);
-            strafeLeft(.5,400);
+            strafeLeft(.5,200);
             sleep(250);
         }
 
@@ -325,11 +325,11 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             //Code above here should never change
             while(!isStopRequested()) {
-                drivePIDtime(1,0,-1,250);
+                drivePIDtime(.8,0,-1,250);
                 sleep(350);
-                strafeLeft(.5,600);
+                strafeLeft(.5,200);
                 sleep(350);
-                drivePIDtime(1,0,-1,900);
+                drivePIDtime(1,0,-1,800);
                 sleep(350);
                 turnToAnglePID(2);
                 sleep(200);
@@ -338,7 +338,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(350);
                 drivePIDtime(1,0,-1,1150);
                 sleep(350);
-                strafeRight(.8,1000 );
+                strafeRight(.8,1100 );
 
                 turnToAnglePID(178);
                 sleep(350);

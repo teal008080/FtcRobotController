@@ -102,9 +102,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 double y = -direction * power;
                 double x = 0;
                 double z = correction;
-                robot.frontleftDrive.setPower(y + x + z);
+                z = z * robot.turnFactorPID;
+                robot.frontleftDrive.setPower(y + x - z);
                 robot.frontrightDrive.setPower(-y + x + z);
-                robot.backleftDrive.setPower(y - x + z);
+                robot.backleftDrive.setPower(y - x - z);
                 robot.backrightDrive.setPower(-y - x + z);
 
                double abserror = Math.abs(getDistance()-goal);
@@ -327,7 +328,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             while(!isStopRequested()) {
                 drivePIDtime(.8,0,-1,250);
                 sleep(350);
-                strafeLeft(.3,300);
+                strafeLeft(.3,600);//
                 sleep(350);
                 drivePIDtime(1,0,-1,800);
                 sleep(350);
@@ -344,7 +345,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(350);
                 wobbledrop();
                 turnToAnglePID(-0);
-
+                robot.drop.setPosition(.6);
 
                 strafeLeft(.6,220);
                 turnToAnglePID(0);

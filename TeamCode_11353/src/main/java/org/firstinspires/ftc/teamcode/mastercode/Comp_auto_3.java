@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -17,17 +18,17 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-@Autonomous(name="Phoenix Auto PID Tuning", group="PID")
+@Autonomous(name="Ultimate Goal Auto Red, Left Line", group="PID")
 //@Disabled
-public class Pid_Tuning extends LinearOpMode {
+public class Comp_auto_3 extends LinearOpMode {
 
     public double z_angle;
     public double globalAngle;
     public double deltaAngle;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(40, 2, 8); //.025
-    MiniPID controllerDrive = new MiniPID(0.00, 0.0, 0.00); //.025
+    MiniPID controllerAngle = new MiniPID(.02, .05,.02); //.025
+    MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
     //Past working values .035, 0, .03
 
     //Ziegler-Nichols standard for starting PID tuning value
@@ -187,17 +188,6 @@ public class Pid_Tuning extends LinearOpMode {
 
     public void strafeLeft(double power, long time){
         robot.frontrightDrive.setPower(power);
-        robot.backrightDrive.setPower(power);
-        robot.frontleftDrive.setPower(power);
-        robot.backleftDrive.setPower(power);
-        sleep(time);
-        stopDrive();
-
-    }
-
-
-    public void strafeRight(double power, long time){
-        robot.frontrightDrive.setPower(power);
         robot.backrightDrive.setPower(-power);
         robot.frontleftDrive.setPower(power);
         robot.backleftDrive.setPower(-power);
@@ -207,9 +197,20 @@ public class Pid_Tuning extends LinearOpMode {
     }
 
 
+    public void strafeRight(double power, long time){
+        robot.frontrightDrive.setPower(-power);
+        robot.backrightDrive.setPower(power);
+        robot.frontleftDrive.setPower(-power);
+        robot.backleftDrive.setPower(power);
+        sleep(time);
+        stopDrive();
+
+    }
+
+
     public void turnToAnglePID(double goalAngle){//-180 to 180
         controllerAngle.setOutputLimits(-1,1);
-        controllerAngle.setOutputRampRate(.4);
+
         while (true) {
             getAngle();
             double error = controllerAngle.getOutput(getAngle(), goalAngle);
@@ -219,8 +220,6 @@ public class Pid_Tuning extends LinearOpMode {
             telemetry.addData("Error:", error);
             telemetry.addData("Global Subtract", globalAngle);
             telemetry.addData("Goal", goalAngle);
-            telemetry.addData("Bl", robot.backleftDrive.getPower());
-            telemetry.addData("fl", robot.frontleftDrive.getPower());
             telemetry.update();
 
 
@@ -247,20 +246,40 @@ public class Pid_Tuning extends LinearOpMode {
 
     }
     public void launch3shots() {
-        robot.shooterDrive.setPower(.75);
-        sleep(4000);
+        robot.shooterDrive.setPower(.78);
+        sleep(2000);
         robot.triggerServo.setPosition(.55);
-        sleep(140);
+        sleep(200);
         robot.triggerServo.setPosition(.43);
-        sleep(140);
+        sleep(200);
         robot.triggerServo.setPosition(.55);
-        sleep(140);
+        sleep(200);
         robot.triggerServo.setPosition(.43);
-        sleep(140);
+        sleep(200);
         robot.triggerServo.setPosition(.55);
-        sleep(140);
+        sleep(200);
         robot.triggerServo.setPosition(.43);
         robot.shooterDrive.setPower(0);
+    }
+    public void launch3powershots() {
+        robot.shooterDrive.setPower(.67);
+        sleep(2000);
+        robot.triggerServo.setPosition(.55);
+        sleep(250);
+        robot.triggerServo.setPosition(.43);
+        sleep(250);
+        strafeLeft(.5,200);
+        robot.triggerServo.setPosition(.55);
+        sleep(250);
+        robot.triggerServo.setPosition(.43);
+        sleep(250);
+        strafeLeft(.5,200);
+        robot.triggerServo.setPosition(.55);
+        sleep(250);
+        robot.triggerServo.setPosition(.43);
+        robot.shooterDrive.setPower(0);
+        strafeRight(.5,200);
+        sleep(250);
     }
 
 
@@ -269,15 +288,25 @@ public class Pid_Tuning extends LinearOpMode {
         robot.intakeChainDrive.setPower(1);
         while (!isirregular()) {
             drivePID(.3, 0, 1, 30);
-            turnToAnglePID(-90);
-            drivePID(.3, -90, 1, 30);
+            turnToAnglePID(-0);
+            drivePID(.3, -0, 1, 30);
             turnToAnglePID(180);
             drivePID(.3, 180, 1, 30);
-            turnToAnglePID(90);
-            drivePID(.3, 90, 1, 30);
+            turnToAnglePID(0);
+            drivePID(.3, 0, 1, 30);
             turnToAnglePID(0);
         }
         robot.intakeChainDrive.setPower(0);
+
+    }
+
+    public void wobbledrop() {
+        robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.wobbleSpool.setPower(1);
+        robot.wobbleSpool.setTargetPosition(1000);
+        robot.wobbleGrab.setPosition(.67);
+        sleep(500);
+
 
     }
 
@@ -290,15 +319,55 @@ public class Pid_Tuning extends LinearOpMode {
         robot.init(hardwareMap);
         telemetry.addData("Imu Status", robot.imu.getSystemStatus());
         telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
-
-
+        robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.wobbleGrab.setPosition(.4);
         waitForStart();
         setAngle();
+
         //Code above here should never change
         while(!isStopRequested()) {
-            controllerAngle.reset();
-            setAngle();
-            drivePIDtime(1,0,1,3000);
+            drivePIDtime(.8,0,-1,250);
+            sleep(350);
+            strafeRight(.3,700);//
+            sleep(350);
+            drivePIDtime(1,0,-1,800);
+            sleep(350);
+            //turnToAnglePID(0);
+            sleep(200);
+            launch3powershots();
+
+            sleep(350);
+            drivePIDtime(1,0,-1,1150);
+            sleep(350);
+            strafeLeft(.8,700 );//
+
+
+            sleep(350);
+            wobbledrop();
+            turnToAnglePID(-0);
+            robot.drop.setPosition(.6);
+
+            strafeRight(.6,220);//
+            turnToAnglePID(0);
+            sleep(400);
+            robot.intakeChainDrive.setPower(1);
+            sleep(350);
+            drivePIDtime(1,-0,1,1800);
+            sleep(350);
+
+            sleep(350);
+
+            drivePIDtime(1,-0,-1,550);
+            robot.intakeChainDrive.setPower(0);
+            sleep(350);
+            launch3shots();
+            sleep(350);
+            drivePIDtime(1,-0,-1,200);
+            sleep(300);
+            strafeRight(1,300);//
+
+
+
 
 
 

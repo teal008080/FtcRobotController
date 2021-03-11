@@ -33,6 +33,7 @@ package org.firstinspires.ftc.teamcode.mastercode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -52,7 +53,7 @@ public class UltimategoalHardware {
     public DcMotor  frontleftDrive      = null;
     public DcMotor  frontrightDrive     = null;
     public DcMotor  backrightDrive      = null;
-    public DcMotor  backleftDrive       = null;
+    public DcMotor backleftDrive       = null;
 
     public DcMotor  intakeChainDrive    = null;
     public DcMotor  shooterDrive        = null;
@@ -164,6 +165,7 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -171,6 +173,7 @@ public class UltimategoalHardware {
         frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setTargetPosition(0);
 

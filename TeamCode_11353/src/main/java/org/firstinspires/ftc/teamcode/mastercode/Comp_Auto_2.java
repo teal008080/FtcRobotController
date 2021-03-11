@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(0, 3,4); //.025
+        MiniPID controllerAngle = new MiniPID(.02, .05,.02); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -245,7 +245,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
         public void launch3shots() {
-            robot.shooterDrive.setPower(.70);
+            robot.shooterDrive.setPower(.78);
             sleep(2000);
             robot.triggerServo.setPosition(.55);
             sleep(200);
@@ -261,18 +261,18 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.shooterDrive.setPower(0);
         }
         public void launch3powershots() {
-            robot.shooterDrive.setPower(.61);
+            robot.shooterDrive.setPower(.67);
             sleep(2000);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeLeft(.5,200);
+            strafeRight(.5,200);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.5,400);
+            strafeRight(.5,200);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
@@ -327,41 +327,41 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             while(!isStopRequested()) {
                 drivePIDtime(.8,0,-1,250);
                 sleep(350);
-                strafeLeft(.5,200);
+                strafeLeft(.3,300);
                 sleep(350);
                 drivePIDtime(1,0,-1,800);
                 sleep(350);
-                turnToAnglePID(2);
+                //turnToAnglePID(0);
                 sleep(200);
                 launch3powershots();
 
                 sleep(350);
                 drivePIDtime(1,0,-1,1150);
                 sleep(350);
-                strafeRight(.8,1100 );
+                strafeRight(.8,700 );
 
                 turnToAnglePID(178);
                 sleep(350);
                 wobbledrop();
-                turnToAnglePID(-2);
+                turnToAnglePID(-0);
 
 
-                strafeLeft(.6,180);
+                strafeLeft(.6,220);
                 turnToAnglePID(0);
                 sleep(400);
                 robot.intakeChainDrive.setPower(1);
                 sleep(350);
-                drivePIDtime(1,-2,1,2000);
+                drivePIDtime(1,-0,1,1800);
                 sleep(350);
 
                 sleep(350);
 
-                drivePIDtime(1,-2,-1,650);
+                drivePIDtime(1,-0,-1,550);
                 robot.intakeChainDrive.setPower(0);
                 sleep(350);
                 launch3shots();
                 sleep(350);
-                drivePIDtime(1,-2,-1,200);
+                drivePIDtime(1,-0,-1,200);
                 sleep(300);
                 strafeLeft(1,300);
 

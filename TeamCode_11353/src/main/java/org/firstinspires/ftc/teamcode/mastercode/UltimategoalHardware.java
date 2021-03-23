@@ -33,13 +33,9 @@ package org.firstinspires.ftc.teamcode.mastercode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 
 
 @Disabled
@@ -48,51 +44,10 @@ public class UltimategoalHardware {
     /* Public OpMode members. */
     public BNO055IMU       imu;
 
-    public long waittime = 0;
-
-    public DcMotor  frontleftDrive      = null;
-    public DcMotor  frontrightDrive     = null;
-    public DcMotor  backrightDrive      = null;
-    public DcMotor backleftDrive       = null;
-
-    public DcMotor  intakeChainDrive    = null;
-    public DcMotor  shooterDrive        = null;
-
-    public Servo    drop                = null;
-    public Servo    triggerServo             = null;
-
-    public DistanceSensor dSensorBack = null;
-    public DistanceSensor dSensorFront = null;
-
-    public DcMotor wobbleSpool = null;
-    public Servo wobbleGrab = null;
-
-
-
-    public int      speedFactor         = 1;
-    public int      reverseFactor       = 1;
-
-    public boolean intakeToggle = false;
-    public boolean intake = false;
-
-    public boolean triggerToggle = true;
-    public boolean trigger = false;
-
-    public boolean shooterToggle = true;
-    public boolean shooter = false;
-
-    public boolean wobbleDown = true;
-    public boolean wobbleopen = true;
-
-    public double     turnFactorPID        = .05;
-
-    public double     tolerancePID         = 2;
-    public double     tolerancePID2         = 5;
-    public double     wobbletolerance       = 30;
-
-
-
-
+    public DcMotor frontleftdrive = null;
+    public DcMotor frontrightdrive = null;
+    public DcMotor backleftdrive = null;
+    public DcMotor Gary = null;
 
 
 
@@ -121,68 +76,25 @@ public class UltimategoalHardware {
         imu.initialize(parameters);
         // Define and Initialize Motors
 
-        frontleftDrive        = hwMap.get(DcMotor.class, "front_left_drive");
-        frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
-        backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
-        backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
-        intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
-        shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
-        wobbleSpool           = hwMap.get(DcMotor.class, "wobblespool");
+        frontleftdrive = hwMap.get(DcMotor.class, "frontleftdrive");
+        frontrightdrive = hwMap.get(DcMotor.class, "frontrightdrive");
+        backleftdrive = hwMap.get(DcMotor.class, "backleftdrive");
+        Gary = hwMap.get(DcMotor.class, "backrightdrive");
 
-        drop                  =hwMap.get(Servo.class, "drop");
-        triggerServo               =hwMap.get(Servo.class, "trigger");
-        wobbleGrab             = hwMap.get(Servo.class, "grab");
+        frontleftdrive.setDirection(DcMotor.Direction.REVERSE);
+        frontrightdrive.setDirection(DcMotor.Direction.REVERSE);
+        backleftdrive.setDirection(DcMotor.Direction.REVERSE);
+        Gary.setDirection(DcMotor.Direction.REVERSE);
 
-        intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
-        shooterDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        frontrightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        backleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        backrightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        frontleftdrive.setPower(0);
+        frontrightdrive.setPower(0);
+        backleftdrive.setPower(0);
+        Gary.setPower(0);
 
-
-
-        // Set all motors to zero power
-        frontleftDrive.setPower(0);
-        frontrightDrive.setPower(0);
-        backleftDrive.setPower(0);
-        backrightDrive.setPower(0);
-        intakeChainDrive.setPower(0);
-        shooterDrive.setPower(0);
-        wobbleSpool.setPower(0);
-
-        //wobbleGrab.setPosition(0);
-        drop.setPosition(.48);
-        triggerServo.setPosition(.44);
-        wobbleGrab.setPosition(.4);
-
-        // dSensorBack        = hwMap.get(DistanceSensor.class, "distance_sensor");
-        dSensorFront      = hwMap.get(DistanceSensor.class, "distance_sensor_front");
-
-
-
-        frontleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooterDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        wobbleSpool.setTargetPosition(0);
-
-
-        // Chain intake drive
-
-
-
-
+        frontleftdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontrightdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backleftdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Gary.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 }

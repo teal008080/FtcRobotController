@@ -332,14 +332,15 @@ public class Comp_auto_3 extends LinearOpMode {
             sleep(350);
             drivePIDtime(1,0,-1,800);
             sleep(350);
-            //turnToAnglePID(0);
+            setAngle();
+            turnToAnglePID(0);
             sleep(200);
             launch3powershots();
 
             sleep(350);
             drivePIDtime(1,0,-1,1150);
             sleep(350);
-            strafeLeft(.8,700 );//
+            strafeLeft(.8,850 );//
 
 
             sleep(350);
@@ -347,7 +348,7 @@ public class Comp_auto_3 extends LinearOpMode {
             turnToAnglePID(-0);
             robot.drop.setPosition(.6);
 
-            strafeRight(.6,220);//
+            strafeRight(.6,300);//
             turnToAnglePID(0);
             sleep(400);
             robot.intakeChainDrive.setPower(1);

@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double deltaAngle;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(.02, .05,.02); //.025
+        MiniPID controllerAngle = new MiniPID(.02, .05, .02); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -42,10 +42,11 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         /**
          * Get current cumulative angle rotation from last reset.
+         *
          * @return Angle in degrees. + = left, - = right from zero point.
          */
 
-        public void setAngle(){
+        public void setAngle() {
             Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             double deltaAngle = angles.firstAngle;
             globalAngle = deltaAngle;
@@ -64,39 +65,34 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
         }
 
-        public boolean isirregular(){
+        public boolean isirregular() {
             boolean irregular = false;
             double starttime = System.currentTimeMillis();
-            double expected = starttime/22;
+            double expected = starttime / 22;
             double current = robot.intakeChainDrive.getCurrentPosition();
             if (expected - current != 0) {
                 irregular = true;
             }
 
 
-          return irregular;
+            return irregular;
         }
 
 
+        public double getDistance() {
 
-
-
-        public double getDistance(){
-
-                double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
-                return distance;
-
-
+            double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
+            return distance;
 
 
         }
 
         public void drivePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
             double starTime = System.currentTimeMillis();
-            controllerDrive.setOutputLimits(-1,1);
+            controllerDrive.setOutputLimits(-1, 1);
             while (true) {
                 double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-                telemetry.addData("Distance",getDistance());
+                telemetry.addData("Distance", getDistance());
                 telemetry.addData("Error:", correction);
                 telemetry.update();
                 double y = -direction * power;
@@ -108,12 +104,12 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.backleftDrive.setPower(y - x - z);
                 robot.backrightDrive.setPower(-y - x + z);
 
-               double abserror = Math.abs(getDistance()-goal);
-                if(abserror <= robot.tolerancePID2) {
+                double abserror = Math.abs(getDistance() - goal);
+                if (abserror <= robot.tolerancePID2) {
                     stopDrive();
                     break;
                 }
-                if(isStopRequested() == true){
+                if (isStopRequested() == true) {
                     stopDrive();
                     stop();
                     break;
@@ -123,10 +119,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         public void drivePIDtime(double power, double goalAngle, int direction, double time) {//-180 to 180
             double starTime = System.currentTimeMillis();
-            controllerDrive.setOutputLimits(-1,1);
+            controllerDrive.setOutputLimits(-1, 1);
             while (true) {
                 double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-                telemetry.addData("Distance",getDistance());
+                telemetry.addData("Distance", getDistance());
                 telemetry.addData("Error:", correction);
                 telemetry.update();
                 double y = -direction * power;
@@ -137,11 +133,11 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.frontrightDrive.setPower(-y + x + z);
                 robot.backleftDrive.setPower(y - x - z);
                 robot.backrightDrive.setPower(-y - x + z);
-                if(System.currentTimeMillis()-starTime >= time) {
+                if (System.currentTimeMillis() - starTime >= time) {
                     stopDrive();
                     break;
                 }
-                if(isStopRequested() == true){
+                if (isStopRequested() == true) {
                     stopDrive();
                     stop();
                     break;
@@ -151,14 +147,14 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         public void strafePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
             double starTime = System.currentTimeMillis();
-            controllerDrive.setOutputLimits(-1,1);
+            controllerDrive.setOutputLimits(-1, 1);
             while (true) {
                 double correction = controllerDrive.getOutput(getAngle(), goalAngle);
                 telemetry.addData("Angle:", getAngle()); //Gives our current pos
                 telemetry.addData("Hot Garb:", correction);
                 telemetry.addData("Global Subtract", globalAngle);
                 telemetry.update();
-                double y = -direction*power;
+                double y = -direction * power;
                 double x = 0;
                 double z = correction;
                 robot.frontleftDrive.setPower(-y + x + z);
@@ -166,7 +162,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.backleftDrive.setPower(y - x + z);
                 robot.backrightDrive.setPower(y - x + z);
 
-                if(isStopRequested() == true){
+                if (isStopRequested() == true) {
                     stopDrive();
                     stop();
                     break;
@@ -175,7 +171,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             }
         }
 
-        public void stopDrive(){
+        public void stopDrive() {
             robot.frontleftDrive.setPower(0);
             robot.frontrightDrive.setPower(0);
             robot.backleftDrive.setPower(0);
@@ -183,29 +179,54 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         }
 
 
+        public void strafeLeft(double power, long time, double goalAngle) {
+            controllerDrive.setOutputLimits(-1, 1);
+            while (true) {
+                double correction = controllerDrive.getOutput(getAngle(), goalAngle);
+
+                telemetry.addData("Hot Garb:", correction);
+
+                double z = correction;
+                double abserror = Math.abs(getAngle() - goalAngle);
+
+                robot.frontrightDrive.setPower(power);
+                robot.backrightDrive.setPower(-power);
+                robot.frontleftDrive.setPower(power);
+                robot.backleftDrive.setPower(-power);
+                sleep(time);
+                stopDrive();
+                if (abserror <= robot.tolerancePID2) {
+                    stopDrive();
+                    break;
+                }
+            }
+        }
 
 
+        public void strafeRight(double power, long time, double goalAngle) {
+            controllerDrive.setOutputLimits(-1,1);
+            while (true) {
+                double correction = controllerAngle.getOutput(getAngle(), goalAngle);
 
-        public void strafeLeft(double power, long time){
-            robot.frontrightDrive.setPower(power);
-            robot.backrightDrive.setPower(-power);
-            robot.frontleftDrive.setPower(power);
-            robot.backleftDrive.setPower(-power);
+                telemetry.addData("Hot Garb:", correction);
+                double z = correction;
+
+                robot.frontrightDrive.setPower(-power + z);
+            robot.backrightDrive.setPower(power + z);
+            robot.frontleftDrive.setPower(-power + z);
+            robot.backleftDrive.setPower(power + z);
+                double abserror = Math.abs(getAngle() - goalAngle);
+                if (abserror <= robot.tolerancePID2) {
+                    stopDrive();
+                    break;
+                }
+
             sleep(time);
             stopDrive();
 
         }
 
-
-        public void strafeRight(double power, long time){
-            robot.frontrightDrive.setPower(-power);
-            robot.backrightDrive.setPower(power);
-            robot.frontleftDrive.setPower(-power);
-            robot.backleftDrive.setPower(power);
-            sleep(time);
-            stopDrive();
-
-        }
+    }
 
 
         public void turnToAnglePID(double goalAngle){//-180 to 180
@@ -268,17 +289,17 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.5,200);
+            strafeRight(.5,200, 0);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.5,200);
+            strafeRight(.5,200, 0);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setPower(0);
-            strafeLeft(.5,200);
+            strafeLeft(.5,200, 0);
             sleep(250);
         }
 
@@ -328,7 +349,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             while(!isStopRequested()) {
                 drivePIDtime(.8,0,-1,250);
                 sleep(350);
-                strafeLeft(.3,600);//
+                strafeLeft(.3,600, 0);//
                 sleep(350);
                 drivePIDtime(1,0,-1,800);
                 sleep(350);
@@ -339,7 +360,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(350);
                 drivePIDtime(1,0,-1,1150);
                 sleep(350);
-                strafeRight(.8,700 );
+                strafeRight(.8,700, 0 );
 
                 turnToAnglePID(178);
                 sleep(350);
@@ -347,7 +368,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 turnToAnglePID(-0);
                 robot.drop.setPosition(.6);
 
-                strafeLeft(.6,220);
+                strafeLeft(.6,220, 0);
                 turnToAnglePID(0);
                 sleep(400);
                 robot.intakeChainDrive.setPower(1);
@@ -364,7 +385,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(350);
                 drivePIDtime(1,-0,-1,200);
                 sleep(300);
-                strafeLeft(1,300);
+                strafeLeft(1,300, 0);
 
 
 

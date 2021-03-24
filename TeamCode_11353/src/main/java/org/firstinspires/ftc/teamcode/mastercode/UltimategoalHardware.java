@@ -48,6 +48,8 @@ public class UltimategoalHardware {
     public DcMotor frontrightdrive = null;
     public DcMotor backleftdrive = null;
     public DcMotor Gary = null;
+    public DcMotor shooter_motor = null;
+
 
 
 
@@ -80,21 +82,25 @@ public class UltimategoalHardware {
         frontrightdrive = hwMap.get(DcMotor.class, "frontrightdrive");
         backleftdrive = hwMap.get(DcMotor.class, "backleftdrive");
         Gary = hwMap.get(DcMotor.class, "backrightdrive");
-
+        shooter_motor = hwMap.get(DcMotor.class, "shooter_motor");
         frontleftdrive.setDirection(DcMotor.Direction.REVERSE);
         frontrightdrive.setDirection(DcMotor.Direction.REVERSE);
         backleftdrive.setDirection(DcMotor.Direction.REVERSE);
         Gary.setDirection(DcMotor.Direction.REVERSE);
+        shooter_motor.setPower(0);
 
         frontleftdrive.setPower(0);
         frontrightdrive.setPower(0);
         backleftdrive.setPower(0);
         Gary.setPower(0);
+        shooter_motor.setPower(0);
 
         frontleftdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontrightdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Gary.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooter_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
     }
 }

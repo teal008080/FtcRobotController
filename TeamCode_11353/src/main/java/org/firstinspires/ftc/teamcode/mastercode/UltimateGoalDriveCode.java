@@ -61,9 +61,25 @@ public class UltimateGoalDriveCode extends OpMode
 
     @Override
     public void loop() {
-        double x = -gamepad1.left_stick_x;
-        double y = gamepad1.right_stick_x;
-        double z = gamepad1.left_stick_y;
+
+        double x = gamepad1.left_stick_x;
+        double y = gamepad1.left_stick_y;
+        robot.frontrightdrive.setPower(y + x);
+        robot.frontleftdrive.setPower(-y + x);
+        robot.backleftdrive.setPower(-y + x);
+        robot.Gary.setPower(y + x);
+
+        boolean button_b = gamepad1.b;
+        if (button_b) {
+            robot.shooter_motor.setPower(.5);
+        } else {
+            robot.shooter_motor.setPower(0);
+        }
+
+
+
+
+
 
 
 

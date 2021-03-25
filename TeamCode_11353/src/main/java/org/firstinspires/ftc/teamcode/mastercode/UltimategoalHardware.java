@@ -33,6 +33,7 @@ package org.firstinspires.ftc.teamcode.mastercode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -49,6 +50,11 @@ public class UltimategoalHardware {
     public DcMotor backleftdrive = null;
     public DcMotor Gary = null;
     public DcMotor shooter_motor = null;
+    public DcMotor intake = null;
+
+
+    public boolean IT = false;
+    public boolean shottog = false;
 
 
 
@@ -83,23 +89,28 @@ public class UltimategoalHardware {
         backleftdrive = hwMap.get(DcMotor.class, "backleftdrive");
         Gary = hwMap.get(DcMotor.class, "backrightdrive");
         shooter_motor = hwMap.get(DcMotor.class, "shooter_motor");
+        intake = hwMap.get(DcMotor.class, "intake");
+
         frontleftdrive.setDirection(DcMotor.Direction.REVERSE);
         frontrightdrive.setDirection(DcMotor.Direction.REVERSE);
         backleftdrive.setDirection(DcMotor.Direction.REVERSE);
         Gary.setDirection(DcMotor.Direction.REVERSE);
-        shooter_motor.setPower(0);
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        shooter_motor.setPower(0);
         frontleftdrive.setPower(0);
         frontrightdrive.setPower(0);
         backleftdrive.setPower(0);
         Gary.setPower(0);
         shooter_motor.setPower(0);
+        intake.setPower(0);
 
         frontleftdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontrightdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Gary.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooter_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }

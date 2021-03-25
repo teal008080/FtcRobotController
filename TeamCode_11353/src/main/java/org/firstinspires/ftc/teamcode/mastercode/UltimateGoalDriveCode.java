@@ -69,12 +69,23 @@ public class UltimateGoalDriveCode extends OpMode
         robot.backleftdrive.setPower(-y + x);
         robot.Gary.setPower(y + x);
 
-        boolean button_b = gamepad1.b;
-        if (button_b) {
-            robot.shooter_motor.setPower(.5);
-        } else {
-            robot.shooter_motor.setPower(0);
-        }
+
+        boolean button_y = gamepad1.y;
+
+        if (button_y && !robot.IT) {
+            if (robot.intake.getPower() == 0) robot.intake.setPower(1);
+            else robot.intake.setPower(0);
+            robot.IT = true;
+        } else if (!button_y) robot.IT = false;
+
+        boolean button_x = gamepad1.x;
+
+        if (button_x && !robot.shottog) {
+            if (robot.intake.getPower() == 0) robot.intake.setPower(1);
+            else robot.intake.setPower(0);
+            robot.shottog = true;
+        } else if (!button_x) robot.shottog = false;
+
 
 
 

@@ -189,16 +189,14 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 double z = correction;
                 double abserror = Math.abs(getAngle() - goalAngle);
 
-                robot.frontrightDrive.setPower(power);
-                robot.backrightDrive.setPower(-power);
-                robot.frontleftDrive.setPower(power);
-                robot.backleftDrive.setPower(-power);
+                robot.frontrightDrive.setPower(power - z);
+                robot.backrightDrive.setPower(-power + z);
+                robot.frontleftDrive.setPower(power + z);
+                robot.backleftDrive.setPower(-power - z);
                 sleep(time);
                 stopDrive();
-                if (abserror <= robot.tolerancePID2) {
-                    stopDrive();
-                    break;
-                }
+                break;
+
             }
         }
 
@@ -211,18 +209,15 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 telemetry.addData("Hot Garb:", correction);
                 double z = correction;
 
-                robot.frontrightDrive.setPower(-power + z);
-            robot.backrightDrive.setPower(power + z);
-            robot.frontleftDrive.setPower(-power + z);
-            robot.backleftDrive.setPower(power + z);
-                double abserror = Math.abs(getAngle() - goalAngle);
-                if (abserror <= robot.tolerancePID2) {
-                    stopDrive();
-                    break;
-                }
+                robot.frontrightDrive.setPower(-power - z);
+                robot.backrightDrive.setPower(power + z);
+                robot.frontleftDrive.setPower(-power + z);
+                robot.backleftDrive.setPower(power - z);
+
 
             sleep(time);
             stopDrive();
+            break;
 
         }
 
@@ -349,7 +344,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             while(!isStopRequested()) {
                 drivePIDtime(.8,0,-1,250);
                 sleep(350);
-                strafeLeft(.3,600, 0);//
+                strafeLeft(.3,600, 0);
+                turnToAnglePID(0);
                 sleep(350);
                 drivePIDtime(1,0,-1,800);
                 sleep(350);

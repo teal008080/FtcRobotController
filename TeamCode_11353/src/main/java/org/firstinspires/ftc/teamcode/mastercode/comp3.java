@@ -291,7 +291,7 @@ public class comp3 extends LinearOpMode {
         //Code above here should never change
         while(!isStopRequested()) {
 
-            launch3shots();
+            strafeLeft(1,1000);
 
 
 

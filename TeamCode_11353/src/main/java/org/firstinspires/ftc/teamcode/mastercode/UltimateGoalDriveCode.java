@@ -118,7 +118,7 @@ public class UltimateGoalDriveCode extends OpMode
             else telemetry.addData("Intake", "Activated");
         } else if (!gamepad2.y) robot.intakeToggle = false;
 
-        double shotspeed = .7;
+        double shotspeed;
         //Shooter code
         if (gamepad1.right_bumper) {
             shotspeed = .63;

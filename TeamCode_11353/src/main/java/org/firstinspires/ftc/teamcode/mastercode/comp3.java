@@ -182,14 +182,25 @@ public class comp3 extends LinearOpMode {
 
 
 
-    public void strafeLeft(double power, long time){
-        robot.frontrightDrive.setPower(-power);
-        robot.backrightDrive.setPower(power);
-        robot.frontleftDrive.setPower(-power);
-        robot.backleftDrive.setPower(power);
-        sleep(time);
-        stopDrive();
+    public void strafeLeft(double power, long time, double goalAngle) {
+        controllerDrive.setOutputLimits(-1, 1);
+        while (true) {
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
 
+            telemetry.addData("Hot Garb:", correction);
+
+            double z = correction;
+            double abserror = Math.abs(getAngle() - goalAngle);
+
+            robot.frontrightDrive.setPower(power - z);
+            robot.backrightDrive.setPower(-power + z);
+            robot.frontleftDrive.setPower(power + z);
+            robot.backleftDrive.setPower(-power - z);
+            sleep(time);
+            stopDrive();
+            break;
+
+        }
     }
 
 
@@ -291,7 +302,7 @@ public class comp3 extends LinearOpMode {
         //Code above here should never change
         while(!isStopRequested()) {
 
-            strafeLeft(1,1000);
+            strafeLeft(1,2000, 0);
 
 
 

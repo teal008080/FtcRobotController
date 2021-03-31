@@ -278,8 +278,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.shooterDrive.setPower(0);
         }
         public void launch3powershots() {
-            robot.shooterDrive.setPower(.67);
-            sleep(2000);
+            robot.shooterDrive.setPower(.65);
+            sleep(2500);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
@@ -342,46 +342,27 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             //Code above here should never change
             while(!isStopRequested()) {
-                drivePIDtime(.8,0,-1,250);
-                sleep(350);
-                strafeLeft(.3,600, 0);
+                drivePIDtime(.6,0,-1,500);
+                sleep(400);
+                strafeLeft(.55,500, 0);
                 turnToAnglePID(0);
-                sleep(350);
-                drivePIDtime(1,0,-1,800);
+                sleep(400);
+                drivePIDtime(1,0,-1,700);
                 sleep(350);
                 //turnToAnglePID(0);
                 sleep(200);
                 launch3powershots();
 
-                sleep(350);
-                drivePIDtime(1,0,-1,1150);
-                sleep(350);
-                strafeRight(.8,700, 0 );
-
-                turnToAnglePID(178);
-                sleep(350);
-                wobbledrop();
-                turnToAnglePID(-0);
-                robot.drop.setPosition(.6);
-
-                strafeLeft(.6,220, 0);
-                turnToAnglePID(0);
-                sleep(400);
+                strafeRight(.8,800,0);
                 robot.intakeChainDrive.setPower(1);
-                sleep(350);
-                drivePIDtime(1,-0,1,1800);
-                sleep(350);
-
-                sleep(350);
-
-                drivePIDtime(1,-0,-1,550);
-                robot.intakeChainDrive.setPower(0);
-                sleep(350);
-                launch3shots();
-                sleep(350);
-                drivePIDtime(1,-0,-1,200);
+                drivePIDtime(.6,0,1,1000);
                 sleep(300);
-                strafeLeft(1,300, 0);
+                drivePIDtime(.6, 0,-1,800);
+                sleep(300);
+                launch3shots();
+                sleep(300);
+                drivePIDtime(.2,0,1,300);
+                strafeLeft(.5,400,0);
 
 
 

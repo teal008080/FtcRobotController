@@ -359,6 +359,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(300);
                 drivePIDtime(.6, 0,-1,800);
                 sleep(300);
+                robot.intakeChainDrive.setPower(0);
                 launch3shots();
                 sleep(300);
                 drivePIDtime(.2,0,1,300);

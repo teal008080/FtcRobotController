@@ -230,10 +230,10 @@ public class comp3 extends LinearOpMode {
 
     }
     public void setPow(double power){
-        robot.backrightDrive.setPower(power);
-        robot.backleftDrive.setPower(power);
-        robot.frontleftDrive.setPower(power);
-        robot.frontrightDrive.setPower(power);
+        robot.backrightDrive.setVelocity(power);
+        robot.backleftDrive.setVelocity(power);
+        robot.frontleftDrive.setVelocity(power);
+        robot.frontrightDrive.setVelocity(power);
 
     }
 
@@ -294,6 +294,8 @@ public class comp3 extends LinearOpMode {
         robot.init(hardwareMap);
         telemetry.addData("Imu Status", robot.imu.getSystemStatus());
         telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
+        robot.frontleftDrive.setDirection(DcMotor.Direction.FORWARD);
+        robot.backleftDrive.setDirection(DcMotor.Direction.FORWARD);
         double i = 0;
 
         waitForStart();
@@ -304,16 +306,16 @@ public class comp3 extends LinearOpMode {
 
             reset();
             robot.backrightDrive.setTargetPosition(10);
-            robot.backleftDrive.setTargetPosition(10);
-            robot.frontleftDrive.setTargetPosition(10);
+            robot.backleftDrive.setTargetPosition(-10);
+            robot.frontleftDrive.setTargetPosition(-10);
             robot.frontrightDrive.setTargetPosition(10);
             setcondom();
-            setPow(.1);
+            setPow(20);
 
-        while (opModeIsActive() && robot.backleftDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
+        while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
         {
             i += 1;
-            telemetry.addData("encoder-back-left", robot.backleftDrive.getCurrentPosition() + "  busy=" + robot.backleftDrive.isBusy());
+            telemetry.addData("encoder-back-left", robot.frontrightDrive.getCurrentPosition() + "  busy=" + robot.frontrightDrive.isBusy());
             telemetry.addData("I", i);
 
             telemetry.update();

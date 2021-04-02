@@ -32,8 +32,8 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -50,13 +50,13 @@ public class UltimategoalHardware {
 
     public long waittime = 0;
 
-    public DcMotor  frontleftDrive      = null;
-    public DcMotor  frontrightDrive     = null;
-    public DcMotor  backrightDrive      = null;
-    public DcMotor backleftDrive       = null;
+    public DcMotorEx  frontleftDrive      = null;
+    public DcMotorEx  frontrightDrive     = null;
+    public DcMotorEx  backrightDrive      = null;
+    public DcMotorEx backleftDrive       = null;
 
-    public DcMotor  intakeChainDrive    = null;
-    public DcMotor  shooterDrive        = null;
+    public DcMotorEx  intakeChainDrive    = null;
+    public DcMotorEx  shooterDrive        = null;
 
     public Servo    drop                = null;
     public Servo    triggerServo             = null;
@@ -64,7 +64,7 @@ public class UltimategoalHardware {
     public DistanceSensor dSensorBack = null;
     public DistanceSensor dSensorFront = null;
 
-    public DcMotor wobbleSpool = null;
+    public DcMotorEx wobbleSpool = null;
     public Servo wobbleGrab = null;
 
 
@@ -123,24 +123,24 @@ public class UltimategoalHardware {
         imu.initialize(parameters);
         // Define and Initialize Motors
 
-        frontleftDrive        = hwMap.get(DcMotor.class, "front_left_drive");
-        frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
-        backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
-        backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
-        intakeChainDrive      = hwMap.get(DcMotor.class, "chain_drive");
-        shooterDrive          = hwMap.get(DcMotor.class, "shooter_drive");
-        wobbleSpool           = hwMap.get(DcMotor.class, "wobblespool");
+        frontleftDrive        = hwMap.get(DcMotorEx.class, "front_left_drive");
+        frontrightDrive       = hwMap.get(DcMotorEx.class, "front_right_drive");
+        backleftDrive         = hwMap.get(DcMotorEx.class, "back_left_drive");
+        backrightDrive        = hwMap.get(DcMotorEx.class, "back_right_drive");
+        intakeChainDrive      = hwMap.get(DcMotorEx.class, "chain_drive");
+        shooterDrive          = hwMap.get(DcMotorEx.class, "shooter_drive");
+        wobbleSpool           = hwMap.get(DcMotorEx.class, "wobblespool");
 
         drop                  =hwMap.get(Servo.class, "drop");
         triggerServo               =hwMap.get(Servo.class, "trigger");
         wobbleGrab             = hwMap.get(Servo.class, "grab");
 
-        intakeChainDrive.setDirection(DcMotor.Direction.REVERSE);
-        shooterDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        frontrightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        backleftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        backrightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        intakeChainDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        shooterDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        frontleftDrive.setDirection(DcMotorEx.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        frontrightDrive.setDirection(DcMotorEx.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        backleftDrive.setDirection(DcMotorEx.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        backrightDrive.setDirection(DcMotorEx.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
 
 
@@ -163,26 +163,26 @@ public class UltimategoalHardware {
 
 
 
-        frontleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooterDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontleftDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontrightDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backleftDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backrightDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        shooterDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
 
         /*
-        frontleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontleftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontrightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backleftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backrightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
          */
 
 
-        shooterDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        wobbleSpool.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setTargetPosition(0);
 
 

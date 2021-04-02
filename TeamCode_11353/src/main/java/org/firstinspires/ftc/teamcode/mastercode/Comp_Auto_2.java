@@ -73,7 +73,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
 
-        public void setMode() {
+        public void setCondom() {
             robot.backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.backleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -124,8 +124,6 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             int pos;
             pos = (int) (distance * robot.clickMult);
             reset();
-            setMode();
-            setPow(power);
             if (direction == 0){
                 robot.backrightDrive.setTargetPosition(pos);
                 robot.backleftDrive.setTargetPosition(pos);
@@ -154,6 +152,22 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             }
 
+
+            setCondom();
+            setPow(power);
+
+            while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
+            {
+
+                telemetry.addData("Front Right Position", robot.frontrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontrightDrive.isBusy());
+                telemetry.addData("Front Left Position", robot.frontleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontleftDrive.isBusy());
+                telemetry.addData("Back Right Position", robot.backrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backrightDrive.isBusy());
+                telemetry.addData("Back Left Position", robot.backleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backleftDrive.isBusy());
+
+
+                telemetry.update();
+
+            }
 
 
 
@@ -440,9 +454,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 strafeLeft(.5,500,0);
                     */
 
-                driveByClicks(20,0,.8);
+                driveByClicks(24,2,.8);
                 sleep(300);
-                driveByClicks(20,1,.8);
+                driveByClicks(20,3,.8);
                 sleep(300);
                 driveByClicks(20,2,.8);
                 sleep(300);

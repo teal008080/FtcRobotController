@@ -114,18 +114,7 @@ public class auto4 extends LinearOpMode {
 
     }
 
-    public boolean isirregular() {
-        boolean irregular = false;
-        double starttime = System.currentTimeMillis();
-        double expected = starttime / 22;
-        double current = robot.intakeChainDrive.getCurrentPosition();
-        if (expected - current != 0) {
-            irregular = true;
-        }
 
-
-        return irregular;
-    }
 
 
     public double getDistance() {

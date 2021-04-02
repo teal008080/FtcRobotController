@@ -80,11 +80,24 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         }
-        public void setPow(double power){
-            robot.backrightDrive.setPower(power);
-            robot.backleftDrive.setPower(power);
-            robot.frontleftDrive.setPower(power);
-            robot.frontrightDrive.setPower(power);
+        public void setVel(double vel){
+            robot.backrightDrive.setVelocity(vel);
+            robot.backleftDrive.setVelocity(vel);
+            robot.frontleftDrive.setVelocity(vel);
+            robot.frontrightDrive.setVelocity(vel);
+
+        }
+        public void setVelWithError(double vel, double goalAngle){
+            double error;
+            controllerAngle.setOutputLimits(-25*robot.clickMult,25*robot.clickMult);
+            error = controllerAngle.getOutput(getAngle(),goalAngle);
+
+
+
+            robot.backrightDrive.setVelocity(vel+error);
+            robot.backleftDrive.setVelocity(vel-error);
+            robot.frontleftDrive.setVelocity(vel-error);
+            robot.frontrightDrive.setVelocity(vel+error);
 
         }
 
@@ -120,14 +133,14 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         }
 
 
-        public void driveByClicks(int distance, double direction, double power){
+        public void driveByClicks(int distance, double direction, double vel){
             int pos;
             pos = (int) (distance * robot.clickMult);
             reset();
             if (direction == 0){
                 robot.backrightDrive.setTargetPosition(pos);
-                robot.backleftDrive.setTargetPosition(pos);
-                robot.frontleftDrive.setTargetPosition(pos);
+                robot.backleftDrive.setTargetPosition(-pos);
+                robot.frontleftDrive.setTargetPosition(-pos);
                 robot.frontrightDrive.setTargetPosition(pos);
             }
             if (direction == 1){
@@ -139,8 +152,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             }
             if (direction == 2){
                 robot.backrightDrive.setTargetPosition(-pos);
-                robot.backleftDrive.setTargetPosition(-pos);
-                robot.frontleftDrive.setTargetPosition(-pos);
+                robot.backleftDrive.setTargetPosition(pos);
+                robot.frontleftDrive.setTargetPosition(pos);
                 robot.frontrightDrive.setTargetPosition(-pos);
 
             }
@@ -152,9 +165,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             }
 
-
+            vel = vel*robot.clickMult;
             setCondom();
-            setPow(power);
+            setVel(vel);
+
 
             while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
@@ -168,6 +182,61 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 telemetry.update();
 
             }
+            setVel(0);
+
+
+
+        }
+        public void driveByClicksPID(int distance, double direction, double vel, double goalAngle){
+            int pos;
+            pos = (int) (distance * robot.clickMult);
+            reset();
+            if (direction == 0){
+                robot.backrightDrive.setTargetPosition(pos);
+                robot.backleftDrive.setTargetPosition(-pos);
+                robot.frontleftDrive.setTargetPosition(-pos);
+                robot.frontrightDrive.setTargetPosition(pos);
+            }
+            if (direction == 1){
+                robot.backrightDrive.setTargetPosition(pos);
+                robot.backleftDrive.setTargetPosition(pos);
+                robot.frontleftDrive.setTargetPosition(-pos);
+                robot.frontrightDrive.setTargetPosition(-pos);
+
+            }
+            if (direction == 2){
+                robot.backrightDrive.setTargetPosition(-pos);
+                robot.backleftDrive.setTargetPosition(pos);
+                robot.frontleftDrive.setTargetPosition(pos);
+                robot.frontrightDrive.setTargetPosition(-pos);
+
+            }
+            if (direction == 3){
+                robot.backrightDrive.setTargetPosition(-pos);
+                robot.backleftDrive.setTargetPosition(-pos);
+                robot.frontleftDrive.setTargetPosition(pos);
+                robot.frontrightDrive.setTargetPosition(pos);
+
+            }
+
+            vel = vel*robot.clickMult;
+            setCondom();
+            setVel(vel);
+
+
+            while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
+            {
+                setVelWithError(vel, goalAngle);
+                telemetry.addData("Front Right Position", robot.frontrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontrightDrive.isBusy());
+                telemetry.addData("Front Left Position", robot.frontleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontleftDrive.isBusy());
+                telemetry.addData("Back Right Position", robot.backrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backrightDrive.isBusy());
+                telemetry.addData("Back Left Position", robot.backleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backleftDrive.isBusy());
+
+
+                telemetry.update();
+
+            }
+            setVel(0);
 
 
 
@@ -370,17 +439,17 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.5,200, 0);
+            driveByClicks(7,1,6);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            strafeRight(.5,200, 0);
+            driveByClicks(7,1,6);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setPower(0);
-            strafeLeft(.5,200, 0);
+
             sleep(250);
         }
 
@@ -454,21 +523,27 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 strafeLeft(.5,500,0);
                     */
 
-                driveByClicks(24,2,.8);
+                driveByClicksPID(24,2,35,0);
                 sleep(300);
-                driveByClicks(20,3,.8);
+                driveByClicksPID(20,3,35,0);
                 sleep(300);
-                driveByClicks(20,2,.8);
+                driveByClicksPID(32,2,35,0);
                 sleep(300);
-                driveByClicks(20,3,.8);
+                launch3powershots();
                 sleep(300);
-                driveByClicks(20,0,.8);
+                driveByClicksPID(17,1,35,0);
                 sleep(300);
-                driveByClicks(20,1,.8);
+                robot.intakeChainDrive.setPower(1);
                 sleep(300);
-                driveByClicks(20,2,.8);
+                driveByClicksPID(38,0,35,0);
                 sleep(300);
-                driveByClicks(20,3,.8);
+                driveByClicksPID(38,2,35,0);
+                sleep(300);
+                robot.intakeChainDrive.setPower(0);
+                launch3shots();
+                driveByClicksPID(6,2,35,0);
+                sleep(300);
+                driveByClicksPID(10,3,35,0);
                 sleep(300);
 
 

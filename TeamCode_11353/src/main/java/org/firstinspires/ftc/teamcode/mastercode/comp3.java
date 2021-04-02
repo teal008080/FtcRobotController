@@ -294,8 +294,7 @@ public class comp3 extends LinearOpMode {
         robot.init(hardwareMap);
         telemetry.addData("Imu Status", robot.imu.getSystemStatus());
         telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
-        robot.frontleftDrive.setDirection(DcMotor.Direction.FORWARD);
-        robot.backleftDrive.setDirection(DcMotor.Direction.FORWARD);
+
         double i = 0;
 
         waitForStart();
@@ -305,12 +304,12 @@ public class comp3 extends LinearOpMode {
         //Code above here should never change
 
             reset();
-            robot.backrightDrive.setTargetPosition(10);
-            robot.backleftDrive.setTargetPosition(-10);
-            robot.frontleftDrive.setTargetPosition(-10);
-            robot.frontrightDrive.setTargetPosition(10);
+            robot.backrightDrive.setTargetPosition((int) (20*robot.clickMult));
+            robot.backleftDrive.setTargetPosition(-(int) (20*robot.clickMult));
+            robot.frontleftDrive.setTargetPosition(-(int) (20*robot.clickMult));
+            robot.frontrightDrive.setTargetPosition((int) (20*robot.clickMult));
             setcondom();
-            setPow(20);
+            setPow(45*robot.clickMult);
 
         while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
         {

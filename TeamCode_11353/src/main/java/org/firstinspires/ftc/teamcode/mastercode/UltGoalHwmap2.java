@@ -43,7 +43,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @Disabled
-public class UltimategoalHardware {
+public class UltGoalHwmap2 {
 
     /* Public OpMode members. */
     public BNO055IMU       imu;
@@ -103,9 +103,6 @@ public class UltimategoalHardware {
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public UltimategoalHardware(){
-
-    }
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
@@ -172,13 +169,13 @@ public class UltimategoalHardware {
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
 
-        /*
+
         frontleftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         frontrightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         backleftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         backrightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-         */
+
 
 
         shooterDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);

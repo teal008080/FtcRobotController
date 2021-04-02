@@ -20,7 +20,7 @@ public class UltimateGoalDriveCode extends OpMode
 
 
     //Creates new robot
-    UltimategoalHardware robot       = new UltimategoalHardware();
+    UltGoalHwmap2 robot       = new UltGoalHwmap2();
 
     /**
      * Code to run ONCE when the driver hits INIT

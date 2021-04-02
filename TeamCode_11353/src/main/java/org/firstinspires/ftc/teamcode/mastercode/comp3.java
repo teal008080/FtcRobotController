@@ -5,6 +5,8 @@ package org.firstinspires.ftc.teamcode.mastercode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -63,18 +65,7 @@ public class comp3 extends LinearOpMode {
         return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
     }
 
-    public boolean isirregular(){
-        boolean irregular = false;
-        double starttime = System.currentTimeMillis();
-        double expected = starttime/22;
-        double current = robot.intakeChainDrive.getCurrentPosition();
-        if (expected - current != 0) {
-            irregular = true;
-        }
 
-
-        return irregular;
-    }
 
 
 
@@ -90,60 +81,9 @@ public class comp3 extends LinearOpMode {
 
     }
 
-    public void drivePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
-        double starTime = System.currentTimeMillis();
-        controllerDrive.setOutputLimits(-1,1);
-        while (true) {
-            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-            telemetry.addData("Distance",getDistance());
-            telemetry.update();
-            double y = -direction * power;
-            double x = 0;
-            double z = correction;
-            robot.frontleftDrive.setPower(y + x + z);
-            robot.frontrightDrive.setPower(-y + x + z);
-            robot.backleftDrive.setPower(y - x + z);
-            robot.backrightDrive.setPower(-y - x + z);
 
-            double abserror = Math.abs(getDistance()-goal);
-            if(abserror <= robot.tolerancePID2) {
-                stopDrive();
-                break;
-            }
-            if(isStopRequested() == true){
-                stopDrive();
-                stop();
-                break;
-            }
-        }
-    }
 
-    public void drivePIDtime(double power, double goalAngle, int direction, double time) {//-180 to 180
-        double starTime = System.currentTimeMillis();
-        controllerDrive.setOutputLimits(-1,1);
-        while (true) {
-            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-            telemetry.addData("Distance",getDistance());
-            telemetry.update();
-            double y = -direction * power;
-            double x = 0;
-            double z = correction;
-            z = z * robot.turnFactorPID;
-            robot.frontleftDrive.setPower(y + x + z);
-            robot.frontrightDrive.setPower(-y + x + z);
-            robot.backleftDrive.setPower(y - x - z);
-            robot.backrightDrive.setPower(-y - x - z);
-            if(System.currentTimeMillis()-starTime >= time) {
-                stopDrive();
-                break;
-            }
-            if(isStopRequested() == true){
-                stopDrive();
-                stop();
-                break;
-            }
-        }
-    }
+
 
     public void strafePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
         double starTime = System.currentTimeMillis();
@@ -271,19 +211,77 @@ public class comp3 extends LinearOpMode {
 
 
     //Assumes the robot is at the side to the left of the blue tower, looking at the tower. Facing the back wall.
-    public void ringIntakeSweep() {
-        robot.intakeChainDrive.setPower(1);
-        while (!isirregular()) {
-            drivePID(.3, 0, 1, 30);
-            turnToAnglePID(-90);
-            drivePID(.3, -90, 1, 30);
-            turnToAnglePID(180);
-            drivePID(.3, 180, 1, 30);
-            turnToAnglePID(90);
-            drivePID(.3, 90, 1, 30);
-            turnToAnglePID(0);
+
+
+
+    public void reset() {
+        robot.backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+    }
+
+    public void setcondom() {
+        robot.backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    }
+    public void setPow(double power){
+        robot.backrightDrive.setPower(power);
+        robot.backleftDrive.setPower(power);
+        robot.frontleftDrive.setPower(power);
+        robot.frontrightDrive.setPower(power);
+
+    }
+
+    public void setPos(int pos){
+        robot.backrightDrive.setTargetPosition(pos);
+        robot.backleftDrive.setTargetPosition(-pos);
+        robot.frontleftDrive.setTargetPosition(-pos);
+        robot.frontrightDrive.setTargetPosition(pos);
+
+
+    }
+
+    public void driveByClicks(int distance, double direction, double power){
+        int pos;
+        pos = (int) (distance * robot.clickMult);
+        reset();
+        setcondom();
+        setPow(power);
+        if (direction == 0){
+            robot.backrightDrive.setTargetPosition(pos);
+            robot.backleftDrive.setTargetPosition(pos);
+            robot.frontleftDrive.setTargetPosition(pos);
+            robot.frontrightDrive.setTargetPosition(pos);
         }
-        robot.intakeChainDrive.setPower(0);
+        if (direction == 1){
+            robot.backrightDrive.setTargetPosition(pos);
+            robot.backleftDrive.setTargetPosition(pos);
+            robot.frontleftDrive.setTargetPosition(-pos);
+            robot.frontrightDrive.setTargetPosition(-pos);
+
+        }
+        if (direction == 2){
+            robot.backrightDrive.setTargetPosition(-pos);
+            robot.backleftDrive.setTargetPosition(-pos);
+            robot.frontleftDrive.setTargetPosition(-pos);
+            robot.frontrightDrive.setTargetPosition(-pos);
+
+        }
+        if (direction == 3){
+            robot.backrightDrive.setTargetPosition(-pos);
+            robot.backleftDrive.setTargetPosition(-pos);
+            robot.frontleftDrive.setTargetPosition(pos);
+            robot.frontrightDrive.setTargetPosition(pos);
+
+        }
+
+
+
 
     }
 
@@ -292,30 +290,41 @@ public class comp3 extends LinearOpMode {
 
 
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
         robot.init(hardwareMap);
         telemetry.addData("Imu Status", robot.imu.getSystemStatus());
         telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
+        double i = 0;
 
         waitForStart();
-        setAngle();
+
+
+
         //Code above here should never change
-        while(!isStopRequested()) {
 
-            strafeLeft(1,2000, 0);
+            reset();
+            robot.backrightDrive.setTargetPosition(10);
+            robot.backleftDrive.setTargetPosition(10);
+            robot.frontleftDrive.setTargetPosition(10);
+            robot.frontrightDrive.setTargetPosition(10);
+            setcondom();
+            setPow(.1);
 
+        while (opModeIsActive() && robot.backleftDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
+        {
+            i += 1;
+            telemetry.addData("encoder-back-left", robot.backleftDrive.getCurrentPosition() + "  busy=" + robot.backleftDrive.isBusy());
+            telemetry.addData("I", i);
 
-
-
-
+            telemetry.update();
+            idle();
+        }
+        setPow(0);
 
 
             // Dont put code below here
-            stopDrive();
-            break;
-        }
-        stopDrive();
-        stop();
+
+
     }
 }
 

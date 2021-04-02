@@ -65,6 +65,38 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
         }
 
+        public void reset() {
+            robot.backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.frontleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        }
+
+        public void setMode() {
+            robot.backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        }
+        public void setPow(double power){
+            robot.backrightDrive.setPower(power);
+            robot.backleftDrive.setPower(power);
+            robot.frontleftDrive.setPower(power);
+            robot.frontrightDrive.setPower(power);
+
+        }
+
+        public void setPos(int pos){
+            robot.backrightDrive.setTargetPosition(pos);
+            robot.backleftDrive.setTargetPosition(pos);
+            robot.frontleftDrive.setTargetPosition(pos);
+            robot.frontrightDrive.setTargetPosition(pos);
+
+
+        }
+
         public boolean isirregular() {
             boolean irregular = false;
             double starttime = System.currentTimeMillis();
@@ -83,6 +115,46 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
             return distance;
+
+
+        }
+
+
+        public void driveByClicks(int distance, double direction, double power){
+            int pos;
+            pos = (int) (distance * robot.clickMult);
+            reset();
+            setMode();
+            setPow(power);
+            if (direction == 0){
+                robot.backrightDrive.setTargetPosition(pos);
+                robot.backleftDrive.setTargetPosition(pos);
+                robot.frontleftDrive.setTargetPosition(pos);
+                robot.frontrightDrive.setTargetPosition(pos);
+            }
+            if (direction == 1){
+                robot.backrightDrive.setTargetPosition(pos);
+                robot.backleftDrive.setTargetPosition(pos);
+                robot.frontleftDrive.setTargetPosition(-pos);
+                robot.frontrightDrive.setTargetPosition(-pos);
+
+            }
+            if (direction == 2){
+                robot.backrightDrive.setTargetPosition(-pos);
+                robot.backleftDrive.setTargetPosition(-pos);
+                robot.frontleftDrive.setTargetPosition(-pos);
+                robot.frontrightDrive.setTargetPosition(-pos);
+
+            }
+            if (direction == 3){
+                robot.backrightDrive.setTargetPosition(-pos);
+                robot.backleftDrive.setTargetPosition(-pos);
+                robot.frontleftDrive.setTargetPosition(pos);
+                robot.frontrightDrive.setTargetPosition(pos);
+
+            }
+
+
 
 
         }
@@ -342,12 +414,14 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
             //Code above here should never change
             while(!isStopRequested()) {
-                drivePIDtime(.6,0,-1,500);
+
+                /*
+                drivePIDtime(.45,0,-1,500);
                 sleep(400);
-                strafeLeft(.55,500, 0);
+                strafeLeft(.50,500, 0);
                 turnToAnglePID(0);
                 sleep(400);
-                drivePIDtime(1,0,-1,700);
+                drivePIDtime(1,0,-1,600);
                 sleep(350);
                 //turnToAnglePID(0);
                 sleep(200);
@@ -362,8 +436,27 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.intakeChainDrive.setPower(0);
                 launch3shots();
                 sleep(300);
-                drivePIDtime(.2,0,1,300);
-                strafeLeft(.5,400,0);
+                drivePIDtime(.2,0,-1,300);
+                strafeLeft(.5,500,0);
+                    */
+
+                driveByClicks(20,0,.8);
+                sleep(300);
+                driveByClicks(20,1,.8);
+                sleep(300);
+                driveByClicks(20,2,.8);
+                sleep(300);
+                driveByClicks(20,3,.8);
+                sleep(300);
+                driveByClicks(20,0,.8);
+                sleep(300);
+                driveByClicks(20,1,.8);
+                sleep(300);
+                driveByClicks(20,2,.8);
+                sleep(300);
+                driveByClicks(20,3,.8);
+                sleep(300);
+
 
 
 

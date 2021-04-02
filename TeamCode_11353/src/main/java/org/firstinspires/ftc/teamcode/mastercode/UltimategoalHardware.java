@@ -90,6 +90,8 @@ public class UltimategoalHardware {
     public double     tolerancePID2         = 5;
     public double     wobbletolerance       = 30;
 
+    public double       clickMult           = 56.35;
+
 
 
 
@@ -169,10 +171,16 @@ public class UltimategoalHardware {
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
+
+        /*
         frontleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+         */
+
+
         shooterDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setTargetPosition(0);

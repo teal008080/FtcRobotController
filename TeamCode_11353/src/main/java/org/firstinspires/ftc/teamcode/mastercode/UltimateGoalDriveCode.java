@@ -121,16 +121,16 @@ public class UltimateGoalDriveCode extends OpMode
         double shotspeed;
         //Shooter code
         if (gamepad1.right_bumper) {
-            shotspeed = .68;
+            shotspeed = 50*robot.clickMult;
         }   else {
-            shotspeed = .73;
+            shotspeed = 80*robot.clickMult;
         }
 
         if (gamepad2.x && !robot.shooterToggle) {
-            if (robot.shooterDrive.getPower() == 0) robot.shooterDrive.setPower(shotspeed);
-            else robot.shooterDrive.setPower(0);
+            if (robot.shooterDrive.getVelocity() == 0) robot.shooterDrive.setVelocity(shotspeed);
+            else robot.shooterDrive.setVelocity(0);
             robot.shooterToggle = true;
-            if (robot.shooterDrive.getPower() == 0) telemetry.addData("Shooter", "Deactivated");
+            if (robot.shooterDrive.getVelocity() == 0) telemetry.addData("Shooter", "Deactivated");
             else telemetry.addData("Shooter", "Activated");
         } else if (!gamepad2.x) robot.shooterToggle = false;
 

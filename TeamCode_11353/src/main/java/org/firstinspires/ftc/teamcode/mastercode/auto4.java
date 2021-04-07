@@ -29,7 +29,7 @@ public class auto4 extends LinearOpMode {
     public double deltaAngle;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(10, .05, 3); //.025
+    MiniPID controllerAngle = new MiniPID(100, .00, 0); //.025
     MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
     //Past working values .035, 0, .03
 
@@ -100,17 +100,40 @@ public class auto4 extends LinearOpMode {
 
 
     }
-    public void setVelWithError(double vel, double goalAngle){
+    public void setVelWithError(double vel, double goalAngle, double direction){
 
-        controllerAngle.setOutputLimits(-25*robot.clickMult,25*robot.clickMult);
+        controllerAngle.setOutputLimits(-50*robot.clickMult,50*robot.clickMult);
         error = controllerAngle.getOutput(getAngle(),goalAngle);
 
+        if (direction == 0){
+            robot.backrightDrive.setVelocity(vel-error);
+            robot.backleftDrive.setVelocity(vel+error);
+            robot.frontleftDrive.setVelocity(vel+error);
+            robot.frontrightDrive.setVelocity(vel-error);
+        }
+        if (direction == 1){
+            robot.backrightDrive.setVelocity(vel-error);
+            robot.backleftDrive.setVelocity(vel-error);
+            robot.frontleftDrive.setVelocity(vel+error);
+            robot.frontrightDrive.setVelocity(vel+error);
+
+        }
+        if (direction == 2){
+            robot.backrightDrive.setVelocity(vel+error);
+            robot.backleftDrive.setVelocity(vel-error);
+            robot.frontleftDrive.setVelocity(vel-error);
+            robot.frontrightDrive.setVelocity(vel+error);
+
+        }
+        if (direction == 3){
+            robot.backrightDrive.setVelocity(vel+error);
+            robot.backleftDrive.setVelocity(vel+error);
+            robot.frontleftDrive.setVelocity(vel-error);
+            robot.frontrightDrive.setVelocity(vel-error);
+
+        }
 
 
-        robot.backrightDrive.setVelocity(vel-error);
-        robot.backleftDrive.setVelocity(vel+error);
-        robot.frontleftDrive.setVelocity(vel+error);
-        robot.frontrightDrive.setVelocity(vel-error);
 
     }
 
@@ -164,7 +187,7 @@ public class auto4 extends LinearOpMode {
 
         while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
         {
-            setVelWithError(vel, goalAngle);
+            setVelWithError(vel, goalAngle, direction);
             telemetry.addData("Front Right Position", robot.frontrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontrightDrive.isBusy());
             telemetry.addData("Front Left Position", robot.frontleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontleftDrive.isBusy());
             telemetry.addData("Back Right Position", robot.backrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backrightDrive.isBusy());
@@ -373,7 +396,9 @@ public class auto4 extends LinearOpMode {
         //Code above here should never change
         while(!isStopRequested()) {
 
-              driveByClicksPID(100,0,20,90);
+              driveByClicksPID(500,1,30,0);
+              sleep(500);
+              driveByClicksPID(500,3,30,0);
 
 
 

@@ -25,9 +25,11 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double z_angle;
         public double globalAngle;
         public double deltaAngle;
+        public double error;
+        public boolean busy = true;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(.02, .05, .02); //.025
+        MiniPID controllerAngle = new MiniPID(100, .00, .00); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -87,17 +89,40 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.frontrightDrive.setVelocity(vel);
 
         }
-        public void setVelWithError(double vel, double goalAngle){
-            double error;
-            controllerAngle.setOutputLimits(-25*robot.clickMult,25*robot.clickMult);
+        public void setVelWithError(double vel, double goalAngle, double direction){
+
+            controllerAngle.setOutputLimits(-50*robot.clickMult,50*robot.clickMult);
             error = controllerAngle.getOutput(getAngle(),goalAngle);
 
+            if (direction == 0){
+                robot.backrightDrive.setVelocity(vel-error);
+                robot.backleftDrive.setVelocity(vel+error);
+                robot.frontleftDrive.setVelocity(vel+error);
+                robot.frontrightDrive.setVelocity(vel-error);
+            }
+            if (direction == 1){
+                robot.backrightDrive.setVelocity(vel-error);
+                robot.backleftDrive.setVelocity(vel-error);
+                robot.frontleftDrive.setVelocity(vel+error);
+                robot.frontrightDrive.setVelocity(vel+error);
+
+            }
+            if (direction == 2){
+                robot.backrightDrive.setVelocity(vel+error);
+                robot.backleftDrive.setVelocity(vel-error);
+                robot.frontleftDrive.setVelocity(vel-error);
+                robot.frontrightDrive.setVelocity(vel+error);
+
+            }
+            if (direction == 3){
+                robot.backrightDrive.setVelocity(vel+error);
+                robot.backleftDrive.setVelocity(vel+error);
+                robot.frontleftDrive.setVelocity(vel-error);
+                robot.frontrightDrive.setVelocity(vel-error);
+
+            }
 
 
-            robot.backrightDrive.setVelocity(vel+error);
-            robot.backleftDrive.setVelocity(vel-error);
-            robot.frontleftDrive.setVelocity(vel-error);
-            robot.frontrightDrive.setVelocity(vel+error);
 
         }
 
@@ -224,21 +249,54 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             setVel(vel);
 
 
-            while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
+            while (opModeIsActive() && motorsBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                setVelWithError(vel, goalAngle);
+
+
+                setVelWithError(vel, goalAngle, direction);
                 telemetry.addData("Front Right Position", robot.frontrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontrightDrive.isBusy());
                 telemetry.addData("Front Left Position", robot.frontleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontleftDrive.isBusy());
                 telemetry.addData("Back Right Position", robot.backrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backrightDrive.isBusy());
                 telemetry.addData("Back Left Position", robot.backleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backleftDrive.isBusy());
-
+                telemetry.addData("Error", error);
+                telemetry.addData("angel", getAngle());
 
                 telemetry.update();
+
+
+
+                if(!robot.frontrightDrive.isBusy()){
+                    robot.frontrightDrive.setVelocity(0);
+                }
+                if(!robot.backrightDrive.isBusy()){
+                    robot.backrightDrive.setVelocity(0);
+                }
+                if(!robot.frontleftDrive.isBusy()){
+                    robot.frontleftDrive.setVelocity(0);
+                }
+                if(!robot.backleftDrive.isBusy()){
+                    robot.backleftDrive.setVelocity(0);
+                }
+
+
 
             }
             setVel(0);
 
 
+
+
+        }
+
+        public boolean motorsBusy(){
+            if(!robot.backleftDrive.isBusy()&&!robot.frontrightDrive.isBusy()&&!robot.frontleftDrive.isBusy()&&!robot.backrightDrive.isBusy()){
+                busy = false;
+            }   else{
+                busy = true;
+            }
+
+
+            return busy;
 
         }
 
@@ -541,9 +599,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(300);
                 robot.intakeChainDrive.setPower(0);
                 launch3shots();
-                driveByClicksPID(6,2,35,0);
+                driveByClicksPID(12,2,35,0);
                 sleep(300);
-                driveByClicksPID(10,3,35,0);
+                driveByClicksPID(20,3,35,0);
                 sleep(300);
 
 

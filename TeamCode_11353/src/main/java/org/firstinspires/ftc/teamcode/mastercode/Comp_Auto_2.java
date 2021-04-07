@@ -29,7 +29,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public boolean busy = true;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(200, .00, 2.0); //.025
+        MiniPID controllerAngle = new MiniPID(175, .00, 100.0); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -505,12 +505,12 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            driveByClicks(7,1,6);
+            driveByClicks(8,1,6);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            driveByClicks(7,1,6);
+            driveByClicks(8,1,6);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
@@ -577,29 +577,29 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 strafeLeft(.5,500,0);
                     */
 
-                driveByClicksPID(24,2,35,0);
+                driveByClicksPID(24,2,40,0);
                 sleep(300);
-                driveByClicksPID(20,3,35,0);
+                driveByClicksPID(20,3,40,0);
                 sleep(300);
-                driveByClicksPID(35,2,35,0);
+                driveByClicksPID(35,2,40,0);
                 turnToAnglePID(0);
                 sleep(300);
                 launch3powershots();
                 sleep(300);
-                driveByClicksPID(17,1,35,0);
+                driveByClicksPID(17,1,40,0);
                 sleep(300);
                 robot.intakeChainDrive.setPower(1);
                 sleep(300);
-                driveByClicksPID(19,0,35,0);
+                driveByClicksPID(19,0,40,0);
                 sleep(300);
-                driveByClicksPID(19,2,35,0);
+                driveByClicksPID(19,2,40,0);
                 sleep(300);
                 robot.intakeChainDrive.setPower(0);
                 turnToAnglePID(0);
                 launch3shots();
-                driveByClicksPID(15,2,35,0);
+                driveByClicksPID(15,2,40,0);
                 sleep(300);
-                driveByClicksPID(20,3,35,0);
+                driveByClicksPID(20,3,40,0);
                 turnToAnglePID(0);
                 sleep(300);
 

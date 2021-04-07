@@ -29,7 +29,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public boolean busy = true;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(100, .00, .00); //.025
+        MiniPID controllerAngle = new MiniPID(200, .00, 2.0); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -75,11 +75,19 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
 
-        public void setCondom() {
+        public void setRunToPosition() {
             robot.backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.backleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        }
+
+        public void setRunUsingEncoder() {
+            robot.backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
         public void setVel(double vel){
@@ -191,7 +199,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             }
 
             vel = vel*robot.clickMult;
-            setCondom();
+            setRunToPosition();
             setVel(vel);
 
 
@@ -245,7 +253,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             }
 
             vel = vel*robot.clickMult;
-            setCondom();
+            setRunToPosition();
             setVel(vel);
 
 
@@ -438,7 +446,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
         public void turnToAnglePID(double goalAngle){//-180 to 180
-            controllerAngle.setOutputLimits(-1,1);
+            reset();
+            setRunUsingEncoder();
+
+            controllerAngle.setOutputLimits(-50*robot.clickMult,50*robot.clickMult);
 
             while (true) {
                 getAngle();
@@ -452,21 +463,18 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 telemetry.update();
 
 
-                error = error*robot.turnFactorPID ;
-
-                robot.frontrightDrive.setPower(-error);
-                robot.backrightDrive.setPower(-error);
-                robot.frontleftDrive.setPower(-error);
-                robot.backleftDrive.setPower(-error);
 
 
-                double abserr = Math.abs(getAngle() - goalAngle);
+                robot.frontrightDrive.setVelocity(-error);
+                robot.backrightDrive.setVelocity(-error);
+                robot.frontleftDrive.setVelocity(-error);
+                robot.backleftDrive.setVelocity(-error);
 
-                if(abserr <= robot.tolerancePID){
-                    robot.frontrightDrive.setPower(0);
-                    robot.backrightDrive.setPower(0);
-                    robot.frontleftDrive.setPower(0);
-                    robot.backleftDrive.setPower(0);
+
+
+
+                if(getAngle()== goalAngle){
+                    setVel(0);
                     break;
                 }
 
@@ -475,7 +483,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
         public void launch3shots() {
-            robot.shooterDrive.setPower(.78);
+            robot.shooterDrive.setPower(.73);
             sleep(2000);
             robot.triggerServo.setPosition(.55);
             sleep(200);
@@ -491,7 +499,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.shooterDrive.setPower(0);
         }
         public void launch3powershots() {
-            robot.shooterDrive.setPower(.65);
+            robot.shooterDrive.setPower(.68);
             sleep(2500);
             robot.triggerServo.setPosition(.55);
             sleep(250);
@@ -513,21 +521,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
         //Assumes the robot is at the side to the left of the blue tower, looking at the tower. Facing the back wall.
-        public void ringIntakeSweep() {
-            robot.intakeChainDrive.setPower(1);
-            while (!isirregular()) {
-                drivePID(.3, 0, 1, 30);
-                turnToAnglePID(-0);
-                drivePID(.3, -0, 1, 30);
-                turnToAnglePID(180);
-                drivePID(.3, 180, 1, 30);
-                turnToAnglePID(0);
-                drivePID(.3, 0, 1, 30);
-                turnToAnglePID(0);
-            }
-            robot.intakeChainDrive.setPower(0);
 
-        }
+
+
 
         public void wobbledrop() {
             robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -585,7 +581,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(300);
                 driveByClicksPID(20,3,35,0);
                 sleep(300);
-                driveByClicksPID(32,2,35,0);
+                driveByClicksPID(35,2,35,0);
+                turnToAnglePID(0);
                 sleep(300);
                 launch3powershots();
                 sleep(300);
@@ -593,15 +590,17 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(300);
                 robot.intakeChainDrive.setPower(1);
                 sleep(300);
-                driveByClicksPID(38,0,35,0);
+                driveByClicksPID(19,0,35,0);
                 sleep(300);
-                driveByClicksPID(38,2,35,0);
+                driveByClicksPID(19,2,35,0);
                 sleep(300);
                 robot.intakeChainDrive.setPower(0);
+                turnToAnglePID(0);
                 launch3shots();
-                driveByClicksPID(12,2,35,0);
+                driveByClicksPID(15,2,35,0);
                 sleep(300);
                 driveByClicksPID(20,3,35,0);
+                turnToAnglePID(0);
                 sleep(300);
 
 

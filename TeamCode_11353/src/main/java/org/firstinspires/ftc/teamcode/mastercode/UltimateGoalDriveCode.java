@@ -121,9 +121,9 @@ public class UltimateGoalDriveCode extends OpMode
         double shotspeed;
         //Shooter code
         if (gamepad1.right_bumper) {
-            shotspeed = .63;
+            shotspeed = .68;
         }   else {
-            shotspeed = .7;
+            shotspeed = .73;
         }
 
         if (gamepad2.x && !robot.shooterToggle) {

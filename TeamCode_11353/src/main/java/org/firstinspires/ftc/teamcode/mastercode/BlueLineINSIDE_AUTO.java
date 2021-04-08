@@ -182,7 +182,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
         }
-        public void driveByClicksPID(int distance, double direction, double vel, double goalAngle){
+        public void driveByClicksPID(double distance, double direction, double vel, double goalAngle){
             int pos;
             pos = (int) (distance * robot.clickMult);
             reset();
@@ -340,12 +340,12 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            driveByClicks(8,1,6);
+            driveByClicksPID(7.5,1,6,0);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
             sleep(250);
-            driveByClicks(8,1,6);
+            driveByClicksPID(7.5,1,6,0);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
@@ -398,7 +398,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 sleep(300);
                 launch3powershots();
                 sleep(300);
-                driveByClicksPID(17,1,40,0);
+                driveByClicksPID(16,1,40,0);
                 sleep(300);
                 robot.intakeChainDrive.setPower(1);
                 sleep(300);

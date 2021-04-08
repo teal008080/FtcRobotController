@@ -91,6 +91,7 @@ public class UltGoalHwmap2 {
     public double     wobbletolerance       = 30;
 
     public double       clickMult           = 62.61;
+    public double       clickMultCM           = 24.64;
 
 
 

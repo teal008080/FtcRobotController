@@ -28,18 +28,9 @@ public class TESTING extends LinearOpMode {
     public double deltaAngle;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(0.021, 0.333, 0.08); //.025
-    MiniPID controllerDrive = new MiniPID(0.00, 0, 0.00); //.025
-    //Past working values .035, 0, .03
+    MiniPID controllerAngle = new MiniPID(0.021, 0.333, 0.08);
+    MiniPID controllerDrive = new MiniPID(0.00, 0, 0.00);
 
-    //Ziegler-Nichols standard for starting PID tuning value
-    //Kcr = Proportional gain that causes steady osscillation (.04)
-    //Pcr = Period of Kcr's Oscillation (measured in seconds) (1.4s) T
-    //In a full PID system:
-    //Proportional: .8Kcr
-    //Derivative: (Ku*Tu)/10
-
-    // called when init button is  pressed.
 
     /**
      * Get current cumulative angle rotation from last reset.
@@ -53,10 +44,6 @@ public class TESTING extends LinearOpMode {
     }
 
     public double getAngle() {
-        // We experimentally determined the Z axis is the axis we want to use for heading angle.
-        // We have to process the angle because the imu works in euler angles so the Z axis is
-        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
-        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
         Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
@@ -67,50 +54,6 @@ public class TESTING extends LinearOpMode {
 
 
 
-
-
-
-
-    public double getDistance(){
-
-        double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
-        return distance;
-
-
-
-
-    }
-
-
-
-
-
-    public void strafePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
-        double starTime = System.currentTimeMillis();
-        controllerDrive.setOutputLimits(-1,1);
-        while (true) {
-            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-            telemetry.addData("Angle:", getAngle()); //Gives our current pos
-            telemetry.addData("Hot Garb:", correction);
-            telemetry.addData("Global Subtract", globalAngle);
-            telemetry.update();
-            double y = -direction*power;
-            double x = 0;
-            double z = correction;
-            robot.frontleftDrive.setPower(-y + x + z);
-            robot.frontrightDrive.setPower(-y + x + z);
-            robot.backleftDrive.setPower(y - x + z);
-            robot.backrightDrive.setPower(y - x + z);
-
-            if(isStopRequested() == true){
-                stopDrive();
-                stop();
-                break;
-            }
-
-        }
-    }
-
     public void stopDrive(){
         robot.frontleftDrive.setPower(0);
         robot.frontrightDrive.setPower(0);
@@ -118,41 +61,6 @@ public class TESTING extends LinearOpMode {
         robot.backrightDrive.setPower(0);
     }
 
-
-
-
-
-    public void strafeLeft(double power, long time, double goalAngle) {
-        controllerDrive.setOutputLimits(-1, 1);
-        while (true) {
-            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-
-            telemetry.addData("Hot Garb:", correction);
-
-            double z = correction;
-            double abserror = Math.abs(getAngle() - goalAngle);
-
-            robot.frontrightDrive.setPower(power - z);
-            robot.backrightDrive.setPower(-power + z);
-            robot.frontleftDrive.setPower(power + z);
-            robot.backleftDrive.setPower(-power - z);
-            sleep(time);
-            stopDrive();
-            break;
-
-        }
-    }
-
-
-    public void strafeRight(double power, long time){
-        robot.frontrightDrive.setPower(power);
-        robot.backrightDrive.setPower(-power);
-        robot.frontleftDrive.setPower(power);
-        robot.backleftDrive.setPower(-power);
-        sleep(time);
-        stopDrive();
-
-    }
 
 
     public void turnToAnglePID(double goalAngle){//-180 to 180
@@ -210,9 +118,6 @@ public class TESTING extends LinearOpMode {
     }
 
 
-    //Assumes the robot is at the side to the left of the blue tower, looking at the tower. Facing the back wall.
-
-
 
     public void reset() {
         robot.backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -222,7 +127,7 @@ public class TESTING extends LinearOpMode {
 
     }
 
-    public void setcondom() {
+    public void setModeRunTo() {
         robot.backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -250,7 +155,7 @@ public class TESTING extends LinearOpMode {
         int pos;
         pos = (int) (distance * robot.clickMult);
         reset();
-        setcondom();
+        setModeRunTo();
         setPow(power);
         if (direction == 0){
             robot.backrightDrive.setTargetPosition(pos);
@@ -280,13 +185,7 @@ public class TESTING extends LinearOpMode {
 
         }
 
-
-
-
     }
-
-
-
 
 
     @Override
@@ -308,7 +207,7 @@ public class TESTING extends LinearOpMode {
             robot.backleftDrive.setTargetPosition(-(int) (20*robot.clickMult));
             robot.frontleftDrive.setTargetPosition(-(int) (20*robot.clickMult));
             robot.frontrightDrive.setTargetPosition((int) (20*robot.clickMult));
-            setcondom();
+            setModeRunTo();
             setPow(45*robot.clickMult);
 
         while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())

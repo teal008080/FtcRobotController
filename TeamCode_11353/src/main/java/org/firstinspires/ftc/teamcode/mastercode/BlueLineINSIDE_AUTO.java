@@ -32,22 +32,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         MiniPID controllerAngle = new MiniPID(150, .00, 20); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
-        //Past working values .035, 0, .03
 
-        //Ziegler-Nichols standard for starting PID tuning value
-        //Kcr = Proportional gain that causes steady osscillation (.04)
-        //Pcr = Period of Kcr's Oscillation (measured in seconds) (1.4s) T
-        //In a full PID system:
-        //Proportional: .8Kcr
-        //Derivative: (Ku*Tu)/10
-
-        // called when init button is  pressed.
-
-        /**
-         * Get current cumulative angle rotation from last reset.
-         *
-         * @return Angle in degrees. + = left, - = right from zero point.
-         */
 
         public void setAngle() {
             Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -56,10 +41,6 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         }
 
         public double getAngle() {
-            // We experimentally determined the Z axis is the axis we want to use for heading angle.
-            // We have to process the angle because the imu works in euler angles so the Z axis is
-            // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
-            // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
             Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
@@ -144,27 +125,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
 
-        public boolean isirregular() {
-            boolean irregular = false;
-            double starttime = System.currentTimeMillis();
-            double expected = starttime / 22;
-            double current = robot.intakeChainDrive.getCurrentPosition();
-            if (expected - current != 0) {
-                irregular = true;
-            }
 
-
-            return irregular;
-        }
-
-
-        public double getDistance() {
-
-            double distance = robot.dSensorFront.getDistance(DistanceUnit.CM);
-            return distance;
-
-
-        }
 
 
         public void driveByClicks(int distance, double direction, double vel){
@@ -309,90 +270,6 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
 
-        public void drivePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
-            double starTime = System.currentTimeMillis();
-            controllerDrive.setOutputLimits(-1, 1);
-            while (true) {
-                double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-                telemetry.addData("Distance", getDistance());
-                telemetry.addData("Error:", correction);
-                telemetry.update();
-                double y = -direction * power;
-                double x = 0;
-                double z = correction;
-                z = z * robot.turnFactorPID;
-                robot.frontleftDrive.setPower(y + x - z);
-                robot.frontrightDrive.setPower(-y + x + z);
-                robot.backleftDrive.setPower(y - x - z);
-                robot.backrightDrive.setPower(-y - x + z);
-
-                double abserror = Math.abs(getDistance() - goal);
-                if (abserror <= robot.tolerancePID2) {
-                    stopDrive();
-                    break;
-                }
-                if (isStopRequested() == true) {
-                    stopDrive();
-                    stop();
-                    break;
-                }
-            }
-        }
-
-        public void drivePIDtime(double power, double goalAngle, int direction, double time) {//-180 to 180
-            double starTime = System.currentTimeMillis();
-            controllerDrive.setOutputLimits(-1, 1);
-            while (true) {
-                double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-                telemetry.addData("Distance", getDistance());
-                telemetry.addData("Error:", correction);
-                telemetry.update();
-                double y = -direction * power;
-                double x = 0;
-                double z = correction;
-                z = z * robot.turnFactorPID;
-                robot.frontleftDrive.setPower(y + x - z);
-                robot.frontrightDrive.setPower(-y + x + z);
-                robot.backleftDrive.setPower(y - x - z);
-                robot.backrightDrive.setPower(-y - x + z);
-                if (System.currentTimeMillis() - starTime >= time) {
-                    stopDrive();
-                    break;
-                }
-                if (isStopRequested() == true) {
-                    stopDrive();
-                    stop();
-                    break;
-                }
-            }
-        }
-
-        public void strafePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
-            double starTime = System.currentTimeMillis();
-            controllerDrive.setOutputLimits(-1, 1);
-            while (true) {
-                double correction = controllerDrive.getOutput(getAngle(), goalAngle);
-                telemetry.addData("Angle:", getAngle()); //Gives our current pos
-                telemetry.addData("Hot Garb:", correction);
-                telemetry.addData("Global Subtract", globalAngle);
-                telemetry.update();
-                double y = -direction * power;
-                double x = 0;
-                double z = correction;
-                robot.frontleftDrive.setPower(-y + x + z);
-                robot.frontrightDrive.setPower(-y + x + z);
-                robot.backleftDrive.setPower(y - x + z);
-                robot.backrightDrive.setPower(y - x + z);
-
-                if (isStopRequested() == true) {
-                    stopDrive();
-                    stop();
-                    break;
-                }
-
-            }
-        }
-
         public void stopDrive() {
             robot.frontleftDrive.setPower(0);
             robot.frontrightDrive.setPower(0);
@@ -401,49 +278,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         }
 
 
-        public void strafeLeft(double power, long time, double goalAngle) {
-            controllerDrive.setOutputLimits(-1, 1);
-            while (true) {
-                double correction = controllerDrive.getOutput(getAngle(), goalAngle);
 
-                telemetry.addData("Hot Garb:", correction);
-
-                double z = correction;
-                double abserror = Math.abs(getAngle() - goalAngle);
-
-                robot.frontrightDrive.setPower(power - z);
-                robot.backrightDrive.setPower(-power + z);
-                robot.frontleftDrive.setPower(power + z);
-                robot.backleftDrive.setPower(-power - z);
-                sleep(time);
-                stopDrive();
-                break;
-
-            }
-        }
-
-
-        public void strafeRight(double power, long time, double goalAngle) {
-            controllerDrive.setOutputLimits(-1,1);
-            while (true) {
-                double correction = controllerAngle.getOutput(getAngle(), goalAngle);
-
-                telemetry.addData("Hot Garb:", correction);
-                double z = correction;
-
-                robot.frontrightDrive.setPower(-power - z);
-                robot.backrightDrive.setPower(power + z);
-                robot.frontleftDrive.setPower(-power + z);
-                robot.backleftDrive.setPower(power - z);
-
-
-            sleep(time);
-            stopDrive();
-            break;
-
-        }
-
-    }
 
 
         public void turnToAnglePID(double goalAngle){//-180 to 180
@@ -551,31 +386,6 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             startTime = System.currentTimeMillis();
             //Code above here should never change
             while(!isStopRequested()) {
-
-                /*
-                drivePIDtime(.45,0,-1,500);
-                sleep(400);
-                strafeLeft(.50,500, 0);
-                turnToAnglePID(0);
-                sleep(400);
-                drivePIDtime(1,0,-1,600);
-                sleep(350);
-                //turnToAnglePID(0);
-                sleep(200);
-                launch3powershots();
-
-                strafeRight(.8,800,0);
-                robot.intakeChainDrive.setPower(1);
-                drivePIDtime(.6,0,1,1000);
-                sleep(300);
-                drivePIDtime(.6, 0,-1,800);
-                sleep(300);
-                robot.intakeChainDrive.setPower(0);
-                launch3shots();
-                sleep(300);
-                drivePIDtime(.2,0,-1,300);
-                strafeLeft(.5,500,0);
-                    */
 
                 driveByClicksPID(24,2,40,0);
                 sleep(300);

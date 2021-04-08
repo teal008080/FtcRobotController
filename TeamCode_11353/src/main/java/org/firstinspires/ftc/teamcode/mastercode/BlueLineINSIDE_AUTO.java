@@ -18,18 +18,19 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-    @Autonomous(name="Ultimate Goal Auto Blue, Right Line", group="PID")
+    @Autonomous(name="BLUE|INSIDE (AUTO)", group="PID")
 //@Disabled
-    public class Comp_Auto_2 extends LinearOpMode {
+    public class BlueLineINSIDE_AUTO extends LinearOpMode {
 
         public double z_angle;
         public double globalAngle;
         public double deltaAngle;
         public double error;
         public boolean busy = true;
+        public double startTime;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(175, .00, 100.0); //.025
+        MiniPID controllerAngle = new MiniPID(150, .00, 20); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
         //Past working values .035, 0, .03
 
@@ -448,7 +449,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public void turnToAnglePID(double goalAngle){//-180 to 180
             reset();
             setRunUsingEncoder();
-
+            double startime = System.currentTimeMillis();
             controllerAngle.setOutputLimits(-50*robot.clickMult,50*robot.clickMult);
 
             while (true) {
@@ -483,7 +484,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
         public void launch3shots() {
-            robot.shooterDrive.setPower(.73);
+            robot.shooterDrive.setVelocity(29*robot.clickMult);
             sleep(2000);
             robot.triggerServo.setPosition(.55);
             sleep(200);
@@ -496,11 +497,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.triggerServo.setPosition(.55);
             sleep(200);
             robot.triggerServo.setPosition(.43);
-            robot.shooterDrive.setPower(0);
+            robot.shooterDrive.setVelocity(0);
         }
         public void launch3powershots() {
-            robot.shooterDrive.setPower(.68);
-            sleep(2500);
+            robot.shooterDrive.setVelocity(26*robot.clickMult);
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
@@ -514,7 +514,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.triggerServo.setPosition(.55);
             sleep(250);
             robot.triggerServo.setPosition(.43);
-            robot.shooterDrive.setPower(0);
+            robot.shooterDrive.setVelocity(0);
 
             sleep(250);
         }
@@ -548,7 +548,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.wobbleGrab.setPosition(.4);
             waitForStart();
             setAngle();
-
+            startTime = System.currentTimeMillis();
             //Code above here should never change
             while(!isStopRequested()) {
 
@@ -582,7 +582,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 driveByClicksPID(20,3,40,0);
                 sleep(300);
                 driveByClicksPID(35,2,40,0);
+                robot.shooterDrive.setVelocity(26*robot.clickMult);
                 turnToAnglePID(0);
+
                 sleep(300);
                 launch3powershots();
                 sleep(300);
@@ -595,6 +597,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 driveByClicksPID(19,2,40,0);
                 sleep(300);
                 robot.intakeChainDrive.setPower(0);
+                robot.shooterDrive.setVelocity(29*robot.clickMult);
+
                 turnToAnglePID(0);
                 launch3shots();
                 driveByClicksPID(15,2,40,0);

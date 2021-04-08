@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-@Autonomous(name="Phoenix Auto PID Tuning", group="PID")
+@Autonomous(name="!!DEPRECIATED!!", group="PID")
 //@Disabled
 public class Pid_Tuning extends LinearOpMode {
 

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * This is the Main Driver Control for the 2020 LCL Lightning team 11353 Robot (unnamed)
  */
 
-@TeleOp(name="UltimateGoalDriveCode", group="Iterative Opmode")
+@TeleOp(name="DRIVECODE", group="Iterative Opmode")
 
 public class UltimateGoalDriveCode extends OpMode
 {
@@ -121,9 +121,9 @@ public class UltimateGoalDriveCode extends OpMode
         double shotspeed;
         //Shooter code
         if (gamepad1.right_bumper) {
-            shotspeed = 50*robot.clickMult;
+            shotspeed = 26*robot.clickMult;
         }   else {
-            shotspeed = 80*robot.clickMult;
+            shotspeed = 29*robot.clickMult;
         }
 
         if (gamepad2.x && !robot.shooterToggle) {

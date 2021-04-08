@@ -20,9 +20,9 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-@Autonomous(name="Testing2", group="PID")
+@Autonomous(name="ZETA TEST2", group="PID")
 //@Disabled
-public class auto4 extends LinearOpMode {
+public class TESTING2 extends LinearOpMode {
 
     public double z_angle;
     public double globalAngle;

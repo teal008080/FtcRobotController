@@ -165,6 +165,7 @@ public class UltGoalHwmap2 {
         backleftDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backrightDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         shooterDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        shooterDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.

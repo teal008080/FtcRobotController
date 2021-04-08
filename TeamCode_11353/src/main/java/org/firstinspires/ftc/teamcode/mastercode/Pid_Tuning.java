@@ -29,7 +29,6 @@ public class Pid_Tuning extends LinearOpMode {
     MiniPID controllerAngle = new MiniPID(40, 2, 8); //.025
     MiniPID controllerDrive = new MiniPID(0.00, 0.0, 0.00); //.025
     //Past working values .035, 0, .03
-
     //Ziegler-Nichols standard for starting PID tuning value
     //Kcr = Proportional gain that causes steady osscillation (.04)
     //Pcr = Period of Kcr's Oscillation (measured in seconds) (1.4s) T

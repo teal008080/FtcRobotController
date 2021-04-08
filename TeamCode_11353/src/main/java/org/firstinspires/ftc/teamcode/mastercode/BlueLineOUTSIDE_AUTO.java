@@ -299,9 +299,6 @@ public class BlueLineOUTSIDE_AUTO extends LinearOpMode {
             telemetry.addData("Goal", goalAngle);
             telemetry.update();
 
-
-
-
             robot.frontrightDrive.setVelocity(-error);
             robot.backrightDrive.setVelocity(-error);
             robot.frontleftDrive.setVelocity(-error);

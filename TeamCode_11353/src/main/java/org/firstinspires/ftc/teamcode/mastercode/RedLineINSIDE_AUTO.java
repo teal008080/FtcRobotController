@@ -505,12 +505,12 @@ public class RedLineINSIDE_AUTO extends LinearOpMode {
         sleep(250);
         robot.triggerServo.setPosition(.43);
         sleep(250);
-        driveByClicksPID(7.5,1,6,0);
+        driveByClicksPID(7.5,3,6,0);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);
         sleep(250);
-        driveByClicksPID(7.5,1,6,0);
+        driveByClicksPID(7.5,3,6,0);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);

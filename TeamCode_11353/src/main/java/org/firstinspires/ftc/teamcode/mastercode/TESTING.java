@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-@Autonomous(name="ZETA TEST1", group="PID")
+@Autonomous(name="ZULU TEST1", group="PID")
 //@Disabled
 public class TESTING extends LinearOpMode {
 

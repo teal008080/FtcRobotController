@@ -30,7 +30,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         public double startTime;
         UltimategoalHardware robot = new UltimategoalHardware();
 
-        MiniPID controllerAngle = new MiniPID(150, .00, 20); //.025
+        MiniPID controllerAngle = new MiniPID(85, .00, 0); //.025
         MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
 
 
@@ -355,20 +355,6 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         }
 
 
-        //Assumes the robot is at the side to the left of the blue tower, looking at the tower. Facing the back wall.
-
-
-
-
-        public void wobbledrop() {
-            robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.wobbleSpool.setPower(1);
-            robot.wobbleSpool.setTargetPosition(1000);
-            robot.wobbleGrab.setPosition(.67);
-            sleep(500);
-
-
-        }
 
 
 

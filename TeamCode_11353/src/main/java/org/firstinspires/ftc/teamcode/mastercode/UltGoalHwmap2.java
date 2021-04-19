@@ -69,6 +69,7 @@ public class UltGoalHwmap2 {
 
 
 
+
     public int      speedFactor         = 1;
     public int      reverseFactor       = 1;
 
@@ -81,8 +82,8 @@ public class UltGoalHwmap2 {
     public boolean shooterToggle = true;
     public boolean shooter = false;
 
-    public boolean wobbleDown = true;
-    public boolean wobbleopen = true;
+    public boolean wobbletoggle = false;
+    public boolean wobbleopentoggle = false;
 
     public double     turnFactorPID        = .05;
 
@@ -181,8 +182,8 @@ public class UltGoalHwmap2 {
 
 
         shooterDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        wobbleSpool.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        wobbleSpool.setTargetPosition(0);
+        wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
 
         // Chain intake drive

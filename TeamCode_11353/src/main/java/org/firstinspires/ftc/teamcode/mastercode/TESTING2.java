@@ -20,16 +20,18 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-@Autonomous(name="ZETA TEST2", group="PID")
+@Autonomous(name="ZULU PID Tuning", group="PID")
 //@Disabled
 public class TESTING2 extends LinearOpMode {
 
     public double z_angle;
     public double globalAngle;
     public double deltaAngle;
+    public double error;
+    public boolean busy = false;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(150, .00, 20); //.025
+    MiniPID controllerAngle = new MiniPID(85, 0, 0); //.025
     MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
     //Past working values .035, 0, .03
 
@@ -47,8 +49,6 @@ public class TESTING2 extends LinearOpMode {
      *
      * @return Angle in degrees. + = left, - = right from zero point.
      */
-
-    public double error;
 
     public void setAngle() {
         Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -77,11 +77,19 @@ public class TESTING2 extends LinearOpMode {
 
     }
 
-    public void setCondom() {
+    public void setRunToPosition() {
         robot.backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    }
+
+    public void setRunUsingEncoder() {
+        robot.backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
     public void setVel(double vel){
@@ -89,15 +97,6 @@ public class TESTING2 extends LinearOpMode {
         robot.backleftDrive.setVelocity(vel);
         robot.frontleftDrive.setVelocity(vel);
         robot.frontrightDrive.setVelocity(vel);
-
-    }
-
-    public void setPos(int pos){
-        robot.backrightDrive.setTargetPosition(pos);
-        robot.backleftDrive.setTargetPosition(pos);
-        robot.frontleftDrive.setTargetPosition(pos);
-        robot.frontrightDrive.setTargetPosition(pos);
-
 
     }
     public void setVelWithError(double vel, double goalAngle, double direction){
@@ -137,7 +136,27 @@ public class TESTING2 extends LinearOpMode {
 
     }
 
+    public void setPos(int pos){
+        robot.backrightDrive.setTargetPosition(pos);
+        robot.backleftDrive.setTargetPosition(pos);
+        robot.frontleftDrive.setTargetPosition(pos);
+        robot.frontrightDrive.setTargetPosition(pos);
 
+
+    }
+
+    public boolean isirregular() {
+        boolean irregular = false;
+        double starttime = System.currentTimeMillis();
+        double expected = starttime / 22;
+        double current = robot.intakeChainDrive.getCurrentPosition();
+        if (expected - current != 0) {
+            irregular = true;
+        }
+
+
+        return irregular;
+    }
 
 
     public double getDistance() {
@@ -148,60 +167,7 @@ public class TESTING2 extends LinearOpMode {
 
     }
 
-    public void driveByClicksPID(int distance, double direction, double vel, double goalAngle){
-        int pos;
-        pos = (int) (distance * robot.clickMult);
-        reset();
-        if (direction == 0){
-            robot.backrightDrive.setTargetPosition(pos);
-            robot.backleftDrive.setTargetPosition(-pos);
-            robot.frontleftDrive.setTargetPosition(-pos);
-            robot.frontrightDrive.setTargetPosition(pos);
-        }
-        if (direction == 1){
-            robot.backrightDrive.setTargetPosition(pos);
-            robot.backleftDrive.setTargetPosition(pos);
-            robot.frontleftDrive.setTargetPosition(-pos);
-            robot.frontrightDrive.setTargetPosition(-pos);
 
-        }
-        if (direction == 2){
-            robot.backrightDrive.setTargetPosition(-pos);
-            robot.backleftDrive.setTargetPosition(pos);
-            robot.frontleftDrive.setTargetPosition(pos);
-            robot.frontrightDrive.setTargetPosition(-pos);
-
-        }
-        if (direction == 3){
-            robot.backrightDrive.setTargetPosition(-pos);
-            robot.backleftDrive.setTargetPosition(-pos);
-            robot.frontleftDrive.setTargetPosition(pos);
-            robot.frontrightDrive.setTargetPosition(pos);
-
-        }
-
-        vel = vel*robot.clickMult;
-        setCondom();
-        setVel(vel);
-
-
-        while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
-        {
-            setVelWithError(vel, goalAngle, direction);
-            telemetry.addData("Front Right Position", robot.frontrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontrightDrive.isBusy());
-            telemetry.addData("Front Left Position", robot.frontleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontleftDrive.isBusy());
-            telemetry.addData("Back Right Position", robot.backrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backrightDrive.isBusy());
-            telemetry.addData("Back Left Position", robot.backleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backleftDrive.isBusy());
-            telemetry.addData("Error", error);
-            telemetry.addData("angel", getAngle());
-            telemetry.update();
-
-        }
-        setVel(0);
-
-
-
-    }
     public void driveByClicks(int distance, double direction, double vel){
         int pos;
         pos = (int) (distance * robot.clickMult);
@@ -235,8 +201,9 @@ public class TESTING2 extends LinearOpMode {
         }
 
         vel = vel*robot.clickMult;
-        setCondom();
+        setRunToPosition();
         setVel(vel);
+
 
         while (opModeIsActive() && robot.frontrightDrive.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
         {
@@ -255,8 +222,177 @@ public class TESTING2 extends LinearOpMode {
 
 
     }
+    public void driveByClicksPID(double distance, double direction, double vel, double goalAngle){
+        int pos;
+        pos = (int) (distance * robot.clickMult);
+        reset();
+        if (direction == 0){
+            robot.backrightDrive.setTargetPosition(pos);
+            robot.backleftDrive.setTargetPosition(-pos);
+            robot.frontleftDrive.setTargetPosition(-pos);
+            robot.frontrightDrive.setTargetPosition(pos);
+        }
+        if (direction == 1){
+            robot.backrightDrive.setTargetPosition(pos);
+            robot.backleftDrive.setTargetPosition(pos);
+            robot.frontleftDrive.setTargetPosition(-pos);
+            robot.frontrightDrive.setTargetPosition(-pos);
+
+        }
+        if (direction == 2){
+            robot.backrightDrive.setTargetPosition(-pos);
+            robot.backleftDrive.setTargetPosition(pos);
+            robot.frontleftDrive.setTargetPosition(pos);
+            robot.frontrightDrive.setTargetPosition(-pos);
+
+        }
+        if (direction == 3){
+            robot.backrightDrive.setTargetPosition(-pos);
+            robot.backleftDrive.setTargetPosition(-pos);
+            robot.frontleftDrive.setTargetPosition(pos);
+            robot.frontrightDrive.setTargetPosition(pos);
+
+        }
+
+        vel = vel*robot.clickMult;
+        setRunToPosition();
+        setVel(vel);
 
 
+        while (opModeIsActive() && motorsBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
+        {
+
+
+            setVelWithError(vel, goalAngle, direction);
+            telemetry.addData("Front Right Position", robot.frontrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontrightDrive.isBusy());
+            telemetry.addData("Front Left Position", robot.frontleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.frontleftDrive.isBusy());
+            telemetry.addData("Back Right Position", robot.backrightDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backrightDrive.isBusy());
+            telemetry.addData("Back Left Position", robot.backleftDrive.getCurrentPosition()/robot.clickMult + "  busy=" + robot.backleftDrive.isBusy());
+            telemetry.addData("Error", error);
+            telemetry.addData("angel", getAngle());
+
+            telemetry.update();
+
+
+
+            if(!robot.frontrightDrive.isBusy()){
+                robot.frontrightDrive.setVelocity(0);
+            }
+            if(!robot.backrightDrive.isBusy()){
+                robot.backrightDrive.setVelocity(0);
+            }
+            if(!robot.frontleftDrive.isBusy()){
+                robot.frontleftDrive.setVelocity(0);
+            }
+            if(!robot.backleftDrive.isBusy()){
+                robot.backleftDrive.setVelocity(0);
+            }
+
+
+
+        }
+        setVel(0);
+
+
+
+
+    }
+
+    public boolean motorsBusy(){
+        if(!robot.backleftDrive.isBusy()&&!robot.frontrightDrive.isBusy()&&!robot.frontleftDrive.isBusy()&&!robot.backrightDrive.isBusy()){
+            busy = false;
+        }   else{
+            busy = true;
+        }
+
+
+        return busy;
+
+    }
+
+    public void drivePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
+        double starTime = System.currentTimeMillis();
+        controllerDrive.setOutputLimits(-1, 1);
+        while (true) {
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
+            telemetry.addData("Distance", getDistance());
+            telemetry.addData("Error:", correction);
+            telemetry.update();
+            double y = -direction * power;
+            double x = 0;
+            double z = correction;
+            z = z * robot.turnFactorPID;
+            robot.frontleftDrive.setPower(y + x - z);
+            robot.frontrightDrive.setPower(-y + x + z);
+            robot.backleftDrive.setPower(y - x - z);
+            robot.backrightDrive.setPower(-y - x + z);
+
+            double abserror = Math.abs(getDistance() - goal);
+            if (abserror <= robot.tolerancePID2) {
+                stopDrive();
+                break;
+            }
+            if (isStopRequested() == true) {
+                stopDrive();
+                stop();
+                break;
+            }
+        }
+    }
+
+    public void drivePIDtime(double power, double goalAngle, int direction, double time) {//-180 to 180
+        double starTime = System.currentTimeMillis();
+        controllerDrive.setOutputLimits(-1, 1);
+        while (true) {
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
+            telemetry.addData("Distance", getDistance());
+            telemetry.addData("Error:", correction);
+            telemetry.update();
+            double y = -direction * power;
+            double x = 0;
+            double z = correction;
+            z = z * robot.turnFactorPID;
+            robot.frontleftDrive.setPower(y + x - z);
+            robot.frontrightDrive.setPower(-y + x + z);
+            robot.backleftDrive.setPower(y - x - z);
+            robot.backrightDrive.setPower(-y - x + z);
+            if (System.currentTimeMillis() - starTime >= time) {
+                stopDrive();
+                break;
+            }
+            if (isStopRequested() == true) {
+                stopDrive();
+                stop();
+                break;
+            }
+        }
+    }
+
+    public void strafePID(double power, double goalAngle, int direction, double goal) {//-180 to 180
+        double starTime = System.currentTimeMillis();
+        controllerDrive.setOutputLimits(-1, 1);
+        while (true) {
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
+            telemetry.addData("Angle:", getAngle()); //Gives our current pos
+            telemetry.addData("Hot Garb:", correction);
+            telemetry.addData("Global Subtract", globalAngle);
+            telemetry.update();
+            double y = -direction * power;
+            double x = 0;
+            double z = correction;
+            robot.frontleftDrive.setPower(-y + x + z);
+            robot.frontrightDrive.setPower(-y + x + z);
+            robot.backleftDrive.setPower(y - x + z);
+            robot.backrightDrive.setPower(y - x + z);
+
+            if (isStopRequested() == true) {
+                stopDrive();
+                stop();
+                break;
+            }
+
+        }
+    }
 
     public void stopDrive() {
         robot.frontleftDrive.setPower(0);
@@ -266,6 +402,26 @@ public class TESTING2 extends LinearOpMode {
     }
 
 
+    public void strafeLeft(double power, long time, double goalAngle) {
+        controllerDrive.setOutputLimits(-1, 1);
+        while (true) {
+            double correction = controllerDrive.getOutput(getAngle(), goalAngle);
+
+            telemetry.addData("Hot Garb:", correction);
+
+            double z = correction;
+            double abserror = Math.abs(getAngle() - goalAngle);
+
+            robot.frontrightDrive.setPower(power - z);
+            robot.backrightDrive.setPower(-power + z);
+            robot.frontleftDrive.setPower(power + z);
+            robot.backleftDrive.setPower(-power - z);
+            sleep(time);
+            stopDrive();
+            break;
+
+        }
+    }
 
 
     public void strafeRight(double power, long time, double goalAngle) {
@@ -292,7 +448,10 @@ public class TESTING2 extends LinearOpMode {
 
 
     public void turnToAnglePID(double goalAngle){//-180 to 180
-        controllerAngle.setOutputLimits(-1,1);
+        reset();
+        setRunUsingEncoder();
+        double startime = System.currentTimeMillis();
+        controllerAngle.setOutputLimits(-50*robot.clickMult,50*robot.clickMult);
 
         while (true) {
             getAngle();
@@ -306,21 +465,18 @@ public class TESTING2 extends LinearOpMode {
             telemetry.update();
 
 
-            error = error*robot.turnFactorPID ;
-
-            robot.frontrightDrive.setPower(-error);
-            robot.backrightDrive.setPower(-error);
-            robot.frontleftDrive.setPower(-error);
-            robot.backleftDrive.setPower(-error);
 
 
-            double abserr = Math.abs(getAngle() - goalAngle);
+            robot.frontrightDrive.setVelocity(-error);
+            robot.backrightDrive.setVelocity(-error);
+            robot.frontleftDrive.setVelocity(-error);
+            robot.backleftDrive.setVelocity(-error);
 
-            if(abserr <= robot.tolerancePID){
-                robot.frontrightDrive.setPower(0);
-                robot.backrightDrive.setPower(0);
-                robot.frontleftDrive.setPower(0);
-                robot.backleftDrive.setPower(0);
+
+
+
+            if(getAngle()== goalAngle){
+                setVel(0);
                 break;
             }
 
@@ -329,7 +485,7 @@ public class TESTING2 extends LinearOpMode {
 
     }
     public void launch3shots() {
-        robot.shooterDrive.setPower(.78);
+        robot.shooterDrive.setVelocity(29*robot.clickMult);
         sleep(2000);
         robot.triggerServo.setPosition(.55);
         sleep(200);
@@ -342,25 +498,24 @@ public class TESTING2 extends LinearOpMode {
         robot.triggerServo.setPosition(.55);
         sleep(200);
         robot.triggerServo.setPosition(.43);
-        robot.shooterDrive.setPower(0);
+        robot.shooterDrive.setVelocity(0);
     }
     public void launch3powershots() {
-        robot.shooterDrive.setPower(.65);
-        sleep(2500);
+        robot.shooterDrive.setVelocity(26*robot.clickMult);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);
         sleep(250);
-        driveByClicks(7,1,6);
+        driveByClicksPID(7.5,3,6,0);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);
         sleep(250);
-        driveByClicks(7,1,6);
+        driveByClicksPID(7.5,3,6,0);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);
-        robot.shooterDrive.setPower(0);
+        robot.shooterDrive.setVelocity(0);
 
         sleep(250);
     }
@@ -369,15 +524,7 @@ public class TESTING2 extends LinearOpMode {
     //Assumes the robot is at the side to the left of the blue tower, looking at the tower. Facing the back wall.
 
 
-    public void wobbledrop() {
-        robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.wobbleSpool.setPower(1);
-        robot.wobbleSpool.setTargetPosition(1000);
-        robot.wobbleGrab.setPosition(.67);
-        sleep(500);
 
-
-    }
 
 
 
@@ -389,7 +536,7 @@ public class TESTING2 extends LinearOpMode {
         telemetry.addData("Imu Status", robot.imu.getSystemStatus());
         telemetry.addData("Calibration Status", robot.imu.getCalibrationStatus());
         robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.wobbleGrab.setPosition(.4);
+
         waitForStart();
         setAngle();
 
@@ -398,12 +545,10 @@ public class TESTING2 extends LinearOpMode {
 
 
 
-            driveByClicksPID(24,2,40,0);
+            driveByClicksPID(5000,0,46,0);
             sleep(300);
-            driveByClicksPID(20,3,40,0);
-            sleep(300);
-            driveByClicksPID(35,2,40,0);
-            sleep(1000);
+            driveByClicksPID(500,2,46,0);
+
 
 
 

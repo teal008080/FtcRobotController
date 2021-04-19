@@ -148,7 +148,45 @@ public class UltimateGoalDriveCode extends OpMode
 
         //wobble meche
 
-        robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(!robot.wobbleSpool.isBusy()){
+            robot.wobbleSpool.setPower(0);
+        } else {
+            if (gamepad2.a && !robot.wobbletoggle) {
+                if (robot.wobbleSpool.getCurrentPosition() == 0) {
+                    robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.wobbleSpool.setTargetPosition(1000);
+                    robot.wobbleSpool.setPower(.5);
+
+                } else {
+                    robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.wobbleSpool.setTargetPosition(0);
+                    robot.wobbleSpool.setPower(.5);
+                }
+                robot.wobbletoggle = true;
+                if (robot.wobbleSpool.getCurrentPosition() == 0) telemetry.addData("Wobble", "Up");
+                else telemetry.addData("Wobble", "Down");
+            } else if (!gamepad2.a) robot.wobbletoggle = false;
+        }
+
+
+        if (gamepad2.b && !robot.wobbleopentoggle) {
+            if (robot.wobbleGrab.getPosition() == 0.4) {
+                robot.wobbleGrab.setPosition(.67);
+            } else {
+
+                robot.wobbleGrab.setPosition(.4);
+            }
+            robot.wobbleopentoggle = true;
+            if (robot.wobbleGrab.getPosition() == 0.4)
+                telemetry.addData("Wobble2", "Opne");
+            else telemetry.addData("Wobble2", "closed");
+        } else if (!gamepad2.b) robot.wobbleopentoggle = false;
+
+
+
+
+
+        /*
 
         telemetry.addData("pos", robot.wobbleSpool.getCurrentPosition());
         telemetry.addData("posinteded", robot.wobbleSpool.getTargetPosition());
@@ -157,14 +195,14 @@ public class UltimateGoalDriveCode extends OpMode
         if (gamepad2.a && !robot.wobbleDown) {
             if (Math.abs(robot.wobbleSpool.getCurrentPosition() - robot.wobbleSpool.getTargetPosition()) <= robot.wobbletolerance) {
                 telemetry.addData("pos", robot.wobbleSpool.getCurrentPosition());
-                robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
                 robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 robot.wobbleSpool.setTargetPosition(1000);
                 robot.wobbleSpool.setPower(.5);
             } else {
-                robot.wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
                 robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.wobbleSpool.setTargetPosition(-1000);
+                robot.wobbleSpool.setTargetPosition(0);
                 robot.wobbleSpool.setPower(.5);
             }
             robot.wobbleDown = true;
@@ -175,6 +213,10 @@ public class UltimateGoalDriveCode extends OpMode
                 robot.wobbleSpool.setPower(0);}
         } else if (!gamepad2.a) robot.wobbleDown = false;
 
+
+        if(!robot.wobbleSpool.isBusy()){
+            robot.wobbleSpool.setPower(0);
+        }
 
         if (gamepad2.b && !robot.wobbleopen) {
             if (robot.wobbleGrab.getPosition() == 0.4) {
@@ -188,8 +230,10 @@ public class UltimateGoalDriveCode extends OpMode
                 telemetry.addData("Wobble2", "Opne");
             else telemetry.addData("Wobble2", "closed");
         } else if (!gamepad2.b) robot.wobbleopen = false;
-
+*/
     }
+
+
 
 
     @Override

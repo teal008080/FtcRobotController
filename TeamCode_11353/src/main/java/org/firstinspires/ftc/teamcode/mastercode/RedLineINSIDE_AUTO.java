@@ -474,7 +474,7 @@ public class RedLineINSIDE_AUTO extends LinearOpMode {
 
 
 
-            if(getAngle()== goalAngle){
+            if(Math.abs(getAngle()-goalAngle) <= 0.1){
                 setVel(0);
                 break;
             }

@@ -183,7 +183,8 @@ public class UltGoalHwmap2 {
 
         shooterDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         wobbleSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wobbleSpool.setTargetPositionTolerance(50);
 
 
         // Chain intake drive

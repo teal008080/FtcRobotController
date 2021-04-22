@@ -148,26 +148,28 @@ public class UltimateGoalDriveCode extends OpMode
 
         //wobble meche
 
-        if(!robot.wobbleSpool.isBusy()){
-            robot.wobbleSpool.setPower(0);
-        } else {
+
             if (gamepad2.a && !robot.wobbletoggle) {
-                if (robot.wobbleSpool.getCurrentPosition() == 0) {
+                if (robot.wobbleSpool.getCurrentPosition() <= 5) {
                     robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     robot.wobbleSpool.setTargetPosition(1000);
-                    robot.wobbleSpool.setPower(.5);
+                    robot.wobbleSpool.setPower(100);
 
                 } else {
                     robot.wobbleSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     robot.wobbleSpool.setTargetPosition(0);
-                    robot.wobbleSpool.setPower(.5);
+                    robot.wobbleSpool.setPower(100);
                 }
                 robot.wobbletoggle = true;
                 if (robot.wobbleSpool.getCurrentPosition() == 0) telemetry.addData("Wobble", "Up");
                 else telemetry.addData("Wobble", "Down");
             } else if (!gamepad2.a) robot.wobbletoggle = false;
-        }
 
+            telemetry.addData("Wobble Pos", robot.wobbleSpool.getCurrentPosition());
+            telemetry.addData("Wobble Pow", robot.wobbleSpool.getPower());
+
+            telemetry.addData("Wobble Target Pos", robot.wobbleSpool.getTargetPosition());
+            telemetry.addData("Wobble busy?", robot.wobbleSpool.isBusy());
 
         if (gamepad2.b && !robot.wobbleopentoggle) {
             if (robot.wobbleGrab.getPosition() == 0.4) {

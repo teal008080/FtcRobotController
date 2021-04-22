@@ -309,7 +309,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
 
-                if(getAngle()== goalAngle){
+                if(Math.abs(getAngle()-goalAngle) <= 0.1){
                     setVel(0);
                     break;
                 }
@@ -381,14 +381,14 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 robot.shooterDrive.setVelocity(26*robot.clickMult);
                 turnToAnglePID(0);
 
-                sleep(300);
+                sleep(800);
                 launch3powershots();
                 sleep(300);
                 driveByClicksPID(16,1,40,0);
                 sleep(300);
                 robot.intakeChainDrive.setPower(1);
                 sleep(300);
-                driveByClicksPID(19,0,40,0);
+                driveByClicksPID(19,0,35,0);
                 sleep(300);
                 driveByClicksPID(19,2,40,0);
                 sleep(300);

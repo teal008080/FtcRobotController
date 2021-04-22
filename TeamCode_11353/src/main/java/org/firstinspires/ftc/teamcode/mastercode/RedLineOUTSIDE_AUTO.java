@@ -30,7 +30,7 @@ public class RedLineOUTSIDE_AUTO extends LinearOpMode {
     public double startTime;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(150, .00, 20); //.025
+    MiniPID controllerAngle = new MiniPID(85, .00, 0); //.025
     MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
     //Past working values .035, 0, .03
 

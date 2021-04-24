@@ -18,9 +18,9 @@ import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
-@Autonomous(name="Drive AND Shoot blue Outside", group="PID")
+@Autonomous(name="WAIT&SHOOT|Red-Outside", group="PID")
 //@Disabled
-public class DASR extends LinearOpMode {
+public class WAIT_SHOOT_RED_OUTSIDE extends LinearOpMode {
 
     public double z_angle;
     public double globalAngle;
@@ -555,20 +555,41 @@ public class DASR extends LinearOpMode {
         //Code above here should never change
         while(!isStopRequested()) {
 
+                /*
+                drivePIDtime(.45,0,-1,500);
+                sleep(400);
+                strafeLeft(.50,500, 0);
+                turnToAnglePID(0);
+                sleep(400);
+                drivePIDtime(1,0,-1,600);
+                sleep(350);
+                //turnToAnglePID(0);
+                sleep(200);
+                launch3powershots();
+
+                strafeRight(.8,800,0);
+                robot.intakeChainDrive.setPower(1);
+                drivePIDtime(.6,0,1,1000);
+                sleep(300);
+                drivePIDtime(.6, 0,-1,800);
+                sleep(300);
+                robot.intakeChainDrive.setPower(0);
+                launch3shots();
+                sleep(300);
+                drivePIDtime(.2,0,-1,300);
+                strafeLeft(.5,500,0);
+                    */
 
             sleep(8000);
             driveByClicksPID(7,2,40,0);
             sleep(300);
-            driveByClicksPID(30, 3,40,0);
+            driveByClicksPID(51, 1,40,0);
             sleep(300);
             driveByClicksPID(18,2,40,0);
-
             robot.shooterDrive.setVelocity(27*robot.clickMult);
             turnToAnglePID(0);
             sleep(800);
             launch3powershots();
-
-
 
 
 

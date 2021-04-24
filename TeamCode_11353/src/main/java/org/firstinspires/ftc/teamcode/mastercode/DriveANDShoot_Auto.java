@@ -501,16 +501,19 @@ public class DriveANDShoot_Auto extends LinearOpMode {
     }
     public void launch3powershots() {
         robot.shooterDrive.setVelocity(27*robot.clickMult);
+        turnToAnglePID(0);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);
         sleep(250);
         driveByClicksPID(9,3,6,0);
+        turnToAnglePID(0);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);
         sleep(250);
         driveByClicksPID(8,3,6,0);
+        turnToAnglePID(0);
         robot.triggerServo.setPosition(.55);
         sleep(250);
         robot.triggerServo.setPosition(.43);
@@ -585,6 +588,7 @@ public class DriveANDShoot_Auto extends LinearOpMode {
             driveByClicksPID(18,2,40,0);
             robot.shooterDrive.setVelocity(27*robot.clickMult);
             turnToAnglePID(0);
+            sleep(800);
             launch3powershots();
 
 

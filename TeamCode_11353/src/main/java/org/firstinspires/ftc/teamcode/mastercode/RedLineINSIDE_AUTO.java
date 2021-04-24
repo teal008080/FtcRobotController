@@ -579,18 +579,19 @@ public class RedLineINSIDE_AUTO extends LinearOpMode {
 
             driveByClicksPID(24,2,40,0);
             sleep(300);
-            driveByClicksPID(20,1,40,0);
+            driveByClicksPID(24,1,40,0);
             sleep(300);
             driveByClicksPID(35,2,40,0);
             robot.shooterDrive.setVelocity(26*robot.clickMult);
             turnToAnglePID(0);
 
-            sleep(300);
+            sleep(800);
             launch3powershots();
             sleep(300);
-            driveByClicksPID(16,3,40,0);
+            driveByClicksPID(21,3,40,0);
             sleep(300);
             robot.intakeChainDrive.setPower(1);
+            turnToAnglePID(0);
             sleep(300);
             driveByClicksPID(19,0,40,0);
             sleep(300);

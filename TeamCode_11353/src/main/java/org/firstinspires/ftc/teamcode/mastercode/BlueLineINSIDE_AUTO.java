@@ -387,6 +387,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
                 driveByClicksPID(16,1,40,0);
                 sleep(300);
                 robot.intakeChainDrive.setPower(1);
+                turnToAnglePID(0);
+
                 sleep(300);
                 driveByClicksPID(19,0,35,0);
                 sleep(300);

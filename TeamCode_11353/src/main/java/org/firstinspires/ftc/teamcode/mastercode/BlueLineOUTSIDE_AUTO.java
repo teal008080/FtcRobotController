@@ -30,7 +30,7 @@ public class BlueLineOUTSIDE_AUTO extends LinearOpMode {
     public double startTime;
     UltimategoalHardware robot = new UltimategoalHardware();
 
-    MiniPID controllerAngle = new MiniPID(150, .00, 20);
+    MiniPID controllerAngle = new MiniPID(85, .00, 0);
     MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01);
 
 
@@ -307,7 +307,7 @@ public class BlueLineOUTSIDE_AUTO extends LinearOpMode {
 
 
 
-            if(getAngle()== goalAngle){
+            if(Math.abs(getAngle()-goalAngle) <= 0.1){
                 setVel(0);
                 break;
             }
@@ -393,12 +393,14 @@ public class BlueLineOUTSIDE_AUTO extends LinearOpMode {
             robot.shooterDrive.setVelocity(26*robot.clickMult);
             turnToAnglePID(0);
 
-            sleep(300);
+            sleep(800);
             launch3powershots();
             sleep(300);
             driveByClicksPID(16,1,40,0);
             sleep(300);
             robot.intakeChainDrive.setPower(1);
+            turnToAnglePID(0);
+
             sleep(300);
             driveByClicksPID(19,0,40,0);
             sleep(300);

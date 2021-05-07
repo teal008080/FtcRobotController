@@ -6,14 +6,10 @@ package org.firstinspires.ftc.teamcode.mastercode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.mastercode.UltimategoalHardware;
-import org.firstinspires.ftc.teamcode.robotutils.MathFunctions;
 import org.firstinspires.ftc.teamcode.robotutils.RobotMovement;
 import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
@@ -22,7 +18,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 //@Disabled
     public class BlueLineINSIDE_AUTO extends LinearOpMode {
 
-        public double z_angle;
+
         public double globalAngle;
         public double deltaAngle;
         public double error;
@@ -31,14 +27,21 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         UltimategoalHardware robot = new UltimategoalHardware();
 
         MiniPID controllerAngle = new MiniPID(85, .00, 0); //.025
-        MiniPID controllerDrive = new MiniPID(0.01, 0.0, 0.01); //.025
 
+
+        //Takes the initial angle of the robot and makes that angle the zero of the program
 
         public void setAngle() {
             Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             double deltaAngle = angles.firstAngle;
             globalAngle = deltaAngle;
         }
+
+        /**
+         * Get current cumulative angle rotation from last reset.
+         *
+         * @return Angle in degrees. + = left, - = right from zero point.
+         */
 
         public double getAngle() {
 
@@ -49,13 +52,16 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             return -RobotMovement.AngleWrap(deltaAngle - globalAngle);
         }
 
+        //Resets the positions of the encoders on each of the motors before each new drive method
+
         public void reset() {
             robot.backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             robot.backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             robot.frontleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             robot.frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         }
+
+        //Sets the mode of the drive motors to Run-To-Postition after the reset
 
         public void setRunToPosition() {
             robot.backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -65,6 +71,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
 
+        //Sets the mode of the drive motors to Run-Using-Encoder after the reset
+
         public void setRunUsingEncoder() {
             robot.backrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.backleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -72,6 +80,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.frontrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
+
+        //Sets a basic velocity for small movements
         public void setVel(double vel){
             robot.backrightDrive.setVelocity(vel);
             robot.backleftDrive.setVelocity(vel);
@@ -79,6 +89,9 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.frontrightDrive.setVelocity(vel);
 
         }
+
+        //Primary velocity setter for encoder based driving with PID angle correction
+
         public void setVelWithError(double vel, double goalAngle, double direction){
 
             controllerAngle.setOutputLimits(-50*robot.clickMult,50*robot.clickMult);
@@ -116,6 +129,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
 
+        //Just sets the position for the encoders to go
+
         public void setPos(int pos){
             robot.backrightDrive.setTargetPosition(pos);
             robot.backleftDrive.setTargetPosition(pos);
@@ -126,7 +141,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
         }
 
 
-
+        //Non-PID drive method using encoder clicks
 
         public void driveByClicks(int distance, double direction, double vel){
             int pos;
@@ -179,7 +194,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             }
             setVel(0);
 
-
+        //Main drive by clicks method using the PID angle error correction
 
         }
         public void driveByClicksPID(double distance, double direction, double vel, double goalAngle){
@@ -254,7 +269,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             setVel(0);
 
 
-
+        //Exit loop for the drive functions
 
         }
 
@@ -270,6 +285,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
         }
 
+        //Final stop function
+
         public void stopDrive() {
             robot.frontleftDrive.setPower(0);
             robot.frontrightDrive.setPower(0);
@@ -279,7 +296,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
 
-
+        //PID based turn to angle funciton
 
         public void turnToAnglePID(double goalAngle){//-180 to 180
             reset();
@@ -317,6 +334,8 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             }
 
 
+            //Easily usable high goal launch method
+
         }
         public void launch3shots() {
             robot.shooterDrive.setVelocity(29*robot.clickMult);
@@ -334,6 +353,10 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
             robot.triggerServo.setPosition(.43);
             robot.shooterDrive.setVelocity(0);
         }
+
+        //Easily usable powershot launch method
+
+
         public void launch3powershots() {
             robot.shooterDrive.setVelocity(26*robot.clickMult);
             robot.triggerServo.setPosition(.55);
@@ -414,7 +437,7 @@ import org.firstinspires.ftc.teamcode.robotutils.MiniPID;
 
 
 
-                // Dont put code below here
+                //End of Autonomous
                 stopDrive();
                 break;
             }

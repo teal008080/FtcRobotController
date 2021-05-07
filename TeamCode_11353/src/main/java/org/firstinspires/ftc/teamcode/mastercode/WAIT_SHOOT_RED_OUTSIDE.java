@@ -580,17 +580,17 @@ public class WAIT_SHOOT_RED_OUTSIDE extends LinearOpMode {
                 strafeLeft(.5,500,0);
                     */
 
-            sleep(8000);
+            sleep(0000);
             driveByClicksPID(7,2,40,0);
             sleep(300);
-            driveByClicksPID(51, 1,40,0);
+            driveByClicksPID(27, 1,40,0);
             sleep(300);
             driveByClicksPID(18,2,40,0);
             robot.shooterDrive.setVelocity(27*robot.clickMult);
             turnToAnglePID(0);
             sleep(800);
             launch3powershots();
-
+            driveByClicksPID(38,2,40,0);
 
 
 

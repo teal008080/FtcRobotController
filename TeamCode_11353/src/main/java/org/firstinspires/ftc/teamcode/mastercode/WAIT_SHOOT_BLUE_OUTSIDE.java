@@ -556,10 +556,10 @@ public class WAIT_SHOOT_BLUE_OUTSIDE extends LinearOpMode {
         while(!isStopRequested()) {
 
 
-            sleep(8000);
+            sleep(5000);
             driveByClicksPID(7,2,40,0);
             sleep(300);
-            driveByClicksPID(30, 3,40,0);
+            driveByClicksPID(6, 3,40,0);
             sleep(300);
             driveByClicksPID(18,2,40,0);
 
